@@ -1,0 +1,186 @@
+<div class="bg">
+  <div class="d-flex justify-content-center">
+    <div class="mt-5 mb-5">
+      <div class="card" style="width: 30rem">
+        <div class="card-body">
+          <button (click)="regresar()" class="btn">
+            <i class="fa fa-reply papeleraRoja"></i>
+          </button>
+          <div class="text-center"><img
+            class="mb-3"
+            src="../../../../assets/images/logo.png"
+            alt=""
+            width="240"
+            height="70"
+          /></div>
+
+          <form
+            #frmRegistro="ngForm"
+            class="needs-validation"
+            (ngSubmit)="frmRegistro.form.valid && registrarUsuario(frmRegistro)"
+          >
+            <div class="row g-3">
+              <h4 class="mb-3 fw-bold mb-0 text-center">
+                Registro Sistema PQRS
+              </h4>
+              <div class="col-sm-6">
+                <!-- Fields -->
+                <label for="firstName" class="form-label"
+                  >Nombres<span class="text-danger"> *</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firstName"
+                  name="firstName"
+                  [(ngModel)]="objUsuario.usuarioNombres"
+                  #firstName="ngModel"
+                  placeholder="Nombres usuario"
+                  [ngClass]="{
+                    'is-invalid': frmRegistro.submitted && firstName.invalid
+                  }"
+                  required
+                />
+                <div
+                  class="text-danger error"
+                  *ngIf="frmRegistro.submitted && firstName.invalid"
+                >
+                  <span *ngIf="firstName.errors?.['required']"
+                    >Ingrese nombre de usuario</span
+                  >
+                </div>
+              </div>
+
+              <div class="col-sm-6">
+                <label for="lastName" class="form-label"
+                  >Apellidos <span class="text-danger"> *</span></label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastName"
+                  name="lastName"
+                  [(ngModel)]="objUsuario.usuarioApellidos"
+                  #lastName="ngModel"
+                  placeholder="Apellidos usuario"
+                  [ngClass]="{
+                    'is-invalid': frmRegistro.submitted && lastName.invalid
+                  }"
+                  required
+                />
+                <div
+                  class="text-danger error"
+                  *ngIf="frmRegistro.submitted && lastName.invalid"
+                >
+                  <span *ngIf="firstName.errors?.['required']"
+                    >Ingrese apellidos de usuario</span
+                  >
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="email" class="form-label"
+                  >Correo institucional
+                  <span class="text-danger"> *</span></label
+                >
+                <input
+                  type="email"
+                  class="form-control"
+                  [(ngModel)]="objAcceso.correoUsuario"
+                  #email="ngModel"
+                  id="email"
+                  name="email"
+                  placeholder="you@example.com"
+                  [ngClass]="{
+                    'is-invalid': frmRegistro.submitted && email.invalid
+                  }"
+                  required
+                  pattern="{{ patronCorreo }}"
+                />
+                <div
+                  class="text-danger error"
+                  *ngIf="frmRegistro.submitted && email.invalid"
+                >
+                  <span *ngIf="email.errors?.['required']"
+                    >Usuario requerido</span
+                  >
+                  <span *ngIf="email.errors?.['pattern']">Correo inválido</span>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="password" class="form-label"
+                  >Contraseña<span class="text-danger"> *</span></label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                  [(ngModel)]="objAcceso.claveUsuario"
+                  #password="ngModel"
+                  placeholder="Contraseña"
+                  [ngClass]="{
+                    'is-invalid': frmRegistro.submitted && password.invalid
+                  }"
+                  required
+                />
+                <div
+                  class="text-danger error"
+                  *ngIf="frmRegistro.submitted && password.invalid"
+                >
+                  <span *ngIf="password.errors?.['required']"
+                    >Contraseña requerida</span
+                  >
+                </div>
+              </div>
+
+              <div class="col-12">
+                <label for="confirmedPassword" class="form-label"
+                  >Confirmar contraseña<span class="text-danger">
+                    *</span
+                  ></label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="repassword"
+                  name="repassword"
+                  [(ngModel)]="objAcceso.reClave"
+                  #repassword="ngModel"
+                  placeholder="Confirmar contraseña"
+                  [ngClass]="{
+                    'is-invalid': frmRegistro.submitted && repassword.invalid
+                  }"
+                  required
+                  pattern="{{ objAcceso.claveUsuario }}"
+                />
+                <div
+                  class="text-danger error"
+                  *ngIf="frmRegistro.submitted && repassword.invalid"
+                >
+                  <span *ngIf="repassword.errors?.['required']"
+                    >Contraseña requerida</span
+                  >
+                  <span *ngIf="repassword.errors?.['pattern']"
+                    >Las contraseñas no coinciden</span
+                  >
+                </div>
+              </div>
+            </div>
+            <hr class="my-4" />
+            <div class="mt-2 form-check">
+              <input type="checkbox" class="form-check-input" id="save-info" />
+              <label class="form-check-label" for="save-info"
+                >Acepto de tratamiento de datos</label
+              >
+            </div>
+            <button class="w-100 mt-3 btn btn-primary btn-sm" type="submit">
+              Finalizar registro
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+export const API_URL = 'http://localhost:8097/';
+
+export const API_USUARIO = API_URL + 'miapi/publico/usuario';
+export const API_IMAGEN = API_URL + 'miapi/publico/imagen';
+export const API_ACCESO = API_URL + 'miapi/publico/acceso/login';

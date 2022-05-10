@@ -1,0 +1,91 @@
+<div class="container-fluid">
+  <div class="row g-3 mt-1">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <!----------------------------->
+
+      <!-------------
+      <div class="px-3 py-4 my-4 text-center">
+        <h1 class="display-5 fw-bold">inicio</h1>
+      </div>
+      ---------------->
+    </div>
+  </div>
+  <!----------------------------->
+  <div class="card">
+    <div class="card-header">Bienvenido, [Nombre]</div>
+    <div class="card-body text-center">
+      <h5 class="mt-2">Sin Whatsapp y sin Correos, todo desde un mismo sitio!</h5>
+      <p class="card-text">
+        Este es el sistema de PQRS de la Facultad de Ingenieria de Sistemas de
+        la Universidad Santo Tomas, Seccional Tunja. Desde donde podras realizar
+        tus solicitudes particulares comunicandote directamente con la Facultad.
+      </p>
+      <a
+        class="btn btn-primary"
+        [routerLink]="['/estudiante/solicitudes/crear']"
+        >Crear nueva solicitud</a
+      >
+    </div>
+  </div>
+  <!----->
+
+  <div class="col-md-10 m-lg-auto">
+    <h5 class="mb-4">Resumen</h5>
+    <div class="row">
+      <div class="col-xl-3 col-lg-6">
+        <div class="card l-bg-cherry">
+          <div class="card-statistic-3 p-4">
+            <div class="card-icon card-icon-large">
+              <i class="fas fa-circle-exclamation"></i>
+            </div>
+            <div class="mb-4">
+              <h5 class="card-title mb-0">Solicitudes Activas</h5>
+            </div>
+            <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                <h2 class="d-flex align-items-center mb-0">51</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6">
+        <div class="card l-bg-orange-dark">
+          <div class="card-statistic-3 p-4">
+            <div class="card-icon card-icon-large">
+              <i class="fas fa-business-time"></i>
+            </div>
+            <div class="mb-4">
+              <h5 class="card-title mb-0">Solicitudes en progreso</h5>
+            </div>
+            <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                <h2 class="d-flex align-items-center mb-0">25</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-lg-6">
+        <div class="card l-bg-green-dark">
+          <div class="card-statistic-3 p-4">
+            <div class="card-icon card-icon-large">
+              <i class="fas fa-clipboard-check"></i>
+            </div>
+            <div class="mb-4">
+              <h5 class="card-title mb-0">Solicitudes Finalizadas</h5>
+            </div>
+            <div class="row align-items-center mb-2 d-flex">
+              <div class="col-8">
+                <h2 class="d-flex align-items-center mb-0">578</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!----------------------------->

@@ -1,0 +1,92 @@
+<div
+class="bg"
+>
+  <div class="d-flex justify-content-center">
+    <div class="mt-5 mb-5">
+      <div class="card text-center" style="width: 20rem">
+        <div class="card-body">
+          <form
+            #frmAcceso="ngForm"
+            (ngSubmit)="frmAcceso.form.valid && verificarDatos(frmAcceso)"
+          >
+            <img
+              class="mb-4"
+              src="../../../../assets/images/logo.png"
+              alt=""
+              width="240"
+              height="70"
+            />
+            <h4 class="mb-3 fw-bold mb-0">Acceso Sistema PQRS</h4>
+            <div class="has-validation">
+              <div class="form-floating mb-3">
+                <input
+                  type="email"
+                  class="form-control"
+                  id="correoLogin"
+                  name="usu"
+                  placeholder="name@usantoto.edu.co"
+                  [(ngModel)]="accesoUsuarioSeleccionado.correoUsuario"
+                  #usu="ngModel"
+                  required
+                  [pattern]="patronCorreo"
+                  [ngClass]="{
+                    'is-invalid': frmAcceso.submitted && usu.invalid
+                  }"
+                />
+                <label for="correoLogin">Correo Institucional</label>
+                <div
+                  class="text-danger error"
+                  *ngIf="frmAcceso.submitted && usu.invalid"
+                >
+                  <span *ngIf="usu.errors?.['required']">Usuario requerido</span>
+                  <span *ngIf="usu.errors?.['pattern']">Correo inválido</span>
+                </div>
+              </div>
+              <div class="form-floating">
+                <input
+                  type="password"
+                  class="form-control"
+                  id="passwordLogin"
+                  placeholder="Contraseña"
+                  name="cla"
+                  [(ngModel)]="accesoUsuarioSeleccionado.claveUsuario"
+                  #cla="ngModel"
+                  required
+                  [ngClass]="{
+                    'is-invalid': frmAcceso.submitted && cla.invalid
+                  }"
+                />
+                <label for="passwordLogin">Contraseña</label>
+                <div
+                  class="text-danger error"
+                  *ngIf="frmAcceso.submitted && cla.invalid"
+                >
+                  <span *ngIf="cla.errors?.['required']">Contraseña requerida</span>
+                </div>
+              </div>
+            </div>
+            <button class="w-100 mt-2 btn btn-md btn-primary" type="submit">
+              Iniciar sesión
+            </button>
+          </form>
+          <p class="mt-3 mb-3 text-sm">
+            ¿No eres usuario registrado? <br />
+            Haz clic
+            <a
+              [routerLink]="['/landing/registro']"
+              routerLinkActive="router-link-active"
+              >aquí</a
+            >
+            para registrarse.
+          </p>
+          <hr class="bg-gray-600 opacity-2" />
+
+          <small class="text-muted">
+            Derechos Reservados 2022 © <br />
+            Universidad Santo Tomás
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

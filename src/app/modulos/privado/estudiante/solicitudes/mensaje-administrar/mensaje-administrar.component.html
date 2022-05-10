@@ -1,0 +1,86 @@
+<div class="container-fluid">
+  <div class="row g-3 mt-1">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a [routerLink]="['inicio']"><i class="fas fa-home"></i></a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Estudiante</li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Solicitudes
+          </li>
+        </ol>
+      </nav>
+
+      <h4 class="mb-3 fw-bold mb-0 text-center">Mis Solicitudes</h4>
+
+      <div>
+        <form class="d-flex">
+          <input
+            class="form-control me-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <div class="card">
+        <div class="card-body">
+          <table
+            class="table table-hover table-sm justify-content-md-center table-bordered"
+          >
+            <thead class="bg-dark text-white">
+              <tr>
+                <th style="width: 40%">Asunto</th>
+                <th style="width: 20%">Tipo</th>
+                <th style="width: 25%">Fecha</th>
+                <th style="width: 15%">Estado</th>
+              </tr>
+            </thead>
+            <thead class="table-info">
+              <tr>
+                <th style="width: 40%">Cancelacion</th>
+                <th style="width: 20%">Queja</th>
+                <th style="width: 25%">31/03/2022</th>
+                <th style="width: 15%">Activo</th>
+              </tr>
+            </thead>
+          </table>
+          <!--
+          <div class="row justify-content-md-center">
+            <div class="col-md-6 text-left" style="padding-left: 15px">
+              <small
+                >
+
+                <strong>{{ cantidadTotalRegistros }}</strong> Registros
+                encontrados en
+                <strong>{{ cantidadPaginas }}</strong> paginas</small
+              >
+            </div>
+            <div class="col-md-6 text-right" style="padding-right: 15px"></div>
+          </div>
+          -->
+          <div class="text-center">
+            <button
+              [routerLink]="['/estudiante/solicitudes/crear']"
+              routerLinkActive="router-link-active"
+              type="button"
+              class="btn btn-primary"
+            >
+              Crear nueva solicitud
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
