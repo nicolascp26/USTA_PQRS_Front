@@ -1,18 +1,26 @@
+import { RolModule } from './../../modulos/privado/administrador/rol/rol.module';
 import { Routes } from '@angular/router';
 
 export const RUTAS_DASHBOARD_ADMINISTRADOR: Routes = [
   {
-    path: 'dashboard',
+    path: '',
     loadChildren: () =>
       import('../../modulos/privado/administrador/control/control.module').then(
         (m) => m.ControlModule
       ),
   },
   {
-    path: 'dashboard',
+    path: 'solicitudes',
     loadChildren: () =>
       import('../../modulos/privado/administrador/solicitudes/solicitudes.module').then(
         (m) => m.SolicitudesModule
+      ),
+  },
+  {
+    path: 'roles',
+    loadChildren: () =>
+      import('../../modulos/privado/administrador/rol/rol.module').then(
+        (m) => m.RolModule
       ),
   },
   {
