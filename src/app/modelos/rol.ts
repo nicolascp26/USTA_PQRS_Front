@@ -1,11 +1,14 @@
 export class Rol {
-  public rolID: number;
+  public rolId: number;
   public rolNombre: string;
+  public cantUsuarios?: number;
   public constructor(
     codRol: number,
-    nomRol: string
+    nomRol: string,
+    cantUsuRol:number
   ) {
-    this.rolID = codRol;
+    this.rolId = codRol;
     this.rolNombre = nomRol;
+    this.cantUsuarios = cantUsuRol;
   }
 }

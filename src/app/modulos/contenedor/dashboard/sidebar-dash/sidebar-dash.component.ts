@@ -32,7 +32,7 @@ export class SidebarDashComponent implements OnInit {
   }
 
   public inicializarRol():Rol{
-    return new Rol(0,'');
+    return new Rol(0,'',0);
   }
 
   public cerrarSesion():void {

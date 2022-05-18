@@ -11,7 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {path:'',component:ContenedorLandComponent,children:RUTAS_LANDING},
   {path:'estudiante', component:ContenedorDashComponent,children:RUTAS_DASHBOARD_ESTUDIANTE, canActivate:[VigilanteGuard]},
-  {path:'administrador', component:ContenedorDashComponent,children:RUTAS_DASHBOARD_ADMINISTRADOR, canActivate:[VigilanteGuard]},
+  {path:'administrador', component:ContenedorDashComponent,children:RUTAS_DASHBOARD_ADMINISTRADOR},
   {path:'**',component:ErrorComponent}
 ];
 
