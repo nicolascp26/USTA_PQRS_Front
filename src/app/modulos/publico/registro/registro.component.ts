@@ -62,8 +62,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
     return new Acceso('', '');
   }
 
-  //Cum
-
   public registrarUsuario(formulario: NgForm): void {
     const correo = this.objAcceso.correoUsuario;
     const miHash = cifrado.sha512(this.objAcceso.claveUsuario);
