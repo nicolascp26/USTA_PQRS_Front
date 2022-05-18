@@ -54,7 +54,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
     return new Usuario(0, '', '', '', '', this.inicializarRol());
   }
   public inicializarRol(): Rol {
-    return new Rol(0, '');
+    return new Rol(0, '',0);
   }
   public inicializarAcceso(): Acceso {
     return new Acceso('', '');
