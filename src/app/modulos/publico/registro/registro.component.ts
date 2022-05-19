@@ -34,10 +34,12 @@ export class RegistroComponent implements OnInit, OnDestroy {
     this.objAcceso = this.inicializarAcceso();
     this.patronCorreo = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$';
     this.subscription = this.tmp;
+
   }
 
   ngOnInit(): void {}
 
+  //El siguiente metodo hace parte del ciclo de vida de angular y se aplica al destruir el componente con el fin de cancelar la subcripcion al servicio
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

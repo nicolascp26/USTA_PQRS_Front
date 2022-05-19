@@ -18,7 +18,7 @@ import { ContenedorLandComponent } from './landing/contenedor-land/contenedor-la
     RouterModule
   ],
   exports:[
-    ContenedorLandComponent
+    ContenedorLandComponent,
   ]
 })
 export class ContenedorModule { }
