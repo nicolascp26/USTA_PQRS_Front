@@ -62,7 +62,7 @@ export class AccesoComponent implements OnInit, OnDestroy {
         );
         localStorage.setItem('token', res.token as any);
         localStorage.setItem('foto', res.foto as any);
-        this.router.navigate(['/estudiante']);
+        this.router.navigate(['/administrador']);
       },
       (err) => {
         mostrarMensaje(

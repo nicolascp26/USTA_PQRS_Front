@@ -59,7 +59,7 @@
                       *ngIf="objRol.cantUsuarios == 0"
                       class="fa fa-trash"
                       style="color: #dc143c; cursor: pointer"
-                      (click)="abrirModal(eliminarRol, objRol)"
+                      (click)="abrirModalEliminar(eliminarRol, objRol)"
                     ></i>
                     <i
                       *ngIf="objRol.cantUsuarios != 0"
@@ -87,10 +87,10 @@
           -->
           <div class="text-center">
             <button
-              [routerLink]="['/estudiante/solicitudes/crear']"
               routerLinkActive="router-link-active"
               type="button"
               class="btn btn-primary"
+              (click)="abrirModalCrear(crearRol)"
             >
               Crear nuevo rol
             </button>
@@ -124,33 +124,52 @@
           type="button"
           class="btn btn-lg fs-6 text-danger col-6 m-0 rounded-0"
           data-bs-dismiss="modal"
-          (click)="cancelarEliminar()"
+          (click)="cancelar()"
         >
           Cancelar
         </button>
       </div>
     </div>
   </ng-template>
-  <ng-template>
-    <form>
-      <div class="form-floating mb-3">
-        <input
-          type="email"
-          class="form-control rounded-4"
-          id="floatingInput"
-          placeholder="name@example.com"
-        />
-        <label for="floatingInput">Email address</label>
+
+  <ng-template #crearRol>
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-body p-4 text-center">
+        <h5 class="mb-0">{{ modalTitulo }}</h5>
       </div>
-      <div class="form-floating mb-3">
-        <input
-          type="email"
-          class="form-control rounded-4"
-          id="floatingInput"
-          placeholder="name@example.com"
-        />
-        <label for="floatingInput">Email address</label>
-      </div>
-    </form>
+      <form #frmCrearRol="ngForm">
+        <div class="form-floating mb-2 mx-4">
+          <input
+            type="text"
+            class="form-control rounded-4"
+            id="nombreRol"
+            placeholder="nombre rol"
+            #nombreRol="ngModel"
+            [(ngModel)]="objRol.rolNombre"
+          />
+          <label for="floatingInput">Nombre Rol</label>
+        </div>
+        <div class="modal-body p-4 text-center">
+          <p class="mb-0">{{ modalContenido }}</p>
+        </div>
+        <div class="modal-footer flex-nowrap p-0">
+          <button
+            type="button"
+            class="btn btn-lg fs-6 text-primary col-6 m-0 rounded-0 border-right"
+            type="submit"
+          >
+            <strong>Confirmar</strong>
+          </button>
+          <button
+            type="button"
+            class="btn btn-lg fs-6 text-danger col-6 m-0 rounded-0"
+            data-bs-dismiss="modal"
+            (click)="cancelar()"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
   </ng-template>
 </div>
