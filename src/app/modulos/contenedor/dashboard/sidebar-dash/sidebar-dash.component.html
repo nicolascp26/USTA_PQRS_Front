@@ -57,8 +57,34 @@
             <hr class="dropdown-divider" />
           </li>
           <li>
-            <a class="dropdown-item" href="#"><i class="fa-solid fa-right-from-bracket"></i>
-              <span class="ms-2" (click)="cerrarSesion()">Cerrar sesion</span></a>
+            <a
+              [routerLink]="['/administrador/usuarios']"
+              routerLinkActive="active"
+              class="nav-link text-white"
+            >
+              <i class="fa fa-clipboard-list"></i
+              ><span class="ms-2">Usuarios</span>
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['/administrador/roles']"
+              routerLinkActive="active"
+              class="nav-link text-white"
+            >
+              <i class="fa fa-solid fa-people-group"></i
+              ><span class="ms-2">Roles</span>
+            </a>
+          </li>
+          <li>
+            <a
+              [routerLink]="['/estudiante/preguntas-frecuentes']"
+              routerLinkActive="router-link-active"
+              class="nav-link text-white"
+            >
+              <i class="fa fa-question-circle"></i
+              ><span class="ms-2">Preguntas frecuentes</span>
+            </a>
           </li>
         </ul>
       </div>

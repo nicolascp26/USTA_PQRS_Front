@@ -24,6 +24,13 @@ export const RUTAS_DASHBOARD_ADMINISTRADOR: Routes = [
       ),
   },
   {
+    path: 'usuarios',
+    loadChildren: () =>
+      import('../../modulos/privado/administrador/usuarios/usuarios.module').then(
+        (m) => m.UsuariosModule
+      ),
+  },
+  {
     path: '',
     loadChildren: () =>
       import('../../modulos/publico/publico.module').then(
