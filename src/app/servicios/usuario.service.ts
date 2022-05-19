@@ -17,6 +17,11 @@ export class UsuarioService {
   public obtenerUsuarioServicio(idUsuario: any): Observable<Usuario> {
     return this.http.get<Usuario>(this.appUser + '/' + idUsuario);
   }
+
+  public cargarUsuarios(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(this.appUser);
+  }
+
   public actualizarUsuarioServicio(objUsuario: Usuario): Observable<Usuario> {
     return this.http.put<Usuario>(
       this.appUser + '/estudiante/perfil' + objUsuario.usuarioID,
