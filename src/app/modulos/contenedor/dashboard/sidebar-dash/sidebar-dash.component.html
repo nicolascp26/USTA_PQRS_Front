@@ -122,12 +122,12 @@
 
           <li>
             <a
-              [routerLink]="['/estudiante/preguntas-frecuentes']"
+              (click)="cerrarSesion()"
               routerLinkActive="router-link-active"
               class="nav-link text-white"
             >
-              <i class="fa fa-question-circle"></i
-              ><span class="ms-2">Preguntas frecuentes</span>
+              <i class="fa-solid fa-arrow-right-from-bracket"></i
+              ><span class="ms-2">Cerrar Sesion</span>
             </a>
           </li>
         </ul>
