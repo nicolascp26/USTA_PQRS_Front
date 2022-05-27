@@ -137,7 +137,9 @@
       <div class="modal-body p-4 text-center">
         <h5 class="mb-0">{{ modalTitulo }}</h5>
       </div>
-      <form #frmCrearRol="ngForm">
+      <form #frmCrearRol="ngForm"
+        (ngSubmit)="frmCrearRol.valid && crearUnRol(frmCrearRol)"
+      >
         <div class="form-floating mb-2 mx-4">
           <input
             type="text"
@@ -145,9 +147,21 @@
             id="rolNombre"
             name="rolNombre"
             placeholder="nombre rol"
-            #nombreRol="ngModel"
+            #rolNombre="ngModel"
             [(ngModel)]="objRol.rolNombre"
+            [ngClass]="{
+              'is-invalid': frmCrearRol.submitted && rolNombre.invalid
+            }"
+            required
           />
+          <div
+            class="text-danger error"
+            *ngIf="frmCrearRol.submitted && rolNombre.invalid"
+          >
+            <span *ngIf="rolNombre.errors?.['required']"
+              >Nombre de rol requerido</span
+            >
+          </div>
           <label for="floatingInput">Nombre Rol</label>
         </div>
         <div class="modal-body p-4 text-center">

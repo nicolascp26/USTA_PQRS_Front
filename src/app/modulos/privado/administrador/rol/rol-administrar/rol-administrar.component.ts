@@ -16,7 +16,7 @@ import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 export class RolAdministrarComponent implements OnInit {
   //Atributos requeridos
   public arregloRoles: Rol[];
-  public objRol:Rol;
+  public objRol: Rol;
   public rolSeleccionado: Rol;
 
   //Atributos paginación
@@ -68,7 +68,7 @@ export class RolAdministrarComponent implements OnInit {
 
   //Métodos obligatorios
   public inicializarRol(): Rol {
-    return new Rol(0, '',0);
+    return new Rol(0, '', 0);
   }
 
   ngOnInit(): void {
@@ -78,6 +78,12 @@ export class RolAdministrarComponent implements OnInit {
   ngOnDestroy(): void {
     if (this.miSuscripcion) {
       this.miSuscripcion.unsubscribe();
+    }
+    if (this.miSuscripcionCrear) {
+      this.miSuscripcionCrear.unsubscribe();
+    }
+    if (this.miSuscripcionEliminar) {
+      this.miSuscripcionEliminar.unsubscribe();
     }
   }
 
@@ -98,36 +104,46 @@ export class RolAdministrarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  public crearRol(formulario: NgForm): void {
-    const rolNombre = this.objRol.rolNombre;
+  public crearUnRol(formulario: NgForm): void {
     this.miSuscripcionCrear = this.rolService
       .crearRol(this.objRol)
       .pipe(
-        map((respuesta)=>{
+        map((respuesta) => {
+          mostrarMensaje('success', 'Rol Creado', 'Exito', this.toastr);
           this.obtenerTodosRoles();
-          mostrarMensaje('success','Rol Creado','Exito',this.toastr);
+          this.modalRef.hide();
+          formulario.reset();
           return respuesta;
         }),
         catchError((miError) => {
-          mostrarMensaje('error','Rol no pudo ser creado','Advertencia',this.toastr);
+          mostrarMensaje(
+            'error',
+            'Rol no pudo ser creado',
+            'Advertencia',
+            this.toastr
+          );
           throw miError;
         })
       )
       .subscribe(observadorAny);
-      formulario.reset();
   }
 
-  public eliminarRol(rolID:number): void {
+  public eliminarRol(rolID: number): void {
     this.miSuscripcionEliminar = this.rolService
       .eliminarRol(rolID)
       .pipe(
-        map((respuesta)=>{
+        map((respuesta) => {
           this.obtenerTodosRoles();
-          mostrarMensaje('success','Rol eliminado','Exito',this.toastr);
+          mostrarMensaje('success', 'Rol eliminado', 'Exito', this.toastr);
           return respuesta;
         }),
         catchError((miError) => {
-          mostrarMensaje('error','Rol no eliminado','Advertencia',this.toastr);
+          mostrarMensaje(
+            'error',
+            'Rol no eliminado',
+            'Advertencia',
+            this.toastr
+          );
           throw miError;
         })
       )
@@ -146,8 +162,7 @@ export class RolAdministrarComponent implements OnInit {
   public abrirModalCrear(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
     this.modalTitulo = 'Crear nuevo rol';
-    this.modalContenido =
-      'Seguro que quiere crear este rol?';
+    this.modalContenido = 'Seguro que quiere crear este rol?';
   }
 
   public cancelar(): void {
@@ -156,7 +171,7 @@ export class RolAdministrarComponent implements OnInit {
 
   public confirmarEliminar(): void {
     this.eliminarRol(this.rolSeleccionado.rolId);
-    this.rolSeleccionado= this.inicializarRol();
+    this.rolSeleccionado = this.inicializarRol();
     this.modalRef.hide();
   }
 }
