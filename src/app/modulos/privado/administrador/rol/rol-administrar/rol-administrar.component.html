@@ -37,7 +37,7 @@
         <div class="card-body">
           <div class="table-responsive-sm">
             <table
-              class="table table-hover table-sm justify-content-md-center table-bordered"
+              class="table table-striped table-hover table-sm justify-content-center table-bordered"
             >
               <thead class="bg-dark text-white">
                 <tr>
@@ -47,7 +47,7 @@
                   <th style="width: 20%"></th>
                 </tr>
               </thead>
-              <thead class="table-info">
+              <tbody>
                 <tr *ngFor="let objRol of arregloRoles">
                   <td>{{ objRol.rolId }}</td>
                   <td>{{ objRol.rolNombre }}</td>
@@ -68,7 +68,7 @@
                     ></i>
                   </td>
                 </tr>
-              </thead>
+              </tbody>
             </table>
           </div>
           <!--
