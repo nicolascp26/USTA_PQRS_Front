@@ -22,12 +22,6 @@ export class UsuarioService {
     return this.http.get<Usuario[]>(this.appUser);
   }
 
-  public actualizarUsuarioServicio(objUsuario: Usuario): Observable<Usuario> {
-    return this.http.put<Usuario>(
-      this.appUser + '/estudiante/perfil' + objUsuario.usuarioID,
-      objUsuario
-    );
-  }
   public registrarUsuario(
     objUsuario: Usuario,
     objAcceso: Acceso
@@ -36,5 +30,16 @@ export class UsuarioService {
       objUsuario,
       objAcceso,
     ]);
+  }
+
+  public actualizarUsuario(objUsuario: Usuario): Observable<Usuario> {
+    return this.http.put<Usuario>(
+      this.appUser + '/estudiante/perfil' + objUsuario.usuarioId,
+      objUsuario
+    );
+  }
+
+  public eliminarUsuario(usuarioId: number): Observable<Usuario> {
+    return this.http.delete<Usuario>(this.appUser + '/' + usuarioId);
   }
 }
