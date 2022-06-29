@@ -2,7 +2,7 @@ import { Rol } from './rol';
 import { Imagen } from './imagen';
 
 export class Usuario {
-  public usuarioID: number;
+  public usuarioId: number;
   public usuarioNombres: string;
   public usuarioApellidos: string;
   public usuarioDocumento: string;
@@ -17,7 +17,7 @@ export class Usuario {
     tel: string,
     rol: Rol
   ) {
-    this.usuarioID = cod;
+    this.usuarioId = cod;
     this.usuarioNombres = nom;
     this.usuarioApellidos = ape;
     this.usuarioDocumento = doc;
