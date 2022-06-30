@@ -5,7 +5,6 @@ import { UsuariosActualizarComponent } from './usuarios-actualizar/usuarios-actu
 import { UsuariosRoutingModule } from './usuarios-routing.module';
 
 
-
 @NgModule({
   declarations: [
     UsuariosAdministrarComponent,
