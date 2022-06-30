@@ -1,7 +1,7 @@
 import { UsuariosActualizarComponent } from './usuarios-actualizar/usuarios-actualizar.component';
 import { UsuariosAdministrarComponent } from './usuarios-administrar/usuarios-administrar.component';
 import { ErrorSeguridadComponent } from './../control/error-seguridad/error-seguridad.component';
-import { Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -14,8 +14,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [],
-  imports: [
-    CommonModule
-  ]
+  imports: [CommonModule, RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
-export class UsuariosRoutingModule { }
+export class UsuariosRoutingModule {}

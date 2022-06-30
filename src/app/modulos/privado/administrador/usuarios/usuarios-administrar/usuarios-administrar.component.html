@@ -5,12 +5,12 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a [routerLink]="['inicio']"><i class="fas fa-home"></i></a>
+            <a><i class="fas fa-home"></i></a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">
             Administrador
           </li>
-          <li class="breadcrumb-item active" aria-current="page">Roles</li>
+          <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
         </ol>
       </nav>
 
@@ -21,10 +21,10 @@
           <input
             class="form-control me-2"
             type="search"
-            placeholder="Search"
-            aria-label="Search"
+            placeholder="Buscar usuarios"
+            aria-label="Buscar"
           />
-          <button class="btn btn-outline-success" type="submit">Search</button>
+          <button class="btn btn-outline-success" type="submit">Buscar</button>
         </form>
       </div>
     </div>
@@ -42,9 +42,9 @@
               <thead class="bg-dark text-white">
                 <tr>
                   <th style="width: 10%">Codigo</th>
-                  <th style="width: 40%">Nombres</th>
-                  <th style="width: 30%">Documento</th>
-                  <th style="width: 30%">Telefono</th>
+                  <th style="width: 30%">Nombres</th>
+                  <th style="width: 20%">Documento</th>
+                  <th style="width: 20%">Telefono</th>
                   <th style="width: 20%"></th>
                 </tr>
               </thead>
@@ -52,18 +52,20 @@
                 <tr *ngFor="let objUsu of arregloUsuarios">
                   <td>{{ objUsu.usuarioId }}</td>
                   <td>
-                    {{ objUsu.usuarioNombres + " " + objUsu.usuarioApellidos }}
+                    {{ objUsu.usuarioNombres + " " + objUsu.usuarioApellidos }}&nbsp;
+                    <!--
+                    <p class="text-secondary">{{ objUsu.usuarioRol.rolNombre }}</p>
+                    -->
+
                   </td>
                   <td>{{ objUsu.usuarioDocumento }}</td>
                   <td>{{ objUsu.usuarioTelefono }}</td>
-                  <td>{{ objUsu.usuarioRol.rolNombre }}</td>
                   <td>
-                    <i class="fa fa-edit" [routerLink]="['/administrador/usuarios/actualizar']" routerLinkActive="router-link-active"  ></i>
-                    &nbsp;
+                    <i class="fa-solid fa-user-gear"></i> &nbsp;
                     <i
-                      class="fa fa-trash"
+                      class="fa fa-solid fa-user-xmark"
                       style="color: #dc143c; cursor: pointer"
-                      (click)="abrirModalEliminar(eliminarRol, objUsu)"
+                      (click)="abrirModalEliminar(eliminarUsuario, objUsu)"
                     ></i>
                   </td>
                 </tr>
@@ -89,9 +91,9 @@
               routerLinkActive="router-link-active"
               type="button"
               class="btn btn-primary"
-              (click)="abrirModalCrear(crearUsuario)"
+              (click)="obtenerUsuarios()"
             >
-              Crear nuevo rol
+              Actualizar lista de usuarios
             </button>
           </div>
         </div>
@@ -105,7 +107,7 @@
     </div>
   </ng-template>
 
-  <ng-template #eliminarRol>
+  <ng-template #eliminarUsuario>
     <div class="modal-content rounded-4 shadow">
       <div class="modal-body p-4 text-center">
         <h5 class="mb-0">{{ modalTitulo }}</h5>
@@ -128,63 +130,6 @@
           Cancelar
         </button>
       </div>
-    </div>
-  </ng-template>
-
-  <ng-template #crearUsuario>
-    <div class="modal-content rounded-4 shadow">
-      <div class="modal-body p-4 text-center">
-        <h5 class="mb-0">{{ modalTitulo }}</h5>
-      </div>
-      <form
-        #frmCrearRol="ngForm"
-        (ngSubmit)="frmCrearRol.valid && crearUsuario(frmCrearUsuario)"
-      >
-        <div class="form-floating mb-2 mx-4">
-          <input
-            type="text"
-            class="form-control rounded-4"
-            id="rolNombre"
-            name="rolNombre"
-            placeholder="nombre rol"
-            #rolNombre="ngModel"
-            [(ngModel)]="objUsu.usuarioNombres"
-            [ngClass]="{
-              'is-invalid': frmCrearRol.submitted && rolNombre.invalid
-            }"
-            required
-          />
-          <div
-            class="text-danger error"
-            *ngIf="frmCrearRol.submitted && rolNombre.invalid"
-          >
-            <span *ngIf="rolNombre.errors?.['required']"
-              >Nombre de rol requerido</span
-            >
-          </div>
-          <label for="floatingInput">Nombre Rol</label>
-        </div>
-        <div class="modal-body p-4 text-center">
-          <p class="mb-0">{{ modalContenido }}</p>
-        </div>
-        <div class="modal-footer flex-nowrap p-0">
-          <button
-            type="button"
-            class="btn btn-lg fs-6 text-primary col-6 m-0 rounded-0 border-right"
-            type="submit"
-          >
-            <strong>Confirmar</strong>
-          </button>
-          <button
-            type="button"
-            class="btn btn-lg fs-6 text-danger col-6 m-0 rounded-0"
-            data-bs-dismiss="modal"
-            (click)="cancelar()"
-          >
-            Cancelar
-          </button>
-        </div>
-      </form>
     </div>
   </ng-template>
 </div>

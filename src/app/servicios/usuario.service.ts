@@ -14,12 +14,12 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) {}
 
-  public obtenerUsuarioServicio(idUsuario: any): Observable<Usuario> {
+  public obtenerUsuarioUnico(idUsuario: any): Observable<Usuario> {
     return this.http.get<Usuario>(this.appUser + '/' + idUsuario);
   }
 
   public cargarUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(this.appUser);
+    return this.http.get<Usuario[]>(this.appUser+ '/getAll');
   }
 
   public registrarUsuario(
