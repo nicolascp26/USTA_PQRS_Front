@@ -1,1 +1,272 @@
-<p>usuarios-actualizar works!</p>
+<div class="container-fluid">
+  <div class="row g-3 mt-1">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a><i class="fas fa-home"></i></a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Administrador
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
+          <li class="breadcrumb-item active" aria-current="page">Actualizar usuario</li>
+        </ol>
+      </nav>
+
+      <h4 class="mb-3 fw-bold mb-0 text-center">Actualizar Usuario</h4>
+    </div>
+  </div>
+
+  <div class="row g-3">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <div class="card">
+        <div class="card-body">
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button
+                class="nav-link active"
+                id="nav-home-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-home"
+                type="button"
+                role="tab"
+                aria-controls="nav-home"
+                aria-selected="true"
+              >
+                <i class="fas fa-chart-pie fa-fw me-2"></i>Resumen
+              </button>
+              <button
+                class="nav-link"
+                id="nav-profile-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-profile"
+                type="button"
+                role="tab"
+                aria-controls="nav-profile"
+                aria-selected="false"
+              >
+                <i class="fas fa-user fa-fw me-2"></i>Perfil
+              </button>
+              <button
+                class="nav-link"
+                id="nav-security-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-security"
+                type="button"
+                role="tab"
+                aria-controls="nav-security"
+                aria-selected="false"
+              >
+                <i class="fas fa-lock fa-fw me-2"></i>Seguridad
+              </button>
+            </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <div
+              class="tab-pane fade show active"
+              id="nav-home"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+            >
+              ...
+            </div>
+            <!-- TAB DE PERFIL -->
+            <div
+              class="tab-pane fade"
+              id="nav-profile"
+              role="tabpanel"
+              aria-labelledby="nav-profile-tab"
+            >
+              ...
+            </div>
+            <!-- TAB DE SEGURIDAD -->
+            <div
+              class="tab-pane fade"
+              id="nav-security"
+              role="tabpanel"
+              aria-labelledby="nav-security-tab"
+            >
+              <div class="container-xl px-4 mt-4">
+                <div class="row">
+                  <div class="col-lg-8">
+                    <!-- Change password card-->
+                    <div class="card mb-4">
+                      <div class="card-header">Change Password</div>
+                      <div class="card-body">
+                        <form>
+                          <!-- Form Group (current password)-->
+                          <div class="mb-3">
+                            <label class="small mb-1" for="currentPassword"
+                              >Current Password</label
+                            >
+                            <input
+                              class="form-control"
+                              id="currentPassword"
+                              type="password"
+                              placeholder="Enter current password"
+                            />
+                          </div>
+                          <!-- Form Group (new password)-->
+                          <div class="mb-3">
+                            <label class="small mb-1" for="newPassword"
+                              >New Password</label
+                            >
+                            <input
+                              class="form-control"
+                              id="newPassword"
+                              type="password"
+                              placeholder="Enter new password"
+                            />
+                          </div>
+                          <!-- Form Group (confirm password)-->
+                          <div class="mb-3">
+                            <label class="small mb-1" for="confirmPassword"
+                              >Confirm Password</label
+                            >
+                            <input
+                              class="form-control"
+                              id="confirmPassword"
+                              type="password"
+                              placeholder="Confirm new password"
+                            />
+                          </div>
+                          <button class="btn btn-primary" type="button">
+                            Save
+                          </button>
+                        </form>
+                      </div>
+                    </div>
+                    <!-- Security preferences card-->
+                    <div class="card mb-4">
+                      <div class="card-header">Security Preferences</div>
+                      <div class="card-body">
+                        <!-- Account privacy optinos-->
+                        <h5 class="mb-1">Account Privacy</h5>
+                        <p class="small text-muted">
+                          By setting your account to private, your profile
+                          information and posts will not be visible to users
+                          outside of your user groups.
+                        </p>
+                        <form>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              id="radioPrivacy1"
+                              type="radio"
+                              name="radioPrivacy"
+                              checked=""
+                            />
+                            <label class="form-check-label" for="radioPrivacy1"
+                              >Public (posts are available to all users)</label
+                            >
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              id="radioPrivacy2"
+                              type="radio"
+                              name="radioPrivacy"
+                            />
+                            <label class="form-check-label" for="radioPrivacy2"
+                              >Private (posts are available to only users in
+                              your groups)</label
+                            >
+                          </div>
+                        </form>
+                        <hr class="my-4" />
+                        <!-- Data sharing options-->
+                        <h5 class="mb-1">Data Sharing</h5>
+                        <p class="small text-muted">
+                          Sharing usage data can help us to improve our products
+                          and better serve our users as they navigation through
+                          our application. When you agree to share usage data
+                          with us, crash reports and usage analytics will be
+                          automatically sent to our development team for
+                          investigation.
+                        </p>
+                        <form>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              id="radioUsage1"
+                              type="radio"
+                              name="radioUsage"
+                              checked=""
+                            />
+                            <label class="form-check-label" for="radioUsage1"
+                              >Yes, share data and crash reports with app
+                              developers</label
+                            >
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              id="radioUsage2"
+                              type="radio"
+                              name="radioUsage"
+                            />
+                            <label class="form-check-label" for="radioUsage2"
+                              >No, limit my data sharing with app
+                              developers</label
+                            >
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <!-- Delete account card-->
+                    <div class="card mb-4">
+                      <div class="card-header">Delete Account</div>
+                      <div class="card-body">
+                        <p>
+                          Deleting your account is a permanent action and cannot
+                          be undone. If you are sure you want to delete your
+                          account, select the button below.
+                        </p>
+                        <button
+                          class="btn btn-danger-soft text-danger"
+                          type="button"
+                        >
+                          I understand, delete my account
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #eliminarUsuario>
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-body p-4 text-center">
+        <h5 class="mb-0">{{ modalTitulo }}</h5>
+        <p class="mb-0">{{ modalContenido }}</p>
+      </div>
+      <div class="modal-footer flex-nowrap p-0">
+        <button
+          type="button"
+          class="btn btn-lg fs-6 text-primary col-6 m-0 rounded-0 border-right"
+        >
+          <strong>Si, eliminar</strong>
+        </button>
+        <button
+          type="button"
+          class="btn btn-lg fs-6 text-danger col-6 m-0 rounded-0"
+          data-bs-dismiss="modal"
+          (click)="cancelar()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </ng-template>
+</div>
