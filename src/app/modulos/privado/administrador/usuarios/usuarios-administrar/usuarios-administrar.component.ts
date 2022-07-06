@@ -16,7 +16,6 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 export class UsuariosAdministrarComponent implements OnInit {
   //Atributos requeridos
   public arregloUsuarios: Usuario[];
-  public objUsuario: Usuario;
   public usuarioSeleccionado: Usuario;
 
   //Atributos paginación
@@ -45,7 +44,6 @@ export class UsuariosAdministrarComponent implements OnInit {
     this.arregloUsuarios = [];
     //this.arregloEstados = ARREGLO_ESTADOS_ROL;
     this.usuarioSeleccionado = this.inicializarUsuario();
-    this.objUsuario = this.inicializarUsuario();
 
     //Inicializar atributos paginación
     this.paginaActual = 0;
@@ -81,6 +79,10 @@ export class UsuariosAdministrarComponent implements OnInit {
     if (this.miSuscripcion) {
       this.miSuscripcion.unsubscribe();
     }
+  }
+
+  public seleccionarUsuario(objUsuario: Usuario): void {
+    this.usuarioSeleccionado = objUsuario;
   }
 
   //Lógica del negocio
