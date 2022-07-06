@@ -49,7 +49,8 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let objUsu of arregloUsuarios">
+                <tr *ngFor="let objUsu of arregloUsuarios"
+                (click)="seleccionarUsuario(objUsu)">
                   <td>{{ objUsu.usuarioId }}</td>
                   <td>
                     {{ objUsu.usuarioNombres + " " + objUsu.usuarioApellidos }}&nbsp;
@@ -61,7 +62,9 @@
                   <td>{{ objUsu.usuarioDocumento }}</td>
                   <td>{{ objUsu.usuarioTelefono }}</td>
                   <td>
-                    <i class="fa-solid fa-user-gear"></i> &nbsp;
+                    <i class="fa-solid fa-user-gear"
+                    [routerLink]="['/administrador/usuarios/actualizar/',objUsu.usuarioId]"
+                    routerLinkActive="router-link-active"></i> &nbsp;
                     <i
                       class="fa fa-solid fa-user-xmark"
                       style="color: #dc143c; cursor: pointer"
@@ -71,6 +74,10 @@
                 </tr>
               </tbody>
             </table>
+            <div>
+              <small
+                ><strong> {{arregloUsuarios.length}} </strong> usuarios registrados</small>
+            </div>
           </div>
           <!--
           <div class="row justify-content-md-center">
@@ -100,12 +107,6 @@
       </div>
     </div>
   </div>
-
-  <ng-template #spinnercito>
-    <div class="spinner-grow text-info" role="status">
-      <span class="visually-hidden">Cargando ...</span>
-    </div>
-  </ng-template>
 
   <ng-template #eliminarUsuario>
     <div class="modal-content rounded-4 shadow">
