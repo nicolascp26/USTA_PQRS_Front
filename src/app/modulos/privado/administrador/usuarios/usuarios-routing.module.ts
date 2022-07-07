@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 const routes: Routes = [
   { path: '', component: UsuariosAdministrarComponent },
   { path: 'actualizar/:usuarioId', component: UsuariosActualizarComponent },
+  {path:'**', component:ErrorSeguridadComponent}
 ];
 
 @NgModule({

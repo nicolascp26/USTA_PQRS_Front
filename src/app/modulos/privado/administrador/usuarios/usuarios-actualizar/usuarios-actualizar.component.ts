@@ -13,80 +13,76 @@ import { NgForm } from '@angular/forms';
 @Component({
   selector: 'app-usuarios-actualizar',
   templateUrl: './usuarios-actualizar.component.html',
-  styleUrls: ['./usuarios-actualizar.component.css']
+  styleUrls: ['./usuarios-actualizar.component.css'],
 })
 export class UsuariosActualizarComponent implements OnInit {
-//Atributos requeridos
-public usuarioSeleccionado: Usuario;
-public arregloUsuarios: Usuario[];
+  //Atributos requeridos
+  public usuarioSeleccionado: Usuario;
 
-//Atributos consumo servicios
-public tmp: any;
-public miSuscripcion: Subscription;
-public cargaFinalizada: boolean;
+  //Atributos consumo servicios
+  public tmp: any;
+  public miSuscripcion: Subscription;
+  public cargaFinalizada: boolean;
 
-//Atributos modales
-public modalTitulo: string;
-public modalContenido: string;
-public modalRef: BsModalRef;
+  //Atributos modales
+  public modalTitulo: string;
+  public modalContenido: string;
+  public modalRef: BsModalRef;
 
-constructor(
-  private ruta: ActivatedRoute,
-  private miRuta: Router,
-  private usuarioService: UsuarioService,
-  private toastr: ToastrService
-) {
-  //Inicializar Usuario
-  this.usuarioSeleccionado = this.inicializarUsuario();
-  this.arregloUsuarios = this.obtenerUsuarios();
-  //Inicializar consumo de servicios
-  this.miSuscripcion = this.tmp;
-  this.cargaFinalizada = false;
-  //Inicializar modales
-  this.modalTitulo = '';
-  this.modalContenido = '';
-  this.modalRef = this.tmp;
-}
+  constructor(
+    private ruta: ActivatedRoute,
+    private miRuta: Router,
+    private usuarioService: UsuarioService,
+    private toastr: ToastrService
+  ) {
+    //Inicializar Usuario
+    this.usuarioSeleccionado = this.inicializarUsuario();
+    //Inicializar consumo de servicios
+    this.miSuscripcion = this.tmp;
+    this.cargaFinalizada = false;
+    //Inicializar modales
+    this.modalTitulo = '';
+    this.modalContenido = '';
+    this.modalRef = this.tmp;
+  }
 
-ngOnInit(): void {
-  this.ruta.paramMap.subscribe((parametro: ParamMap) => {
-    const miCodigo = String(parametro.get('usuarioId'));
-    const miCodigoNumerico = parseFloat(miCodigo);
-
-    this.arregloUsuarios.filter((objUsuario) => {
-      if (objUsuario.usuarioId === miCodigoNumerico) {
-        this.usuarioSeleccionado = objUsuario;
-        console.log(this.usuarioSeleccionado.usuarioNombres);
-      }
+  ngOnInit(): void {
+    this.ruta.paramMap.subscribe((parametro: ParamMap) => {
+      const miCodigo = String(parametro.get('usuarioId'));
+      const miCodigoNumerico = parseFloat(miCodigo);
+      this.obtenerUsuarioUnico(miCodigoNumerico);
     });
-  });
-}
+  }
 
-public obtenerUsuarios(): Usuario[] {
-  this.miSuscripcion = this.usuarioService
-    .cargarUsuarios()
-    .pipe(
-      map((resultado: Usuario[]) => {
-        this.arregloUsuarios = resultado;
-      }),
-      finalize(() => {
-        this.cargaFinalizada = true;
-        //Deberíamos analizar la paginación
-      })
-    )
-    .subscribe(observadorAny);
-    return this.arregloUsuarios;
-}
+  ngOnDestroy(): void {
+    if (this.miSuscripcion) {
+      this.miSuscripcion.unsubscribe();
+    }
+  }
 
-public inicializarUsuario(): Usuario {
-  return new Usuario(0, '', '', '', '', this.inicializarRol());
-}
+  public obtenerUsuarioUnico(usuarioId:number): void {
+    this.miSuscripcion = this.usuarioService
+      .obtenerUsuarioUnico(usuarioId)
+      .pipe(
+        map((resultado: Usuario) => {
+          this.usuarioSeleccionado = resultado;
+        }),
+        finalize(() => {
+          this.cargaFinalizada = true;
+        })
+      )
+      .subscribe(observadorAny);
+  }
 
-public inicializarRol(): Rol {
-  return new Rol(0, '', 0);
-}
+  public inicializarUsuario(): Usuario {
+    return new Usuario(0, '', '', '', '', this.inicializarRol());
+  }
 
-public cancelar(): void {
-  this.modalRef.hide();
-}
+  public inicializarRol(): Rol {
+    return new Rol(0, '', 0);
+  }
+
+  public cancelar(): void {
+    this.modalRef.hide();
+  }
 }
