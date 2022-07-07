@@ -57,12 +57,12 @@
                     <!--
                     <p class="text-secondary">{{ objUsu.usuarioRol.rolNombre }}</p>
                     -->
-
                   </td>
                   <td>{{ objUsu.usuarioDocumento }}</td>
                   <td>{{ objUsu.usuarioTelefono }}</td>
                   <td>
                     <i class="fa-solid fa-user-gear"
+                    style="cursor: pointer"
                     [routerLink]="['/administrador/usuarios/actualizar/',objUsu.usuarioId]"
                     routerLinkActive="router-link-active"></i> &nbsp;
                     <i

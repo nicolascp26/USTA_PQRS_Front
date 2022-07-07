@@ -15,7 +15,7 @@ export class UsuarioService {
   constructor(private http: HttpClient) {}
 
   public obtenerUsuarioUnico(idUsuario: any): Observable<Usuario> {
-    return this.http.get<Usuario>(this.appUser + '/' + idUsuario);
+    return this.http.get<Usuario>(this.appUser + '/getSingle/'+ idUsuario);
   }
 
   public cargarUsuarios(): Observable<Usuario[]> {
@@ -34,7 +34,7 @@ export class UsuarioService {
 
   public actualizarUsuario(objUsuario: Usuario): Observable<Usuario> {
     return this.http.put<Usuario>(
-      this.appUser + '/estudiante/perfil' + objUsuario.usuarioId,
+      this.appUser + '/estudiante/perfil/' + objUsuario.usuarioId,
       objUsuario
     );
   }
