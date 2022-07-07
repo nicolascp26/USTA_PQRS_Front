@@ -92,7 +92,6 @@ export class UsuariosAdministrarComponent implements OnInit {
       .pipe(
         map((resultado: Usuario[]) => {
           this.arregloUsuarios = resultado;
-          console.log(this.arregloUsuarios);
         }),
         finalize(() => {
           this.cargaFinalizada = true;

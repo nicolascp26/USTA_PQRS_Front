@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UsuariosAdministrarComponent } from './usuarios-administrar/usuarios-administrar.component';
 import { UsuariosActualizarComponent } from './usuarios-actualizar/usuarios-actualizar.component';
 import { UsuariosRoutingModule } from './usuarios-routing.module';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { UsuariosRoutingModule } from './usuarios-routing.module';
   ],
   imports: [
     CommonModule,
+    FormsModule,
     UsuariosRoutingModule
   ]
 })
