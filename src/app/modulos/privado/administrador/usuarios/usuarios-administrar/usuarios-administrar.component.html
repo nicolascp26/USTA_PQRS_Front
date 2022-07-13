@@ -49,34 +49,44 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let objUsu of arregloUsuarios"
-                (click)="seleccionarUsuario(objUsu)">
+                <tr
+                  *ngFor="let objUsu of arregloUsuarios"
+                  (click)="seleccionarUsuario(objUsu)"
+                >
                   <td>{{ objUsu.usuarioId }}</td>
                   <td>
-                    {{ objUsu.usuarioNombres + " " + objUsu.usuarioApellidos }}&nbsp;
+                    {{
+                      objUsu.usuarioNombres + " " + objUsu.usuarioApellidos
+                    }}&nbsp;
                     <!--
                     <p class="text-secondary">{{ objUsu.usuarioRol.rolNombre }}</p>
                     -->
                   </td>
                   <td>{{ objUsu.usuarioDocumento }}</td>
                   <td>{{ objUsu.usuarioTelefono }}</td>
-                  <td>
-                    <i class="fa-solid fa-user-gear"
-                    style="cursor: pointer"
-                    [routerLink]="['/administrador/usuarios/actualizar/',objUsu.usuarioId]"
-                    routerLinkActive="router-link-active"></i> &nbsp;
-                    <i
-                      class="fa fa-solid fa-user-xmark"
-                      style="color: #dc143c; cursor: pointer"
-                      (click)="abrirModalEliminar(eliminarUsuario, objUsu)"
-                    ></i>
+                  <td style="text-align: center">
+                    <span
+                      class="badge bg-warning text-dark"
+                      style="cursor: pointer"
+                      [routerLink]="[
+                        '/administrador/usuarios/actualizar/',
+                        objUsu.usuarioId
+                      ]"
+                      routerLinkActive="router-link-active"
+                    >
+                      <i class="fa-solid fa-user-gear"></i>
+                      Editar usuario
+                    </span>
+                    &nbsp;
                   </td>
                 </tr>
               </tbody>
             </table>
             <div>
               <small
-                ><strong> {{arregloUsuarios.length}} </strong> usuarios registrados</small>
+                ><strong> {{ arregloUsuarios.length }} </strong> usuarios
+                registrados</small
+              >
             </div>
           </div>
           <!--

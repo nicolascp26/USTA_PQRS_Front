@@ -15,11 +15,11 @@ export class UsuarioService {
   constructor(private http: HttpClient) {}
 
   public obtenerUsuarioUnico(idUsuario: any): Observable<Usuario> {
-    return this.http.get<Usuario>(this.appUser + '/getSingle/'+ idUsuario);
+    return this.http.get<Usuario>(this.appUser + '/getSingle/' + idUsuario);
   }
 
   public cargarUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(this.appUser+ '/getAll');
+    return this.http.get<Usuario[]>(this.appUser + '/getAll');
   }
 
   public registrarUsuario(
@@ -34,9 +34,13 @@ export class UsuarioService {
 
   public actualizarUsuario(objUsuario: Usuario): Observable<Usuario> {
     return this.http.put<Usuario>(
-      this.appUser + '/estudiante/perfil/' + objUsuario.usuarioId,
+      this.appUser + '/update/' + objUsuario.usuarioId,
       objUsuario
     );
+  }
+
+  public actualizarUsuarioAcceso(objAcceso: Acceso,objUsuario: Usuario): Observable<Acceso> {
+    return this.http.put<Acceso>(this.appUser + '/registro' + objUsuario.usuarioId, objAcceso);
   }
 
   public eliminarUsuario(usuarioId: number): Observable<Usuario> {
