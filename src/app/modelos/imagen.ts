@@ -1,6 +1,6 @@
 import { Usuario } from './usuario';
 export class Imagen {
-  public imgID: number;
+  public imgId: number;
   public imgUsuario: Usuario;
   public imgNombrePublico: string;
   public imgNombrePrivado: string;
@@ -15,7 +15,7 @@ export class Imagen {
     tipo: string,
     base: string
   ) {
-    this.imgID = codImg;
+    this.imgId = codImg;
     this.imgUsuario = usu;
     this.imgNombrePublico = nomPub;
     this.imgNombrePrivado = nomPri;
