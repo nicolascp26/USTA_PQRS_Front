@@ -22,8 +22,8 @@ export class PerfilComponent implements OnInit {
   constructor() {
     this.objUsuario = this.inicializarUsuario();
     this.objImagen = this.inicializarImagen();
-    this.suscripcion=this.tmp;
-    this.cargaFinalizada=false;
+    this.suscripcion = this.tmp;
+    this.cargaFinalizada = false;
   }
 
   ngOnInit(): void {}
@@ -32,23 +32,21 @@ export class PerfilComponent implements OnInit {
    * METODOS OBLIGATORIOS
    */
 
-  public inicializarUsuario():Usuario {
-    return new Usuario(0,'','','','',this.inicializarRol());
+  public inicializarUsuario(): Usuario {
+    return new Usuario(0, '', '', '', '', this.inicializarRol());
   }
 
-  public inicializarImagen():Imagen {
-    return new Imagen(0,this.inicializarUsuario(),'','','','');
+  public inicializarImagen(): Imagen {
+    return new Imagen(0, this.inicializarUsuario(), '', '', '', '');
   }
 
-  public inicializarRol():Rol {
-    return new Rol(0,'',0);
+  public inicializarRol(): Rol {
+    return new Rol(0, '', 0);
   }
 
-/**Logica del negocio */
+  /**Logica del negocio */
 
-public obtenerUsuario():void{
-
-}
+  public obtenerUsuario(): void {}
 
   /*Metodo para cargar la foto
   public seleccionarFoto(objeto: any): void {

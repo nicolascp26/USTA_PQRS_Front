@@ -1,3 +1,4 @@
+import { RolService } from './../../../../../servicios/rol.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/mensajes-toast.func';
@@ -7,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Usuario } from '../../../../../modelos/usuario';
 import { Rol } from '../../../../../modelos/rol';
 import { UsuarioService } from '../../../../../servicios/usuario.service';
+import { AccesoService } from '../../../../../servicios/acceso.service';
 import { Subscription, finalize, map, catchError } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
@@ -18,6 +20,8 @@ import { NgForm } from '@angular/forms';
 export class UsuariosActualizarComponent implements OnInit {
   //Atributos requeridos
   public usuarioSeleccionado: Usuario;
+  public rolSeleccionado: Rol;
+  public arregloRoles: Rol[];
 
   //Atributos consumo servicios
   public tmp: any;
@@ -31,12 +35,15 @@ export class UsuariosActualizarComponent implements OnInit {
 
   constructor(
     private ruta: ActivatedRoute,
-    private miRuta: Router,
     private usuarioService: UsuarioService,
-    private toastr: ToastrService
+    private accesoService: AccesoService,
+    private rolService: RolService,
+    private miMensaje: ToastrService
   ) {
     //Inicializar Usuario
     this.usuarioSeleccionado = this.inicializarUsuario();
+    this.rolSeleccionado = this.inicializarRol();
+    this.arregloRoles = [];
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
     this.cargaFinalizada = false;
@@ -51,6 +58,7 @@ export class UsuariosActualizarComponent implements OnInit {
       const miCodigo = String(parametro.get('usuarioId'));
       const miCodigoNumerico = parseFloat(miCodigo);
       this.obtenerUsuarioUnico(miCodigoNumerico);
+      this.obtenerRoles();
     });
   }
 
@@ -60,12 +68,21 @@ export class UsuariosActualizarComponent implements OnInit {
     }
   }
 
-  public obtenerUsuarioUnico(usuarioId:number): void {
+  public inicializarUsuario(): Usuario {
+    return new Usuario(0, '', '', '', '', this.inicializarRol());
+  }
+
+  public inicializarRol(): Rol {
+    return new Rol(0, '', 0);
+  }
+
+  public obtenerUsuarioUnico(usuarioId: number): void {
     this.miSuscripcion = this.usuarioService
       .obtenerUsuarioUnico(usuarioId)
       .pipe(
         map((resultado: Usuario) => {
           this.usuarioSeleccionado = resultado;
+          this.rolSeleccionado = this.usuarioSeleccionado.usuarioRol;
         }),
         finalize(() => {
           this.cargaFinalizada = true;
@@ -74,12 +91,70 @@ export class UsuariosActualizarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  public inicializarUsuario(): Usuario {
-    return new Usuario(0, '', '', '', '', this.inicializarRol());
+  public actualizarUsuario(formulario: NgForm): void {
+    this.miSuscripcion = this.usuarioService
+      .actualizarUsuario(this.usuarioSeleccionado)
+      .pipe(
+        map((respuesta) => {
+          mostrarMensaje(
+            'success',
+            'Usuario actualizado Correctamente',
+            'Satisfactorio',
+            this.miMensaje
+          );
+          return respuesta;
+        }),
+        catchError((err) => {
+          mostrarMensaje(
+            'error',
+            'No se pudo actualizar',
+            'Fallo',
+            this.miMensaje
+          );
+          throw err;
+        })
+      )
+      .subscribe(observadorAny);
   }
 
-  public inicializarRol(): Rol {
-    return new Rol(0, '', 0);
+  public actualizarAcceso(formulario: NgForm): void {
+    /*this.miSuscripcion = this.accesoService
+      .obtenerAcceso()
+      .pipe(
+        map((respuesta) => {
+          mostrarMensaje(
+            'success',
+            'Usuario actualizado Correctamente',
+            'Satisfactorio',
+            this.miMensaje
+          );
+          return respuesta;
+        }),
+        catchError((err) => {
+          mostrarMensaje(
+            'error',
+            'No se pudo actualizar',
+            'Fallo',
+            this.miMensaje
+          );
+          throw err;
+        })
+      )
+      .subscribe(observadorAny);*/
+  }
+
+  public obtenerRoles(): void {
+    this.miSuscripcion = this.rolService
+      .cargarRoles()
+      .pipe(
+        map((resultado: Rol[]) => {
+          this.arregloRoles = resultado;
+        }),
+        finalize(() => {
+          this.cargaFinalizada = true;
+        })
+      )
+      .subscribe(observadorAny);
   }
 
   public cancelar(): void {

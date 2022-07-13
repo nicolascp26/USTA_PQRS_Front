@@ -87,7 +87,7 @@
                   <div class="col-xl-4">
                     <!-- Profile picture card-->
                     <div class="card mb-4 mb-xl-0">
-                      <div class="card-header">Profile Picture</div>
+                      <div class="card-header">Imagen de usuario</div>
                       <div class="card-body text-center">
                         <!-- Profile picture image-->
                         <img
@@ -97,11 +97,27 @@
                         />
                         <!-- Profile picture help block-->
                         <div class="small font-italic text-muted mb-4">
-                          JPG or PNG no larger than 5 MB
+                          JPG o PNG tamaño maximo 5 MB
                         </div>
                         <!-- Profile picture upload button-->
-                        <button class="btn btn-primary" type="button">
-                          Upload new image
+                        <button
+                          class="btn btn-primary"
+                          type="button"
+                          (click)="cajaOculta.click()"
+                        >
+                          <span class="text-white"
+                            ><i class="fa fa-camera" style="color: white"></i>
+                            Cambiar foto
+                          </span>
+                          <input
+                            type="file"
+                            class="form-control"
+                            style="display: none"
+                            id="fotoUsuario"
+                            name="fotoUsuario"
+                            accept="image/x-png, image/jpeg"
+                            #cajaOculta
+                          />
                         </button>
                       </div>
                     </div>
@@ -109,14 +125,21 @@
                   <div class="col-xl-8">
                     <!-- Account details card-->
                     <div class="card mb-4">
-                      <div class="card-header">Account Details</div>
+                      <div class="card-header">Datos de usuario</div>
                       <div class="card-body">
-                        <form>
+                        <form
+                          #frmActualizarUsuario="ngForm"
+                          class="needs-validation"
+                          (ngSubmit)="
+                            frmActualizarUsuario.form.valid &&
+                              actualizarUsuario(frmActualizarUsuario)
+                          "
+                        >
                           <div class="row gx-3 mb-3">
                             <!-- Form Group (first name)-->
                             <div class="col-md-6">
                               <label class="small mb-1" for="usuarioNombres"
-                                >First name</label
+                                >Nombres</label
                               >
                               <input
                                 name="usuarioNombres"
@@ -124,91 +147,104 @@
                                 class="form-control"
                                 type="text"
                                 [(ngModel)]="usuarioSeleccionado.usuarioNombres"
+                                #usuarioNombres="ngModel"
+                                [ngClass]="{
+                                  'is-invalid':
+                                    frmActualizarUsuario.submitted &&
+                                    usuarioNombres.invalid
+                                }"
+                                required
                               />
+                              <div
+                                class="text-danger error"
+                                *ngIf="
+                                  frmActualizarUsuario.submitted &&
+                                  usuarioNombres.invalid
+                                "
+                              >
+                                <span
+                                  *ngIf="usuarioNombres.errors?.['required']"
+                                  >Ingrese nombre de usuario</span
+                                >
+                              </div>
                             </div>
                             <!-- Form Group (last name)-->
                             <div class="col-md-6">
-                              <label class="small mb-1" for="inputLastName"
-                                >Last name</label
+                              <label class="small mb-1" for="usuarioApellidos"
+                                >Apellidos</label
                               >
                               <input
                                 class="form-control"
-                                id="inputLastName"
+                                name="usuarioApellidos"
+                                id="usuarioApellidos"
                                 type="text"
-                                placeholder="Enter your last name"
+                                [(ngModel)]="
+                                  usuarioSeleccionado.usuarioApellidos
+                                "
                               />
                             </div>
                           </div>
                           <!-- Form Row        -->
                           <div class="row gx-3 mb-3">
-                            <!-- Form Group (organization name)-->
+                            <!-- Form Group (phone number)-->
                             <div class="col-md-6">
-                              <label class="small mb-1" for="inputOrgName"
-                                >Organization name</label
+                              <label class="small mb-1" for="usuarioTelefono"
+                                >Telefono</label
                               >
                               <input
                                 class="form-control"
-                                id="inputOrgName"
-                                type="text"
-                                placeholder="Enter your organization name"
+                                id="usuarioTelefono"
+                                name="usuarioTelefono"
+                                type="tel"
+                                [(ngModel)]="
+                                  usuarioSeleccionado.usuarioTelefono
+                                "
                               />
                             </div>
                             <!-- Form Group (location)-->
                             <div class="col-md-6">
-                              <label class="small mb-1" for="inputLocation"
-                                >Location</label
+                              <label class="small mb-1" for="usuarioDocumento"
+                                >Documento</label
                               >
                               <input
                                 class="form-control"
-                                id="inputLocation"
+                                id="usuarioDocumento"
+                                name="usuarioDocumento"
                                 type="text"
-                                placeholder="Enter your location"
+                                [(ngModel)]="
+                                  usuarioSeleccionado.usuarioDocumento
+                                "
                               />
                             </div>
-                          </div>
-                          <!-- Form Group (email address)-->
-                          <div class="mb-3">
-                            <label class="small mb-1" for="inputEmailAddress"
-                              >Email address</label
-                            >
-                            <input
-                              class="form-control"
-                              id="inputEmailAddress"
-                              type="email"
-                              placeholder="Enter your email address"
-                            />
                           </div>
                           <!-- Form Row-->
                           <div class="row gx-3 mb-3">
                             <!-- Form Group (phone number)-->
                             <div class="col-md-6">
-                              <label class="small mb-1" for="inputPhone"
-                                >Phone number</label
+                              <label class="small mb-1" for="usuarioTelefono"
+                                >Tipo de usuario</label
                               >
-                              <input
-                                class="form-control"
-                                id="inputPhone"
-                                type="tel"
-                                placeholder="Enter your phone number"
-                              />
-                            </div>
-                            <!-- Form Group (birthday)-->
-                            <div class="col-md-6">
-                              <label class="small mb-1" for="inputBirthday"
-                                >Birthday</label
+                              <select
+                                class="form-control form-select"
+                                id="rol"
+                                name="rol"
+                                [(ngModel)]="usuarioSeleccionado.usuarioRol"
                               >
-                              <input
-                                class="form-control"
-                                id="inputBirthday"
-                                type="date"
-                                name="birthday"
-                                placeholder="Enter your birthday"
-                              />
+                                <option
+                                  [ngValue]="rol"
+                                  *ngFor="
+                                    let rol of arregloRoles;
+                                    let indice = index
+                                  "
+                                >
+                                  {{ rol.rolNombre }}
+                                </option>
+                              </select>
                             </div>
                           </div>
                           <!-- Save changes button-->
-                          <button class="btn btn-primary" type="button">
-                            Save changes
+                          <button class="btn btn-primary" type="submit">
+                            Guardar cambios
                           </button>
                         </form>
                       </div>
@@ -227,49 +263,71 @@
               <div class="container-xl px-4 mt-4">
                 <div class="row">
                   <div class="col-lg-8">
-                    <!-- Change password card-->
+                    <!-- Change access data card-->
                     <div class="card mb-4">
-                      <div class="card-header">Change Password</div>
+                      <div class="card-header">Cambiar contraseña</div>
                       <div class="card-body">
-                        <form>
+                        <form
+                          #frmActualizarAcceso="ngForm"
+                          class="needs-validation"
+                          (ngSubmit)="
+                            frmActualizarAcceso.form.valid &&
+                              actualizarAcceso(frmActualizarAcceso)
+                          "
+                        >
                           <!-- Form Group (current password)-->
+                          <!-- Form Group (email address)-->
+                          <div class="mb-3">
+                            <label class="small mb-1" for="usuarioAccesoCorreo"
+                              >Correo electronico</label
+                            >
+                            <input
+                              class="form-control"
+                              name="usuarioAccesoCorreo"
+                              id="usuarioAccesoCorreo"
+                              type="email"
+                              value="aaa@email.com"
+                              aria-label="Disabled input example"
+                              readonly
+                            />
+                          </div>
                           <div class="mb-3">
                             <label class="small mb-1" for="currentPassword"
-                              >Current Password</label
+                              >Contraseña actual</label
                             >
                             <input
                               class="form-control"
                               id="currentPassword"
                               type="password"
-                              placeholder="Enter current password"
+                              placeholder="Ingresa la contraseña actual"
                             />
                           </div>
                           <!-- Form Group (new password)-->
                           <div class="mb-3">
                             <label class="small mb-1" for="newPassword"
-                              >New Password</label
+                              >Nueva contraseña</label
                             >
                             <input
                               class="form-control"
                               id="newPassword"
                               type="password"
-                              placeholder="Enter new password"
+                              placeholder="Ingresa una nueva contraseña"
                             />
                           </div>
                           <!-- Form Group (confirm password)-->
                           <div class="mb-3">
                             <label class="small mb-1" for="confirmPassword"
-                              >Confirm Password</label
+                              >Confirmar contraseña nueva</label
                             >
                             <input
                               class="form-control"
                               id="confirmPassword"
                               type="password"
-                              placeholder="Confirm new password"
+                              placeholder="Confirmar nueva contraseña"
                             />
                           </div>
                           <button class="btn btn-primary" type="button">
-                            Save
+                            Confirmar cambio
                           </button>
                         </form>
                       </div>
@@ -355,18 +413,16 @@
                   <div class="col-lg-4">
                     <!-- Delete account card-->
                     <div class="card mb-4">
-                      <div class="card-header">Delete Account</div>
+                      <div class="card-header">Eliminar cuenta</div>
                       <div class="card-body">
                         <p>
-                          Deleting your account is a permanent action and cannot
-                          be undone. If you are sure you want to delete your
-                          account, select the button below.
+                          La eliminación de su cuenta es una acción permanente y
+                          no puede no se puede deshacer. Si está seguro de
+                          querer eliminar su cuenta, seleccione el botón de
+                          abajo.
                         </p>
-                        <button
-                          class="btn btn-danger-soft text-danger"
-                          type="button"
-                        >
-                          I understand, delete my account
+                        <button class="btn btn-outline-danger" type="button">
+                          Entiendo, deseo eliminar mi cuenta
                         </button>
                       </div>
                     </div>

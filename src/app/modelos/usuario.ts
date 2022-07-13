@@ -8,7 +8,6 @@ export class Usuario {
   public usuarioDocumento: string;
   public usuarioTelefono: string;
   public usuarioRol: Rol;
-  public correoUsuario?: string;
   public constructor(
     cod: number,
     nom: string,
@@ -23,6 +22,5 @@ export class Usuario {
     this.usuarioDocumento = doc;
     this.usuarioTelefono = tel;
     this.usuarioRol = rol;
-    this.correoUsuario = '';
   }
 }
