@@ -13,10 +13,12 @@ import { Router } from '@angular/router';
 export class SidebarDashComponent implements OnInit {
   public usuarioSeleccionado: Usuario;
   public base64: string;
+  public nombreUsuario: string | any;
 
   constructor(public accesoService: AccesoService) {
     this.usuarioSeleccionado = this.inicializarUsuario();
     this.base64 = localStorage.getItem('foto') as string;
+    this.nombreUsuario = accesoService.objAcceso.usuarioNombres;
   }
 
   ngOnInit(): void {}
@@ -26,7 +28,7 @@ export class SidebarDashComponent implements OnInit {
   }
 
   public inicializarUsuario(): Usuario {
-    return new Usuario(0, '', '', '', '', this.inicializarRol());
+    return new Usuario(0, '', '', '', '', 0);
   }
 
   public inicializarRol(): Rol {

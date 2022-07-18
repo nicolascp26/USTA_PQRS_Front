@@ -6,6 +6,7 @@ export class Imagen {
   public imgNombrePrivado: string;
   public imgTipo: string;
   public base64: string;
+  public imgTamano?: string;
 
   constructor(
     codImg: number,

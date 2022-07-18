@@ -52,6 +52,7 @@ export class AccesoComponent implements OnInit, OnDestroy {
     const correo = this.accesoUsuarioSeleccionado.correoUsuario;
     const miHash = cifrado.sha512(this.accesoUsuarioSeleccionado.claveUsuario);
     const acceso = new Acceso(correo, miHash);
+    let rolTemp = '';
     this.subscription = this.accesoService.iniciarSesion(acceso).subscribe(
       (res) => {
         mostrarMensaje(
@@ -62,7 +63,19 @@ export class AccesoComponent implements OnInit, OnDestroy {
         );
         localStorage.setItem('token', res.token as any);
         localStorage.setItem('foto', res.foto as any);
-        this.router.navigate(['/administrador']);
+        rolTemp = res.rol;
+        console.log(rolTemp);
+        switch (rolTemp) {
+          case 'Administrador':
+            this.router.navigate(['/administrador']);
+            break;
+          case 'Estudiante':
+            this.router.navigate(['/estudiante']);
+            break;
+          case 'Invitado':
+            this.router.navigate(['/invitado']);
+            break;
+        }
       },
       (err) => {
         mostrarMensaje(

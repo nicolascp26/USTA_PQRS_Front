@@ -3,8 +3,8 @@ export class Acceso {
   public claveUsuario: string;
   public reClave?:string;
 
-  public nombre_usuario?:string;
-  public rol_usuario?: string;
+  public usuarioNombres?:string;
+  public usuarioRol?: string | any;
 
   public constructor(
     corr: string,
