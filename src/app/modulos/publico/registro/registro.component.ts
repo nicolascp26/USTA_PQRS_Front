@@ -53,7 +53,7 @@ export class RegistroComponent implements OnInit, OnDestroy {
   // metodos obligatorios ****
 
   public inicializarUsuario(): Usuario {
-    return new Usuario(0, '', '', '', '', this.inicializarRol());
+    return new Usuario(0, '', '', '', '', 0);
   }
   public inicializarRol(): Rol {
     return new Rol(0, '',0);

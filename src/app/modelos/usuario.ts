@@ -7,20 +7,20 @@ export class Usuario {
   public usuarioApellidos: string;
   public usuarioDocumento: string;
   public usuarioTelefono: string;
-  public usuarioRol: Rol;
+  public rolId: number;
   public constructor(
     cod: number,
     nom: string,
     ape: string,
     doc: string,
     tel: string,
-    rol: Rol
+    rol: number
   ) {
     this.usuarioId = cod;
     this.usuarioNombres = nom;
     this.usuarioApellidos = ape;
     this.usuarioDocumento = doc;
     this.usuarioTelefono = tel;
-    this.usuarioRol = rol;
+    this.rolId = rol;
   }
 }

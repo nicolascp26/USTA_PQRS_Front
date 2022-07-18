@@ -69,7 +69,7 @@ export class UsuariosActualizarComponent implements OnInit {
   }
 
   public inicializarUsuario(): Usuario {
-    return new Usuario(0, '', '', '', '', this.inicializarRol());
+    return new Usuario(0, '', '', '', '', 0);
   }
 
   public inicializarRol(): Rol {
@@ -82,7 +82,7 @@ export class UsuariosActualizarComponent implements OnInit {
       .pipe(
         map((resultado: Usuario) => {
           this.usuarioSeleccionado = resultado;
-          this.rolSeleccionado = this.usuarioSeleccionado.usuarioRol;
+          console.log(this.usuarioSeleccionado);
         }),
         finalize(() => {
           this.cargaFinalizada = true;

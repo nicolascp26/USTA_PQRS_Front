@@ -52,8 +52,7 @@
             routerLinkActive="active"
             class="nav-link text-white"
           >
-            <i class="fa fa-users-gear"></i
-            ><span class="ms-2">Usuarios</span>
+            <i class="fa fa-users-gear"></i><span class="ms-2">Usuarios</span>
           </a>
         </li>
         <li>
@@ -94,7 +93,7 @@
             height="32"
             class="rounded-circle me-2"
           />
-          <strong>User name</strong>
+          <strong>{{ nombreUsuario }}</strong>
         </a>
         <ul
           class="dropdown-menu dropdown-menu-dark text-small shadow"
@@ -125,7 +124,7 @@
               (click)="cerrarSesion()"
               routerLinkActive="router-link-active"
               class="nav-link text-white"
-              style="cursor: pointer;"
+              style="cursor: pointer"
             >
               <i class="fa-solid fa-arrow-right-from-bracket"></i
               ><span class="ms-2">Cerrar Sesion</span>
