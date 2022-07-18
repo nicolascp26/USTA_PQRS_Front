@@ -64,7 +64,7 @@ export class UsuariosAdministrarComponent implements OnInit {
 
   //Métodos obligatorios
   public inicializarUsuario(): Usuario {
-    return new Usuario(0, '', '', '', '', this.inicializarRol());
+    return new Usuario(0, '', '', '', '', 0);
   }
 
   public inicializarRol(): Rol {

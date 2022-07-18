@@ -33,7 +33,7 @@ export class PerfilComponent implements OnInit {
    */
 
   public inicializarUsuario(): Usuario {
-    return new Usuario(0, '', '', '', '', this.inicializarRol());
+    return new Usuario(0, '', '', '', '', 0);
   }
 
   public inicializarImagen(): Imagen {

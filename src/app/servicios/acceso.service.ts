@@ -44,10 +44,13 @@ export class AccesoService {
   public verificarAcceso(): boolean {
     if (localStorage.getItem('token')) {
       const miToken: any = localStorage.getItem('token');
+
       try {
         const obj: any = jwtDecode(miToken);
         this.objAcceso.correoUsuario = obj.correo;
         this.objAcceso.claveUsuario = obj.clave;
+        this.objAcceso.usuarioRol = obj.usuarioRol;
+        this.objAcceso.usuarioNombres = obj.usuarioNombres;
         return true;
       } catch (error) {
         return false;

@@ -228,14 +228,14 @@
                                 class="form-control form-select"
                                 id="rol"
                                 name="rol"
-                                [(ngModel)]="usuarioSeleccionado.usuarioRol"
+                                [(ngModel)]="usuarioSeleccionado.rolId"
                               >
                                 <option
-                                  [ngValue]="rol"
                                   *ngFor="
                                     let rol of arregloRoles;
                                     let indice = index
                                   "
+                                  [ngValue]="rol.rolId"
                                 >
                                   {{ rol.rolNombre }}
                                 </option>
