@@ -1,3 +1,4 @@
+import { observadorAny } from './../../../utilidades/observable/observable-any';
 import { Acceso } from '../../../modelos/acceso';
 import { AccesoService } from './../../../servicios/acceso.service';
 
@@ -6,7 +7,7 @@ import { mostrarMensaje } from './../../../utilidades/mensajes/mensajes-toast.fu
 import * as cifrado from 'js-sha512';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { catchError, map, Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -53,39 +54,41 @@ export class AccesoComponent implements OnInit, OnDestroy {
     const miHash = cifrado.sha512(this.accesoUsuarioSeleccionado.claveUsuario);
     const acceso = new Acceso(correo, miHash);
     let rolTemp = '';
-    this.subscription = this.accesoService.iniciarSesion(acceso).subscribe(
-      (res) => {
-        mostrarMensaje(
-          'success',
-          'Autenticacion exitosa',
-          'Bienvenido',
-          this.miMensaje
-        );
-        localStorage.setItem('token', res.token as any);
-        localStorage.setItem('foto', res.foto as any);
-        rolTemp = res.rol;
-        console.log(rolTemp);
-        switch (rolTemp) {
-          case 'Administrador':
-            this.router.navigate(['/administrador']);
-            break;
-          case 'Estudiante':
-            this.router.navigate(['/estudiante']);
-            break;
-          case 'Invitado':
-            this.router.navigate(['/invitado']);
-            break;
-        }
-      },
-      (err) => {
-        mostrarMensaje(
-          'error',
-          'No se pudo autenticar',
-          'Vuelva a ingresar',
-          this.miMensaje
-        );
-        formulario.reset();
-      }
-    );
+    this.subscription = this.accesoService
+      .iniciarSesion(acceso)
+      .pipe(
+        map((respuesta) => {
+          mostrarMensaje(
+            'success',
+            'Autenticacion exitosa',
+            'Bienvenido',
+            this.miMensaje
+          );
+          localStorage.setItem('token', respuesta.token as any);
+          localStorage.setItem('foto', respuesta.foto as any);
+          rolTemp = respuesta.rol;
+          switch (rolTemp) {
+            case 'Administrador':
+              this.router.navigate(['/administrador']);
+              break;
+            case 'Estudiante':
+              this.router.navigate(['/estudiante']);
+              break;
+            case 'Invitado':
+              this.router.navigate(['/invitado']);
+              break;
+          }
+        }),
+        catchError((miError) => {
+          mostrarMensaje(
+            'error',
+            'No se pudo autenticar',
+            'Vuelva a ingresar',
+            this.miMensaje
+          );
+          throw miError;
+        })
+      )
+      .subscribe(observadorAny);
   }
 }

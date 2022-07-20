@@ -1,3 +1,4 @@
+import { ErrorSeguridadComponent } from './error-seguridad/error-seguridad.component';
 import { PreguntasFrecuentesComponent } from './preguntas-frecuentes/preguntas-frecuentes.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { Routes, RouterModule } from '@angular/router';
@@ -6,10 +7,10 @@ import { CommonModule } from '@angular/common';
 import { InicioComponent } from './inicio/inicio.component';
 
 const routes:Routes =[
-  {path:'inicio',component:InicioComponent},
+  {path:'',component:InicioComponent},
   {path:'perfil',component:PerfilComponent},
   {path:'preguntas-frecuentes',component:PreguntasFrecuentesComponent},
-  {path:'',redirectTo:'inicio',pathMatch:'full'}
+  { path: '**', component: ErrorSeguridadComponent },
 ];
 
 @NgModule({

@@ -1,9 +1,8 @@
-import { RolModule } from './../../modulos/privado/administrador/rol/rol.module';
 import { Routes } from '@angular/router';
 
 export const RUTAS_DASHBOARD_ADMINISTRADOR: Routes = [
   {
-    path: '',
+    path: 'inicio',
     loadChildren: () =>
       import('../../modulos/privado/administrador/control/control.module').then(
         (m) => m.ControlModule
@@ -12,9 +11,9 @@ export const RUTAS_DASHBOARD_ADMINISTRADOR: Routes = [
   {
     path: 'solicitudes',
     loadChildren: () =>
-      import('../../modulos/privado/administrador/solicitudes/solicitudes.module').then(
-        (m) => m.SolicitudesModule
-      ),
+      import(
+        '../../modulos/privado/administrador/solicitudes/solicitudes.module'
+      ).then((m) => m.SolicitudesModule),
   },
   {
     path: 'roles',
@@ -26,16 +25,9 @@ export const RUTAS_DASHBOARD_ADMINISTRADOR: Routes = [
   {
     path: 'usuarios',
     loadChildren: () =>
-      import('../../modulos/privado/administrador/usuarios/usuarios.module').then(
-        (m) => m.UsuariosModule
-      ),
+      import(
+        '../../modulos/privado/administrador/usuarios/usuarios.module'
+      ).then((m) => m.UsuariosModule),
   },
-  {
-    path: '',
-    loadChildren: () =>
-      import('../../modulos/publico/publico.module').then(
-        (m) => m.PublicoModule
-      ),
-  },
-  { path: '', redirectTo: 'landing', pathMatch: 'full' },
+  { path: '**', redirectTo: 'inicio', pathMatch: 'full' },
 ];
