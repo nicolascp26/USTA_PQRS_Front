@@ -1,3 +1,4 @@
+import { Usuario } from './../modelos/usuario';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
@@ -39,6 +40,10 @@ export class AccesoService {
 
   public obtenerToken(): any {
     return localStorage.getItem('token') as string;
+  }
+
+  public obtenerRolporToken():any{
+    return this.objAcceso.usuarioRol;
   }
 
   public verificarAcceso(): boolean {
