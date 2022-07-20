@@ -24,7 +24,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     NgxPaginationModule,
   ],
   providers: [
-    //provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi(true)
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })
