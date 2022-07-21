@@ -1,29 +1,37 @@
-import { NgForm } from '@angular/forms';
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/mensajes-toast.func';
-import { RolService } from './../../../../../servicios/rol.service';
+import { NgForm } from '@angular/forms';
 import { observadorAny } from 'src/app/utilidades/observable/observable-any';
 import { ToastrService } from 'ngx-toastr';
-import { finalize, map, Subscription, catchError } from 'rxjs';
-import { Rol } from './../../../../../modelos/rol';
-import { Component, OnInit, TemplateRef } from '@angular/core';
+import { TipoService } from './../../../../../servicios/tipo.service';
+import { map, Subscription, finalize, catchError } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Tipo } from './../../../../../modelos/tipo';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 
 @Component({
-  selector: 'app-rol-administrar',
-  templateUrl: './rol-administrar.component.html',
-  styleUrls: ['./rol-administrar.component.css'],
+  selector: 'app-mensaje-tipos',
+  templateUrl: './mensaje-tipos.component.html',
+  styleUrls: ['./mensaje-tipos.component.css'],
 })
-export class RolAdministrarComponent implements OnInit {
+export class MensajeTiposComponent implements OnInit {
   //Atributos requeridos
-  public arregloRoles: Rol[];
-  public objRol: Rol;
-  public rolSeleccionado: Rol;
+  public arregloTipos: Tipo[];
+  public objTipo: Tipo;
+  public tipoSeleccionado: Tipo;
+
+  public arregloTipoClases = [
+    { id: 1, nom: 'Peticion' },
+    { id: 2, nom: 'Queja' },
+    { id: 3, nom: 'Reclamo' },
+    { id: 4, nom: 'Sugerencia' },
+  ];
 
   //Atributos paginación
   public paginaActual: number;
   public cantidadMostrar: number;
   public cantidadPaginas: number;
   public cantidadTotalRegistros: number;
+  public searchBar = '';
 
   //Atributos modales
   public modalTitulo: string;
@@ -38,15 +46,15 @@ export class RolAdministrarComponent implements OnInit {
   public cargaFinalizada: boolean;
 
   constructor(
-    private rolService: RolService,
+    private tipoService: TipoService,
     public modalService: BsModalService,
     private miMensaje: ToastrService
   ) {
     //Inicializar atributos requeridos
-    this.arregloRoles = [];
+    this.arregloTipos = [];
     //this.arregloEstados = ARREGLO_ESTADOS_ROL;
-    this.rolSeleccionado = this.inicializarRol();
-    this.objRol = this.inicializarRol();
+    this.tipoSeleccionado = this.inicializarTipo();
+    this.objTipo = this.inicializarTipo();
 
     //Inicializar atributos paginación
     this.paginaActual = 0;
@@ -67,12 +75,13 @@ export class RolAdministrarComponent implements OnInit {
   }
 
   //Métodos obligatorios
-  public inicializarRol(): Rol {
-    return new Rol(0, '', 0);
+  public inicializarTipo(): Tipo {
+    return new Tipo(0, '', '', 0);
   }
 
   ngOnInit(): void {
-    this.obtenerTodosRoles();
+    this.obtenerTodosTipos();
+    console.log(this.arregloTipoClases);
   }
 
   ngOnDestroy(): void {
@@ -88,29 +97,33 @@ export class RolAdministrarComponent implements OnInit {
   }
 
   //Lógica del negocio
-  public obtenerTodosRoles(): void {
-    this.miSuscripcion = this.rolService
-      .cargarRoles()
+  public obtenerTodosTipos(): void {
+    this.miSuscripcion = this.tipoService
+      .cargarTipos()
       .pipe(
-        map((resultado: Rol[]) => {
-          this.arregloRoles = resultado;
-          console.log(this.arregloRoles);
+        map((resultado: Tipo[]) => {
+          this.arregloTipos = resultado;
         }),
         finalize(() => {
           this.cargaFinalizada = true;
-          //Deberíamos analizar la paginación
+          this.searchBar='';
         })
       )
       .subscribe(observadorAny);
   }
 
-  public crearUnRol(formulario: NgForm): void {
-    this.miSuscripcionCrear = this.rolService
-      .crearRol(this.objRol)
+  public crearUnTipo(formulario: NgForm): void {
+    this.miSuscripcionCrear = this.tipoService
+      .crearTipo(this.objTipo)
       .pipe(
         map((respuesta) => {
-          mostrarMensaje('success', 'Rol Creado', 'Exito', this.miMensaje);
-          this.obtenerTodosRoles();
+          mostrarMensaje(
+            'success',
+            'Tipo de solicitud Creado',
+            'Exito',
+            this.miMensaje
+          );
+          this.obtenerTodosTipos();
           this.modalRef.hide();
           formulario.reset();
           return respuesta;
@@ -118,7 +131,7 @@ export class RolAdministrarComponent implements OnInit {
         catchError((miError) => {
           mostrarMensaje(
             'error',
-            'Rol no pudo ser creado',
+            'Tipo de solicitud no pudo ser creado',
             'Advertencia',
             this.miMensaje
           );
@@ -128,18 +141,18 @@ export class RolAdministrarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  public actualizarRol(formulario: NgForm): void {
-    this.miSuscripcion = this.rolService
-      .actualizarRol(this.rolSeleccionado)
+  public actualizarTipo(formulario: NgForm): void {
+    this.miSuscripcion = this.tipoService
+      .actualizarTipo(this.tipoSeleccionado)
       .pipe(
         map((respuesta) => {
           mostrarMensaje(
             'success',
-            'Rol actualizado Correctamente',
+            'Tipo de solicitud actualizado correctamente',
             'Satisfactorio',
             this.miMensaje
           );
-          this.obtenerTodosRoles();
+          this.obtenerTodosTipos();
           this.modalRef.hide();
           formulario.reset();
           return respuesta;
@@ -157,19 +170,24 @@ export class RolAdministrarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  public eliminarRol(rolID: number): void {
-    this.miSuscripcionEliminar = this.rolService
-      .eliminarRol(rolID)
+  public eliminarTipo(tipoID: number): void {
+    this.miSuscripcionEliminar = this.tipoService
+      .eliminarTipo(tipoID)
       .pipe(
         map((respuesta) => {
-          this.obtenerTodosRoles();
-          mostrarMensaje('success', 'Rol eliminado', 'Exito', this.miMensaje);
+          this.obtenerTodosTipos();
+          mostrarMensaje(
+            'success',
+            'Tipo de solicitud eliminado',
+            'Exito',
+            this.miMensaje
+          );
           return respuesta;
         }),
         catchError((miError) => {
           mostrarMensaje(
             'error',
-            'Rol no eliminado',
+            'Tipo de solicitud no eliminado',
             'Advertencia',
             this.miMensaje
           );
@@ -180,24 +198,27 @@ export class RolAdministrarComponent implements OnInit {
   }
 
   //Metodos Modales
-  public abrirModalEliminar(template: TemplateRef<any>, objBorrar: Rol): void {
-    this.rolSeleccionado = objBorrar;
+  public abrirModalEliminar(template: TemplateRef<any>, objBorrar: Tipo): void {
+    this.tipoSeleccionado = objBorrar;
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
     this.modalTitulo = 'Advertencia';
     this.modalContenido =
-      'Seguro que quieres eliminar ' + this.rolSeleccionado.rolNombre + '?';
+      'Seguro que quieres eliminar ' + this.tipoSeleccionado.tipoNombre + '?';
   }
 
   public abrirModalCrear(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
-    this.modalTitulo = 'Crear nuevo rol';
-    this.modalContenido = 'Seguro que quiere crear este rol?';
+    this.modalTitulo = 'Crear nuevo tipo';
+    this.modalContenido = 'Seguro que quiere crear este tipo de solicitud?';
   }
 
-  public abrirModalActualizar(template: TemplateRef<any>, objActualizar: Rol): void {
-    this.rolSeleccionado = objActualizar;
+  public abrirModalActualizar(
+    template: TemplateRef<any>,
+    objActualizar: Tipo
+  ): void {
+    this.tipoSeleccionado = objActualizar;
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
-    this.modalTitulo = 'Actualizar rol';
+    this.modalTitulo = 'Actualizar tipo de solicitud';
     this.modalContenido = 'Guardar los cambios?';
   }
 
@@ -206,8 +227,19 @@ export class RolAdministrarComponent implements OnInit {
   }
 
   public confirmarEliminar(): void {
-    this.eliminarRol(this.rolSeleccionado.rolId);
-    this.rolSeleccionado = this.inicializarRol();
+    this.eliminarTipo(this.tipoSeleccionado.tipoId);
+    this.tipoSeleccionado = this.inicializarTipo();
     this.modalRef.hide();
+  }
+
+  public buscarTabla() {
+    let searchValue = this.searchBar.toLocaleLowerCase();
+    if (this.searchBar !== '') {
+      this.arregloTipos = this.arregloTipos.filter((tipo: Tipo) => {
+        return tipo.tipoNombre.toLocaleLowerCase().match(searchValue);
+      });
+    } else {
+      this.obtenerTodosTipos();
+    }
   }
 }
