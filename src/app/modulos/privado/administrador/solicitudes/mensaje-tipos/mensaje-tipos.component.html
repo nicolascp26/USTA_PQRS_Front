@@ -5,10 +5,15 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a [routerLink]="['/administrador/inicio']"><i class="fas fa-home"></i></a>
+            <a [routerLink]="['/administrador/inicio']"
+              ><i class="fas fa-home"></i
+            ></a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">
             Administrador
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Solicitudes
           </li>
           <li class="breadcrumb-item active" aria-current="page">
             Tipos de solicitudes
@@ -81,6 +86,11 @@
                 </tr>
               </tbody>
             </table>
+            <div>
+              <small
+                ><strong> {{ arregloTipos.length }} </strong> tipos de solicitudes creados
+              </small>
+            </div>
           </div>
           <!--
           <div class="row justify-content-md-center">

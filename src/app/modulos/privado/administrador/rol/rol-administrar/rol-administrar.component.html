@@ -5,7 +5,9 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a [routerLink]="['inicio']"><i class="fas fa-home"></i></a>
+            <a [routerLink]="['/administrador/inicio']"
+              ><i class="fas fa-home"></i
+            ></a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">
             Administrador
@@ -53,8 +55,11 @@
                   <td>{{ objRol.rolNombre }}</td>
                   <td>{{ objRol.cantUsuarios }}</td>
                   <td style="text-align: center">
-                    <i class="fa fa-edit" style="cursor: pointer"
-                    (click)="abrirModalActualizar(ActualizarRol, objRol)"></i>
+                    <i
+                      class="fa fa-edit"
+                      style="cursor: pointer"
+                      (click)="abrirModalActualizar(ActualizarRol, objRol)"
+                    ></i>
                     &nbsp;
                     <i
                       *ngIf="objRol.cantUsuarios == 0"
@@ -71,6 +76,11 @@
                 </tr>
               </tbody>
             </table>
+            <div>
+              <small
+                ><strong> {{ arregloRoles.length }} </strong> roles creados
+              </small>
+            </div>
           </div>
           <!--
           <div class="row justify-content-md-center">
