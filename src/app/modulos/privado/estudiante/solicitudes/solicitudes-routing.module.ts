@@ -1,3 +1,4 @@
+import { ErrorSeguridadComponent } from '../control/error-seguridad/error-seguridad.component';
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -5,9 +6,9 @@ import { MensajeAdministrarComponent } from './mensaje-administrar/mensaje-admin
 import { MensajeCrearComponent } from './mensaje-crear/mensaje-crear.component';
 
 const routes: Routes = [
-  { path: 'administrarSolicitudes', component: MensajeAdministrarComponent },
+  { path: '', component: MensajeAdministrarComponent },
   { path: 'crear', component: MensajeCrearComponent },
-  { path: '', redirectTo: 'administrarSolicitudes', pathMatch: 'full' },
+  { path: '**', component: ErrorSeguridadComponent},
 ];
 
 @NgModule({
@@ -15,4 +16,4 @@ const routes: Routes = [
   imports: [CommonModule, RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class ControlRoutingModule {}
+export class SolicitudesRoutingModule {}

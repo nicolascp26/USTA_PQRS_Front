@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlRoutingModule } from './control-routing.module';
+import { SolicitudesRoutingModule } from './solicitudes-routing.module';
 import { MensajeAdministrarComponent } from './mensaje-administrar/mensaje-administrar.component';
 import { MensajeCrearComponent } from './mensaje-crear/mensaje-crear.component';
 import { MensajeVisualizarComponent } from './mensaje-visualizar/mensaje-visualizar.component';
@@ -14,7 +14,7 @@ import { MensajeVisualizarComponent } from './mensaje-visualizar/mensaje-visuali
   ],
   imports: [
     CommonModule,
-    ControlRoutingModule
+    SolicitudesRoutingModule
   ]
 })
 export class SolicitudesModule { }
