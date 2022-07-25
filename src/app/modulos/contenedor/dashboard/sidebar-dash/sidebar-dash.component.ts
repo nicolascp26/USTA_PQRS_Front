@@ -1,3 +1,8 @@
+import {
+  ADMINISTRADOR_BOTONES,
+  ESTUDIANTE_BOTONES,
+  DEFAULT_BOTONES,
+} from './../../../../utilidades/botones-dinamicos/sidebar-dash-botones';
 import { AccesoService } from './../../../../servicios/acceso.service';
 import { Rol } from '../../../../modelos/rol';
 import { Usuario } from '../../../../modelos/usuario';
@@ -14,14 +19,19 @@ export class SidebarDashComponent implements OnInit {
   public usuarioSeleccionado: Usuario;
   public base64: string;
   public nombreUsuario: string | any;
+  public rolUsuario: string | any;
+  public botonesCargados:any = [];
 
   constructor(public accesoService: AccesoService) {
     this.usuarioSeleccionado = this.inicializarUsuario();
     this.base64 = localStorage.getItem('foto') as string;
     this.nombreUsuario = accesoService.objAcceso.usuarioNombres;
+    this.rolUsuario = accesoService.objAcceso.usuarioRol;
+    this.inicializarSidebar();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   public inicializarImagen(): Imagen {
     return new Imagen(0, this.inicializarUsuario(), '', '', '', '');
@@ -37,5 +47,19 @@ export class SidebarDashComponent implements OnInit {
 
   public cerrarSesion(): void {
     this.accesoService.logout();
+  }
+
+  public inicializarSidebar(): void {
+    switch (this.rolUsuario) {
+      case 'Administrador':
+        this.botonesCargados = ADMINISTRADOR_BOTONES;
+        break;
+      case 'Estudiante':
+        this.botonesCargados = ESTUDIANTE_BOTONES;
+        break;
+      default:
+        this.botonesCargados = DEFAULT_BOTONES;
+        break;
+    }
   }
 }
