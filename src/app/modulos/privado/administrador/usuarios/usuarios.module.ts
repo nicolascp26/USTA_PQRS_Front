@@ -4,7 +4,7 @@ import { UsuariosAdministrarComponent } from './usuarios-administrar/usuarios-ad
 import { UsuariosActualizarComponent } from './usuarios-actualizar/usuarios-actualizar.component';
 import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { FormsModule } from '@angular/forms';
-
+import { NgPipesModule } from 'ngx-pipes';
 
 @NgModule({
   declarations: [
@@ -14,7 +14,8 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     FormsModule,
-    UsuariosRoutingModule
+    UsuariosRoutingModule,
+    NgPipesModule
   ]
 })
 export class UsuariosModule { }

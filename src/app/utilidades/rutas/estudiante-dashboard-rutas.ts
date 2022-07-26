@@ -17,6 +17,6 @@ export const RUTAS_DASHBOARD_ESTUDIANTE: Routes = [
         (m) => m.SolicitudesModule
       ),
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  { path: '**', redirectTo: 'inicio', pathMatch: 'full' },
   //{ path: '**', component: ErrorSeguridadComponent }
 ];

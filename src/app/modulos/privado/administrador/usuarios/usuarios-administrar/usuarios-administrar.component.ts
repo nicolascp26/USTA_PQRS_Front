@@ -1,3 +1,4 @@
+import { RolService } from './../../../../../servicios/rol.service';
 import { observadorAny } from './../../../../../utilidades/observable/observable-any';
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/mensajes-toast.func';
 import { ToastrService } from 'ngx-toastr';
@@ -17,12 +18,15 @@ export class UsuariosAdministrarComponent implements OnInit {
   //Atributos requeridos
   public arregloUsuarios: Usuario[];
   public usuarioSeleccionado: Usuario;
+  public arregloRoles: Rol[];
+  public rolSeleccionado: any;
 
   //Atributos paginación
   public paginaActual: number;
   public cantidadMostrar: number;
   public cantidadPaginas: number;
   public cantidadTotalRegistros: number;
+  public searchBar = '';
 
   //Atributos modales
   public modalTitulo: string;
@@ -37,14 +41,16 @@ export class UsuariosAdministrarComponent implements OnInit {
 
   constructor(
     private usuarioService: UsuarioService,
+    private rolService: RolService,
     public modalService: BsModalService,
     private toastr: ToastrService
   ) {
     //Inicializar atributos requeridos
     this.arregloUsuarios = [];
+    this.arregloRoles = [];
     //this.arregloEstados = ARREGLO_ESTADOS_ROL;
     this.usuarioSeleccionado = this.inicializarUsuario();
-
+    this.rolSeleccionado = this.inicializarRol();
     //Inicializar atributos paginación
     this.paginaActual = 0;
     this.cantidadMostrar = 0;
@@ -73,6 +79,7 @@ export class UsuariosAdministrarComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerUsuarios();
+    this.obtenerRoles();
   }
 
   ngOnDestroy(): void {
@@ -123,8 +130,25 @@ export class UsuariosAdministrarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
+  public obtenerRoles(): void {
+    this.miSuscripcion = this.rolService
+      .cargarRoles()
+      .pipe(
+        map((resultado: Rol[]) => {
+          this.arregloRoles = resultado;
+        }),
+        finalize(() => {
+          this.cargaFinalizada = true;
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
   //Metodos Modales
-  public abrirModalEliminar(template: TemplateRef<any>, objBorrar: Usuario): void {
+  public abrirModalEliminar(
+    template: TemplateRef<any>,
+    objBorrar: Usuario
+  ): void {
     this.usuarioSeleccionado = objBorrar;
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
     this.modalTitulo = 'Advertencia';

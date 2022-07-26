@@ -231,15 +231,4 @@ export class MensajeTiposComponent implements OnInit {
     this.tipoSeleccionado = this.inicializarTipo();
     this.modalRef.hide();
   }
-
-  public buscarTabla() {
-    let searchValue = this.searchBar.toLocaleLowerCase();
-    if (this.searchBar !== '') {
-      this.arregloTipos = this.arregloTipos.filter((tipo: Tipo) => {
-        return tipo.tipoNombre.toLocaleLowerCase().match(searchValue);
-      });
-    } else {
-      this.obtenerTodosTipos();
-    }
-  }
 }
