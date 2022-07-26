@@ -5,18 +5,14 @@ import { SolicitudesRoutingModule } from './solicitudes-routing.module';
 import { MensajeAdministrarComponent } from './mensaje-administrar/mensaje-administrar.component';
 import { MensajeVisualizarComponent } from './mensaje-visualizar/mensaje-visualizar.component';
 import { MensajeTiposComponent } from './mensaje-tipos/mensaje-tipos.component';
-
+import { NgPipesModule } from 'ngx-pipes';
 
 @NgModule({
   declarations: [
     MensajeAdministrarComponent,
     MensajeVisualizarComponent,
-    MensajeTiposComponent
+    MensajeTiposComponent,
   ],
-  imports: [
-    CommonModule,
-    FormsModule,
-    SolicitudesRoutingModule
-  ]
+  imports: [CommonModule, FormsModule, SolicitudesRoutingModule, NgPipesModule],
 })
-export class SolicitudesModule { }
+export class SolicitudesModule {}

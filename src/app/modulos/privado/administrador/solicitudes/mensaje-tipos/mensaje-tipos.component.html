@@ -25,17 +25,17 @@
         Administrar Tipos de solicitudes
       </h4>
 
-      <div class="input-group">
+      <div class="input-group-sm text-center mb-2">
+        <span class="badge rounded-pill bg-success">
+          <i class="fas fa-search"></i>
+        </span>
         <input
-          class="form-control me-2"
+          class="form-control-sm form-control-borderless"
           type="search"
           placeholder="Buscar tipos"
           aria-label="Buscar"
           [(ngModel)]="searchBar"
         />
-        <button class="btn btn-success" type="submit" (click)="buscarTabla()">
-          <i class="fas fa-search"></i>
-        </button>
       </div>
     </div>
   </div>
@@ -59,7 +59,12 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let objTipo of arregloTipos">
+                <tr
+                  *ngFor="
+                    let objTipo of arregloTipos
+                      | filterBy: ['tipoClase', 'tipoNombre']:searchBar
+                  "
+                >
                   <td>{{ objTipo.tipoId }}</td>
                   <td>{{ objTipo.tipoClase }}</td>
                   <td>{{ objTipo.tipoNombre }}</td>
@@ -88,7 +93,8 @@
             </table>
             <div>
               <small
-                ><strong> {{ arregloTipos.length }} </strong> tipos de solicitudes creados
+                ><strong> {{ arregloTipos.length }} </strong> tipos de
+                solicitudes encontrados
               </small>
             </div>
           </div>

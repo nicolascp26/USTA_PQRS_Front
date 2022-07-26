@@ -1,4 +1,3 @@
-import { Usuario } from './../modelos/usuario';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
@@ -42,7 +41,7 @@ export class AccesoService {
     return localStorage.getItem('token') as string;
   }
 
-  public obtenerRolporToken():any{
+  public obtenerRolporToken(): any {
     return this.objAcceso.usuarioRol;
   }
 
@@ -52,6 +51,7 @@ export class AccesoService {
 
       try {
         const obj: any = jwtDecode(miToken);
+        this.objAcceso.usuarioId = obj.id;
         this.objAcceso.correoUsuario = obj.correo;
         this.objAcceso.claveUsuario = obj.clave;
         this.objAcceso.usuarioRol = obj.usuarioRol;
@@ -65,6 +65,13 @@ export class AccesoService {
   }
 
   public iniciarSesion(objAcceso: Acceso): Observable<AccesoRespuesta> {
-    return this.http.post<AccesoRespuesta>(this.appLogin, objAcceso);
+    return this.http.post<AccesoRespuesta>(this.appLogin+'/login', objAcceso);
+  }
+
+  public actualizarAcceso(objAcceso: Acceso): Observable<Acceso> {
+    return this.http.put<Acceso>(
+      this.appLogin + '/update/' + objAcceso.usuarioId,
+      objAcceso
+    );
   }
 }

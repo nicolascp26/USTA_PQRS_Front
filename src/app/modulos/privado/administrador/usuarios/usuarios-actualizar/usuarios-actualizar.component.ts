@@ -36,7 +36,6 @@ export class UsuariosActualizarComponent implements OnInit {
   constructor(
     private ruta: ActivatedRoute,
     private usuarioService: UsuarioService,
-    private accesoService: AccesoService,
     private rolService: RolService,
     private miMensaje: ToastrService
   ) {
