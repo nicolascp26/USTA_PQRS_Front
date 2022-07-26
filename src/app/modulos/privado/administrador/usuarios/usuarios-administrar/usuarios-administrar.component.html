@@ -5,7 +5,9 @@
       <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a [routerLink]="['/administrador/inicio']"><i class="fas fa-home"></i></a>
+            <a [routerLink]="['/administrador/inicio']"
+              ><i class="fas fa-home"></i
+            ></a>
           </li>
           <li class="breadcrumb-item active" aria-current="page">
             Administrador
@@ -16,16 +18,17 @@
 
       <h4 class="mb-3 fw-bold mb-0 text-center">Administrar Usuarios</h4>
 
-      <div>
-        <form class="d-flex">
-          <input
-            class="form-control me-2"
-            type="search"
-            placeholder="Buscar usuarios"
-            aria-label="Buscar"
-          />
-          <button class="btn btn-outline-success" type="submit">Buscar</button>
-        </form>
+      <div class="input-group-sm text-center mb-2">
+        <span class="badge rounded-pill bg-success">
+          <i class="fas fa-search"></i>
+        </span>
+        <input
+          class="form-control-sm form-control-borderless"
+          type="search"
+          placeholder="Buscar usuarios"
+          aria-label="Buscar"
+          [(ngModel)]="searchBar"
+        />
       </div>
     </div>
   </div>
@@ -50,7 +53,16 @@
               </thead>
               <tbody>
                 <tr
-                  *ngFor="let objUsu of arregloUsuarios"
+                  *ngFor="
+                    let objUsu of arregloUsuarios
+                      | filterBy
+                        : [
+                            'usuarioNombres',
+                            'usuarioApellidos',
+                            'usuarioDocumento'
+                          ]
+                        : searchBar
+                  "
                   (click)="seleccionarUsuario(objUsu)"
                 >
                   <td>{{ objUsu.usuarioId }}</td>
@@ -58,9 +70,6 @@
                     {{
                       objUsu.usuarioNombres + " " + objUsu.usuarioApellidos
                     }}&nbsp;
-                    <!--
-                    <p class="text-secondary">{{ objUsu.usuarioRol.rolNombre }}</p>
-                    -->
                   </td>
                   <td>{{ objUsu.usuarioDocumento }}</td>
                   <td>{{ objUsu.usuarioTelefono }}</td>
