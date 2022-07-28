@@ -1,74 +1,245 @@
-<div class="container bootstrap snippets bootdeys">
-  <div class="col-md-9">
-    <div class="timeline-centered timeline-sm">
-      <article class="timeline-entry">
-        <div class="timeline-entry-inner">
-          <time datetime="2014-01-10T03:45" class="timeline-time"
-            ><span>12:45 AM</span><span>Today</span></time
+<div class="container-fluid">
+  <div class="row g-3 mt-1">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a [routerLink]="['/administrador/inicio']"
+              ><i class="fas fa-home"></i
+            ></a>
+          </li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Administrador
+          </li>
+          <li
+            class="breadcrumb-item active"
+            style="cursor: pointer"
+            aria-current="page"
+            [routerLink]="['/administrador/solicitudes']"
           >
-          <div class="timeline-icon bg-violet">
-            <i class="fa fa-exclamation"></i>
-          </div>
-          <div class="timeline-label">
-            <h4 class="timeline-title">New Project</h4>
+            Solicitudes
+          </li>
+        </ol>
+      </nav>
 
-            <p>
-              Tolerably earnestly middleton extremely distrusts she boy now not.
-              Add and offered prepare how cordial.
-            </p>
-          </div>
-        </div>
-      </article>
-      <article class="timeline-entry left-aligned">
-        <div class="timeline-entry-inner">
-          <time datetime="2014-01-10T03:45" class="timeline-time"
-            ><span>9:15 AM</span><span>Today</span></time
-          >
-          <div class="timeline-icon bg-green"><i class="fa fa-group"></i></div>
-          <div class="timeline-label bg-green">
-            <h4 class="timeline-title">Job Meeting</h4>
+      <h4 class="mb-3 fw-bold mb-0 text-center">
+        Solicitud: <strong>{{ arregloHiloMensajes[0].mensajeTitulo }}</strong>
+      </h4>
+    </div>
+  </div>
 
-            <p>
-              Caulie dandelion maize lentil collard greens radish arugula sweet
-              pepper water spinach kombu courgette.
-            </p>
-          </div>
+  <div class="row g-3">
+    <div class="col-1"></div>
+    <div class="col-10">
+      <div class="card">
+        <div class="card-body">
+          <ul class="timeline">
+            <li>
+              <!-- begin timeline-time -->
+              <div class="timeline-time">
+                <span class="date">today</span>
+                <span class="time">04:20</span>
+              </div>
+              <!-- end timeline-time -->
+              <!-- begin timeline-icon -->
+              <div class="timeline-icon">
+                <a href="javascript:;">&nbsp;</a>
+              </div>
+              <!-- end timeline-icon -->
+              <!-- begin timeline-body -->
+              <div class="timeline-body">
+                <div class="timeline-header">
+                  <span class="userimage"
+                    ><img
+                      src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                      alt=""
+                  /></span>
+                  <span class="username"
+                    ><a href="javascript:;">John Smith</a> <small></small
+                  ></span>
+                  <span class="pull-right text-muted">18 Views</span>
+                </div>
+                <div class="timeline-content">
+                  <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Nunc faucibus turpis quis tincidunt luctus. Nam sagittis dui
+                    in nunc consequat, in imperdiet nunc sagittis.
+                  </p>
+                </div>
+                <div class="timeline-likes">
+                  <div class="stats-right">
+                    <span class="stats-text">259 Shares</span>
+                    <span class="stats-text">21 Comments</span>
+                  </div>
+                  <div class="stats">
+                    <span class="fa-stack fa-fw stats-icon">
+                      <i class="fa fa-circle fa-stack-2x text-danger"></i>
+                      <i
+                        class="fa fa-heart fa-stack-1x fa-inverse t-plus-1"
+                      ></i>
+                    </span>
+                    <span class="fa-stack fa-fw stats-icon">
+                      <i class="fa fa-circle fa-stack-2x text-primary"></i>
+                      <i class="fa fa-thumbs-up fa-stack-1x fa-inverse"></i>
+                    </span>
+                    <span class="stats-total">4.3k</span>
+                  </div>
+                </div>
+                <div class="timeline-footer">
+                  <a href="javascript:;" class="m-r-15 text-inverse-lighter"
+                    ><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a
+                  >
+                  <a href="javascript:;" class="m-r-15 text-inverse-lighter"
+                    ><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a
+                  >
+                  <a href="javascript:;" class="m-r-15 text-inverse-lighter"
+                    ><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a
+                  >
+                </div>
+                <div class="timeline-comment-box">
+                  <div class="user">
+                    <img
+                      src="https://bootdey.com/img/Content/avatar/avatar6.png"
+                    />
+                  </div>
+                  <div class="input">
+                    <form action="">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control rounded-corner"
+                          placeholder="Write a comment..."
+                        />
+                        <span class="input-group-btn p-l-10">
+                          <button
+                            class="btn btn-primary f-s-12 rounded-corner"
+                            type="button"
+                          >
+                            Comment
+                          </button>
+                        </span>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <!-- end timeline-body -->
+            </li>
+            <li>
+              <!-- begin timeline-time -->
+              <div class="timeline-time">
+                <span class="date">24 February 2014</span>
+                <span class="time">08:17</span>
+              </div>
+              <!-- end timeline-time -->
+              <!-- begin timeline-icon -->
+              <div class="timeline-icon">
+                <a href="javascript:;">&nbsp;</a>
+              </div>
+              <!-- end timeline-icon -->
+              <!-- begin timeline-body -->
+              <div class="timeline-body" *ngFor="let msj of arregloHiloMensajes">
+                <div class="timeline-header">
+                  <span class="userimage"
+                    ><img
+                      src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                      alt=""
+                  /></span>
+                  <span class="username">Richard Leong</span>
+                  <span class="pull-right text-muted">1,282 Views</span>
+                </div>
+                <div class="timeline-content">
+                  <p class="lead">
+                    <i class="fa fa-quote-left fa-fw pull-left"></i>
+                    Quisque sed varius nisl. Nulla facilisi. Phasellus consequat
+                    sapien sit amet nibh molestie placerat. Donec nulla quam,
+                    ullamcorper ut velit vitae, lobortis condimentum magna.
+                    Suspendisse mollis in sem vel mollis.
+                    <i class="fa fa-quote-right fa-fw pull-right"></i>
+                  </p>
+                </div>
+                <div class="timeline-footer">
+                  <a href="javascript:;" class="m-r-15 text-inverse-lighter"
+                    ><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a
+                  >
+                  <a href="javascript:;" class="m-r-15 text-inverse-lighter"
+                    ><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a
+                  >
+                  <a href="javascript:;" class="m-r-15 text-inverse-lighter"
+                    ><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a
+                  >
+                </div>
+              </div>
+              <!-- end timeline-body -->
+            </li>
+            <li>
+              <!-- begin timeline-time -->
+              <div class="timeline-time">
+                <span class="date">10 January 2014</span>
+                <span class="time">20:43</span>
+              </div>
+              <!-- end timeline-time -->
+              <!-- begin timeline-icon -->
+              <div class="timeline-icon">
+                <a href="javascript:;">&nbsp;</a>
+              </div>
+              <!-- end timeline-icon -->
+              <!-- begin timeline-body -->
+              <div class="timeline-body">
+                <div class="timeline-header">
+                  <span class="userimage"
+                    ><img
+                      src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                      alt=""
+                  /></span>
+                  <span class="username">Lelouch Wong</span>
+                  <span class="pull-right text-muted">1,021,282 Views</span>
+                </div>
+                <div class="timeline-content">
+                  <h4 class="template-title">
+                    <i class="fa fa-map-marker text-danger fa-fw"></i>
+                    795 Folsom Ave, Suite 600 San Francisco, CA 94107
+                  </h4>
+                  <p>
+                    In hac habitasse platea dictumst. Pellentesque bibendum id
+                    sem nec faucibus. Maecenas molestie, augue vel accumsan
+                    rutrum, massa mi rutrum odio, id luctus mauris nibh ut leo.
+                  </p>
+                  <p class="m-t-20">
+                    <img
+                      src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                      alt=""
+                    />
+                  </p>
+                </div>
+                <div class="timeline-footer">
+                  <a href="javascript:;" class="m-r-15 text-inverse-lighter"
+                    ><i class="fa fa-thumbs-up fa-fw fa-lg m-r-3"></i> Like</a
+                  >
+                  <a href="javascript:;" class="m-r-15 text-inverse-lighter"
+                    ><i class="fa fa-comments fa-fw fa-lg m-r-3"></i> Comment</a
+                  >
+                  <a href="javascript:;" class="m-r-15 text-inverse-lighter"
+                    ><i class="fa fa-share fa-fw fa-lg m-r-3"></i> Share</a
+                  >
+                </div>
+              </div>
+              <!-- end timeline-body -->
+            </li>
+            <li>
+              <!-- begin timeline-icon -->
+              <div class="timeline-icon">
+                <a href="javascript:;">&nbsp;</a>
+              </div>
+              <!-- end timeline-icon -->
+              <!-- begin timeline-body -->
+              <div class="timeline-body">Loading...</div>
+              <!-- begin timeline-body -->
+            </li>
+          </ul>
         </div>
-      </article>
-      <article class="timeline-entry">
-        <div class="timeline-entry-inner">
-          <time datetime="2014-01-09T13:22" class="timeline-time"
-            ><span>8:20 PM</span><span>04/03/2013</span></time
-          >
-          <div class="timeline-icon bg-orange">
-            <i class="fa fa-paper-plane"></i>
-          </div>
-          <div class="timeline-label bg-orange">
-            <h4 class="timeline-title">Daily Feeds</h4>
-
-            <p>
-              <img
-                src="https://via.placeholder.com/45x45/"
-                alt=""
-                class="timeline-img pull-left"
-              />Parsley amaranth tigernut silver beet maize fennel spinach
-              ricebean black-eyed. Tolerably earnestly middleton extremely
-              distrusts she boy now not. Add and offered prepare how cordial.
-            </p>
-          </div>
-        </div>
-        <div class="timeline-entry-inner">
-          <div
-            style="
-              -webkit-transform: rotate(-90deg);
-              -moz-transform: rotate(-90deg);
-            "
-            class="timeline-icon"
-          >
-            <i class="fa fa-plus"></i>
-          </div>
-        </div>
-      </article>
+      </div>
     </div>
   </div>
 </div>
