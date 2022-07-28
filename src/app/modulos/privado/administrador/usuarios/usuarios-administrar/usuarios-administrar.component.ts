@@ -43,7 +43,7 @@ export class UsuariosAdministrarComponent implements OnInit {
     private usuarioService: UsuarioService,
     private rolService: RolService,
     public modalService: BsModalService,
-    private toastr: ToastrService
+    private miMensaje: ToastrService
   ) {
     //Inicializar atributos requeridos
     this.arregloUsuarios = [];
@@ -114,7 +114,7 @@ export class UsuariosAdministrarComponent implements OnInit {
       .pipe(
         map((respuesta) => {
           this.obtenerUsuarios();
-          mostrarMensaje('success', 'Usuario eliminado', 'Exito', this.toastr);
+          mostrarMensaje('success', 'Usuario eliminado', 'Exito', this.miMensaje);
           return respuesta;
         }),
         catchError((miError) => {
@@ -122,7 +122,7 @@ export class UsuariosAdministrarComponent implements OnInit {
             'error',
             'Usuario no eliminado',
             'Advertencia',
-            this.toastr
+            this.miMensaje
           );
           throw miError;
         })
