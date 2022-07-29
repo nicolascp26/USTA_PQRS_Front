@@ -103,7 +103,9 @@
                       </div>
                       <div>
                         <strong>Fecha:</strong>
-                        {{ soli.mensajeFecha + " a las " + soli.mensajeHora }}
+                        {{ soli.mensajeFecha | date: "MMM d, y" }}
+                        a las
+                        {{ soli.mensajeFecha | date: "h:mm a" }}
                       </div>
                     </span>
                   </td>
@@ -113,7 +115,9 @@
                     <span *ngIf="soli.mensajePrioridad == 3">Baja</span>
                   </td>
 
-                  <td class="text-center">{{ soli.mensajeTipoId }}</td>
+                  <td class="text-center">
+                    {{ soli.tipoClase }}-{{ soli.tipoNombre }}
+                  </td>
                 </tr>
               </tbody>
             </table>
