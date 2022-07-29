@@ -1,30 +1,53 @@
+import { AccesoService } from './../../../../../servicios/acceso.service';
+import { mostrarMensaje } from 'src/app/utilidades/mensajes/mensajes-toast.func';
+import { ToastrService } from 'ngx-toastr';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { NgForm } from '@angular/forms';
 import { observadorAny } from 'src/app/utilidades/observable/observable-any';
-import { map, Subscription, finalize } from 'rxjs';
+import { map, Subscription, finalize, catchError } from 'rxjs';
 import { Mensaje } from './../../../../../modelos/mensaje';
 import { MensajesService } from './../../../../../servicios/mensajes.service';
 import { ParamMap, ActivatedRoute } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-mensaje-visualizar',
   templateUrl: './mensaje-visualizar.component.html',
-  styleUrls: ['./mensaje-visualizar.component.css']
+  styleUrls: ['./mensaje-visualizar.component.css'],
 })
 export class MensajeVisualizarComponent implements OnInit {
+  //Atributos requeridos
+  public nuevoMensaje: Mensaje;
+  public arregloHiloMensajes: Mensaje[];
+  public usuarioId: number;
 
-//Atributos requeridos
-public mensajeSeleccionado: Mensaje;
-public arregloHiloMensajes: Mensaje[];
+  //Atributos modales
+  public modalTitulo: string;
+  public modalContenido: string;
+  public modalRef: BsModalRef;
 
-//Atributos consumo de servicios
-public tmp: any;
-public miSuscripcion: Subscription;
-public cargaFinalizada: boolean;
+  //Atributos consumo de servicios
+  public tmp: any;
+  public miSuscripcion: Subscription;
+  public cargaFinalizada: boolean;
 
-  constructor(private mensajesService:MensajesService,private ruta: ActivatedRoute,) {
+  constructor(
+    private mensajesService: MensajesService,
+    private accesoService: AccesoService,
+    public modalService: BsModalService,
+    private toastr: ToastrService,
+    private ruta: ActivatedRoute
+  ) {
     //Inicializar atributos requeridos
-    this.mensajeSeleccionado = this.inicializarMensaje();
+    this.nuevoMensaje = this.inicializarMensaje();
     this.arregloHiloMensajes = [];
+    this.usuarioId = accesoService.objAcceso.usuarioId;
+
+    //Inicializar modales
+    this.modalTitulo = '';
+    this.modalContenido = '';
+    this.modalRef = this.tmp;
+
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
     this.cargaFinalizada = false;
@@ -35,6 +58,8 @@ public cargaFinalizada: boolean;
       const miCodigo = String(parametro.get('mensajeId'));
       const miCodigoNumerico = parseFloat(miCodigo);
       this.obtenerHiloMensajes(miCodigoNumerico);
+      this.nuevoMensaje.mensajeCodpadre = miCodigoNumerico;
+      this.nuevoMensaje.mensajeUsuario = this.usuarioId;
     });
   }
 
@@ -45,7 +70,7 @@ public cargaFinalizada: boolean;
   }
 
   public inicializarMensaje(): Mensaje {
-    return new Mensaje(0, '', '','','',0,0,0);
+    return new Mensaje(0, 0, 0, '', '', '', 0, 0);
   }
 
   public obtenerHiloMensajes(mensajeId: number): void {
@@ -63,4 +88,62 @@ public cargaFinalizada: boolean;
       .subscribe(observadorAny);
   }
 
+  public responderMensaje(formulario: NgForm): void {
+    this.miSuscripcion = this.mensajesService
+      .responderMensaje(this.nuevoMensaje)
+      .pipe(
+        map((respuesta) => {
+          mostrarMensaje('success', 'Mensaje enviado', 'Exito', this.toastr);
+          this.obtenerHiloMensajes(this.nuevoMensaje.mensajeCodpadre);
+          formulario.reset();
+          return respuesta;
+        }),
+        catchError((miError) => {
+          mostrarMensaje(
+            'error',
+            'El mensaje no fue enviado',
+            'Advertencia',
+            this.toastr
+          );
+          throw miError;
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
+  public terminarSolicitud(): void {
+    this.miSuscripcion = this.mensajesService
+      .terminarSolicitud(this.nuevoMensaje)
+      .pipe(
+        map((respuesta) => {
+          mostrarMensaje('success', 'Mensaje enviado', 'Exito', this.toastr);
+          this.obtenerHiloMensajes(this.nuevoMensaje.mensajeCodpadre);
+          return respuesta;
+        }),
+        catchError((miError) => {
+          mostrarMensaje(
+            'error',
+            'El mensaje no fue enviado',
+            'Advertencia',
+            this.toastr
+          );
+          throw miError;
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
+  //Metodos de las modales
+  public abrirModalEliminar(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
+    this.modalTitulo = 'Advertencia';
+    this.modalContenido = 'Seguro que quieres terminar la solicitud?';
+  }
+  public cancelar(): void {
+    this.modalRef.hide();
+  }
+  public confirmarTerminar(): void {
+    this.terminarSolicitud();
+    this.modalRef.hide();
+  }
 }

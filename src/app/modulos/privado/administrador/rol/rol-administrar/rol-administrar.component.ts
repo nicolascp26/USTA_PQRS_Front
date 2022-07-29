@@ -19,12 +19,6 @@ export class RolAdministrarComponent implements OnInit {
   public objRol: Rol;
   public rolSeleccionado: Rol;
 
-  //Atributos paginación
-  public paginaActual: number;
-  public cantidadMostrar: number;
-  public cantidadPaginas: number;
-  public cantidadTotalRegistros: number;
-
   //Atributos modales
   public modalTitulo: string;
   public modalContenido: string;
@@ -47,12 +41,6 @@ export class RolAdministrarComponent implements OnInit {
     //this.arregloEstados = ARREGLO_ESTADOS_ROL;
     this.rolSeleccionado = this.inicializarRol();
     this.objRol = this.inicializarRol();
-
-    //Inicializar atributos paginación
-    this.paginaActual = 0;
-    this.cantidadMostrar = 0;
-    this.cantidadPaginas = 0;
-    this.cantidadTotalRegistros = 0;
 
     //Inicializar modales
     this.modalTitulo = '';

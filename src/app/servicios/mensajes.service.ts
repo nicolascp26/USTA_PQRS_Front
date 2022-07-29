@@ -35,7 +35,14 @@ export class MensajesService {
 
   public responderMensaje(objMensaje: Mensaje): Observable<Mensaje> {
     return this.http.post<Mensaje>(
-      this.apiMensajes + '/replyMessage/' + objMensaje.mensajeId,
+      this.apiMensajes + '/replyMessage/' + objMensaje.mensajeCodpadre,
+      objMensaje
+    );
+  }
+
+  public terminarSolicitud(objMensaje: Mensaje): Observable<Mensaje> {
+    return this.http.put<Mensaje>(
+      this.apiMensajes + '/finalizeRequest/' + objMensaje.mensajeCodpadre,
       objMensaje
     );
   }
