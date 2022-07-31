@@ -8,6 +8,7 @@ export class Usuario {
   public usuarioDocumento: string;
   public usuarioTelefono: string;
   public rolId: number;
+  public rolNombre?:string;
   public constructor(
     cod: number,
     nom: string,

@@ -31,8 +31,6 @@ export class MensajeVisualizarComponent implements OnInit {
   public miSuscripcion: Subscription;
   public cargaFinalizada: boolean;
 
-
-
   constructor(
     private mensajesService: MensajesService,
     private accesoService: AccesoService,

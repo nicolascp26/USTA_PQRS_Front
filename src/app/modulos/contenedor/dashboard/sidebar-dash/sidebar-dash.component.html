@@ -1,105 +1,118 @@
-<main>
-  <div class="side-nav-content">
-    <div
-      class="d-flex flex-column vh-100 flex-shrink-0 p-3 text-white bg-dark"
-      style="width: 250px"
-    >
-      <a
-        [routerLink]="['inicio']"
-        class="navbar-brand d-flex align-items-center text-decoration-none"
-      >
-        <img
-          class=""
-          src="../../../../assets/images/logo-white.png"
-          alt=""
-          width="200"
-          height="60"
-        />
-      </a>
+<header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a
+    [routerLink]="['inicio']"
+    class="navbar-brand col-md-3 col-lg-2 me-0 px-3"
+  >
+    <img
+      class=""
+      src="../../../../assets/images/logo-white.png"
+      alt=""
+      width="200"
+      height="60"
+    />
+  </a>
+  <button
+    class="navbar-toggler position-absolute d-md-none collapsed"
+    type="button"
+    data-bs-toggle="collapse"
+    data-bs-target="#sidebarMenu"
+    aria-controls="sidebarMenu"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <hr />
+</header>
+<div>
+  <nav
+    id="sidebarMenu"
+    class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse px-3"
+  >
+    <div class="position-sticky pt-3">
+      <ul class="nav nav-pills flex-column mb-auto mt-5">
+        <li class="nav-item" *ngFor="let item of botonesCargados">
+          <a
+            [routerLink]="['' + item.route]"
+            class="nav-link text-white"
+            routerLinkActive="active"
+          >
+            <i class="{{ item.icon }}"></i
+            ><span class="ms-2">{{ item.name }} </span>
+          </a>
+        </li>
+      </ul>
       <hr />
-      <nav>
-        <ul class="nav nav-pills flex-column mb-auto">
-          <li class="nav-item" *ngFor="let item of botonesCargados">
+      <div class="dropdown">
+        <a
+          href="#"
+          class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+          id="dropdownUser1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <img
+            [src]="'data:image/png;base64,' + base64"
+            onerror="this.src='../../assets/imagenes/noDisponible.png'"
+            alt=""
+            width="32"
+            height="32"
+            class="rounded-circle me-2"
+          />
+          <strong>{{ nombreUsuario }}</strong>
+        </a>
+        <ul
+          class="dropdown-menu dropdown-menu-dark text-small shadow"
+          aria-labelledby="dropdownUser1"
+        >
+          <li class="nav-item">
             <a
-              [routerLink]="['' + item.route]"
-              class="nav-link text-white"
-              routerLinkActive="active"
+              *ngIf="rolUsuario == 'Estudiante'"
+              class="dropdown-item"
+              [routerLink]="['/estudiante/solicitudes']"
+              routerLinkActive="text-white"
+              >Historial de solicitudes</a
             >
-              <i class="{{ item.icon }}"></i
-              ><span class="ms-2">{{ item.name }} </span>
+          </li>
+          <li class="nav-item">
+            <a
+              *ngIf="rolUsuario == 'Estudiante'"
+              class="dropdown-item"
+              [routerLink]="['/estudiante/inicio/perfil']"
+              routerLinkActive="text-white"
+              >Editar perfil</a
+            >
+            <a
+              *ngIf="rolUsuario == 'Administrador'"
+              class="dropdown-item"
+              [routerLink]="['/administrador/inicio/perfil']"
+              routerLinkActive="text-white"
+              >Editar perfil</a
+            >
+          </li>
+          <li>
+            <hr class="dropdown-divider" />
+          </li>
+
+          <li>
+            <a
+              (click)="cerrarSesion()"
+              routerLinkActive="router-link-active"
+              class="nav-link text-white"
+              style="cursor: pointer"
+            >
+              <i class="fa-solid fa-arrow-right-from-bracket"></i
+              ><span class="ms-2">Cerrar Sesion</span>
             </a>
           </li>
         </ul>
-        <hr />
-        <div class="dropdown">
-          <a
-            href="#"
-            class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
-            id="dropdownUser1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <img
-              [src]="'data:image/png;base64,' + base64"
-              onerror="this.src='../../assets/imagenes/noDisponible.png'"
-              alt=""
-              width="32"
-              height="32"
-              class="rounded-circle me-2"
-            />
-            <strong>{{ nombreUsuario }}</strong>
-          </a>
-          <ul
-            class="dropdown-menu dropdown-menu-dark text-small shadow"
-            aria-labelledby="dropdownUser1"
-          >
-            <li class="nav-item">
-              <a *ngIf="rolUsuario == 'Estudiante'"
-                class="dropdown-item"
-                [routerLink]="[
-                  '/estudiante/solicitudes'
-                ]"
-                routerLinkActive="text-white"
-                >Historial de solicitudes</a
-              >
-            </li>
-            <li class="nav-item">
-              <a *ngIf="rolUsuario == 'Estudiante'"
-                class="dropdown-item"
-                [routerLink]="['/estudiante/inicio/perfil']"
-                routerLinkActive="text-white"
-                >Editar perfil</a
-              >
-              <a *ngIf="rolUsuario == 'Administrador'"
-                class="dropdown-item"
-                [routerLink]="['/administrador/inicio/perfil']"
-                routerLinkActive="text-white"
-                >Editar perfil</a
-              >
-            </li>
-            <li>
-              <hr class="dropdown-divider" />
-            </li>
-
-            <li>
-              <a
-                (click)="cerrarSesion()"
-                routerLinkActive="router-link-active"
-                class="nav-link text-white"
-                style="cursor: pointer"
-              >
-                <i class="fa-solid fa-arrow-right-from-bracket"></i
-                ><span class="ms-2">Cerrar Sesion</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </nav>
+      </div>
     </div>
-    <!--
+  </nav>
+</div>
+
+<!--
       <footer class="row bg-light py-4 mt-auto">
         <div class="col">Footer content here...</div>
       </footer>
       -->
-  </div>
-</main>

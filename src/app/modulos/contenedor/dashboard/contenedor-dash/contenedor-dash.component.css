@@ -1,20 +1,4 @@
-main {
-  position: absolute;
-  display: flex;
-  width: 100%;
-  z-index: 1;
-  /* overflow-x: hidden;*/
-}
-
-app-sidebar-dash {
-  position: fixed;
-  left: 0rem;
-  width: 250px;
-  height: calc(100vh - 4rem);
-}
-
 .display-area{
   position: absolute;
-  left: 250px;
-  width: calc(100% - 250px);
+
 }

@@ -16,8 +16,8 @@ export class MensajesService {
     return this.http.get<Mensaje[]>(this.apiMensajes + '/getAllAdmin');
   }
 
-  public obtenerSolicitudesUsuario(): Observable<Mensaje[]> {
-    return this.http.get<Mensaje[]>(this.apiMensajes + '/getAllUser');
+  public obtenerSolicitudesUsuario(usuarioId:number): Observable<Mensaje[]> {
+    return this.http.get<Mensaje[]>(this.apiMensajes + '/getAllUser/'+ usuarioId);
   }
 
   public obtenerHiloMensajes(mensajeId: number): Observable<Mensaje[]> {
