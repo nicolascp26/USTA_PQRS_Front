@@ -81,7 +81,6 @@ export class MensajeTiposComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerTodosTipos();
-    console.log(this.arregloTipoClases);
   }
 
   ngOnDestroy(): void {

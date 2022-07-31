@@ -6,11 +6,11 @@ import { RolService } from './../../../../../servicios/rol.service';
 import { AccesoService } from './../../../../../servicios/acceso.service';
 import { UsuarioService } from './../../../../../servicios/usuario.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { map, Subscription, finalize, catchError } from 'rxjs';
 import { Rol } from './../../../../../modelos/rol';
 import { Usuario } from './../../../../../modelos/usuario';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-perfil',
@@ -35,10 +35,10 @@ export class PerfilComponent implements OnInit {
   public modalRef: BsModalRef;
 
   constructor(
-    private ruta: ActivatedRoute,
     private usuarioService: UsuarioService,
     private accesoService: AccesoService,
     private rolService: RolService,
+    public modalService: BsModalService,
     private miMensaje: ToastrService
   ) {
     //Inicializar Usuario
@@ -80,7 +80,6 @@ export class PerfilComponent implements OnInit {
       .pipe(
         map((resultado: Usuario) => {
           this.usuarioSeleccionado = resultado;
-          console.log(this.usuarioSeleccionado);
         }),
         finalize(() => {
           this.cargaFinalizada = true;
@@ -155,7 +154,16 @@ export class PerfilComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
+  public abrirModalEliminar(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
+    this.modalTitulo = 'Advertencia';
+    this.modalContenido = 'Seguro que quieres eliminar la cuenta?';
+  }
   public cancelar(): void {
+    this.modalRef.hide();
+  }
+  public confirmarEliminar(): void {
+    //this.terminarSolicitud();
     this.modalRef.hide();
   }
 }

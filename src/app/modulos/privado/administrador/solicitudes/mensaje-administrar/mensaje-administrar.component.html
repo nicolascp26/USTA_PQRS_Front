@@ -1,134 +1,122 @@
 <div class="container-fluid">
   <div class="row g-3 mt-1">
-    <div class="col-1"></div>
-    <div class="col-10">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a [routerLink]="['/administrador/inicio']"
-              ><i class="fas fa-home"></i
-            ></a>
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">
-            Administrador
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">
-            Solicitudes
-          </li>
-        </ol>
-      </nav>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/administrador/inicio']"
+            ><i class="fas fa-home"></i
+          ></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Administrador
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Solicitudes</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="row justify-content-center">
+    <h4 class="mb-3 fw-bold text-center">Administrar Solicitudes</h4>
 
-      <h4 class="mb-3 fw-bold mb-0 text-center">Administrar Solicitudes</h4>
-
-      <div class="input-group-sm text-center mb-2">
-        <span class="badge rounded-pill bg-success">
-          <i class="fas fa-search"></i>
-        </span>
-        <input
-          class="form-control-sm form-control-borderless"
-          type="search"
-          placeholder="Buscar solicitudes"
-          aria-label="Buscar"
-          [(ngModel)]="searchBar"
-        />
-      </div>
+    <div class="input-group-sm text-center mb-2">
+      <span class="badge rounded-pill bg-success">
+        <i class="fas fa-search"></i>
+      </span>
+      <input
+        class="form-control-sm form-control-borderless"
+        type="search"
+        placeholder="Buscar solicitudes"
+        aria-label="Buscar"
+        [(ngModel)]="searchBar"
+      />
     </div>
   </div>
 
-  <div class="row g-3">
-    <div class="col-1"></div>
-    <div class="col-10">
-      <div class="card">
-        <div class="card-body">
-          <div class="table-responsive-sm">
-            <table
-              class="table table-striped table-hover table-sm justify-content-center table-bordered"
-            >
-              <thead class="bg-dark text-white">
-                <tr>
-                  <th style="width: 10%">Estado</th>
-                  <th style="width: 30%">Solicitud</th>
-                  <th style="width: 30%">Detalle</th>
-                  <th style="width: 10%">Prioridad</th>
-                  <th style="width: 10%">Tipo de solicitud</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  *ngFor="
-                    let soli of arregloSolicitudes
-                      | filterBy
-                        : [
-                            'mensajeTitulo',
-                            'usuarioNombres',
-                            'usuarioApellidos'
-                          ]
-                        : searchBar
-                  "
-                  (click)="seleccionarSolicitud(soli)"
-                >
-                  <td class="text-center">
-                    <span
-                      class="badge rounded-pill bg-success"
-                      *ngIf="soli.mensajeEstado == 1"
-                      >Nueva</span
-                    >
-                    <span
-                      class="badge rounded-pill bg-warning text-dark"
-                      *ngIf="soli.mensajeEstado == 2"
-                      >En progreso</span
-                    >
-                    <span
-                      class="badge rounded-pill bg-danger"
-                      *ngIf="soli.mensajeEstado == 3"
-                      >Terminada</span
-                    >
-                  </td>
-                  <td>
-                    <a
-                      [routerLink]="[
-                        '/administrador/solicitudes/visualizar/',
-                        soli.mensajeId
-                      ]"
-                      routerLinkActive="router-link-active"
-                    >
-                      {{ soli.mensajeTitulo }}
-                    </a>
-                  </td>
-                  <td>
-                    <span>
-                      <div>
-                        <strong>Creada por:</strong>
-                        {{ soli.usuarioNombres + " " + soli.usuarioApellidos }}
-                      </div>
-                      <div>
-                        <strong>Fecha:</strong>
-                        {{ soli.mensajeFecha | date: "MMM d, y" }}
-                        a las
-                        {{ soli.mensajeFecha | date: "h:mm a" }}
-                      </div>
-                    </span>
-                  </td>
-                  <td class="text-center">
-                    <span *ngIf="soli.mensajePrioridad == 1">Alta</span>
-                    <span *ngIf="soli.mensajePrioridad == 2">Media</span>
-                    <span *ngIf="soli.mensajePrioridad == 3">Baja</span>
-                  </td>
-
-                  <td class="text-center">
-                    {{ soli.tipoClase }}-{{ soli.tipoNombre }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div>
-              <small
-                ><strong> {{ arregloSolicitudes.length }} </strong> solicitudes
-                registradas</small
+  <div class="row">
+    <div class="table-responsive-sm">
+      <table
+        class="table table-striped table-hover table-sm justify-content-center table-bordered"
+      >
+        <thead class="bg-dark text-white">
+          <tr>
+            <th style="width: 10%">Estado</th>
+            <th style="width: 30%">Solicitud</th>
+            <th style="width: 30%">Detalle</th>
+            <th style="width: 10%">Prioridad</th>
+            <th style="width: 10%">Tipo de solicitud</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let soli of arregloSolicitudes
+                | filterBy
+                  : ['mensajeTitulo', 'usuarioNombres', 'usuarioApellidos','tipoClase','tipoNombre']
+                  : searchBar
+            "
+            (click)="seleccionarSolicitud(soli)"
+          >
+            <td class="text-center">
+              <span
+                class="badge rounded-pill bg-success"
+                *ngIf="soli.mensajeEstado == 1"
+                >Nueva</span
               >
-            </div>
-          </div>
-          <!--
+              <span
+                class="badge rounded-pill bg-warning text-dark"
+                *ngIf="soli.mensajeEstado == 2"
+                >En progreso</span
+              >
+              <span
+                class="badge rounded-pill bg-danger"
+                *ngIf="soli.mensajeEstado == 3"
+                >Terminada</span
+              >
+            </td>
+            <td>
+              <a
+                [routerLink]="[
+                  '/administrador/solicitudes/visualizar/',
+                  soli.mensajeId
+                ]"
+                routerLinkActive="router-link-active"
+              >
+                {{ soli.mensajeTitulo }}
+              </a>
+            </td>
+            <td>
+              <span>
+                <div>
+                  <strong>Creada por:</strong>
+                  {{ soli.usuarioNombres + " " + soli.usuarioApellidos }}
+                </div>
+                <div>
+                  <strong>Fecha:</strong>
+                  {{ soli.mensajeFecha | date: "MMM d, y" }}
+                  a las
+                  {{ soli.mensajeFecha | date: "h:mm a" }}
+                </div>
+              </span>
+            </td>
+            <td class="text-center">
+              <span *ngIf="soli.mensajePrioridad == 1">Alta</span>
+              <span *ngIf="soli.mensajePrioridad == 2">Media</span>
+              <span *ngIf="soli.mensajePrioridad == 3">Baja</span>
+            </td>
+
+            <td class="text-center">
+              {{ soli.tipoClase }}-{{ soli.tipoNombre }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <small
+          ><strong> {{ arregloSolicitudes.length }} </strong> solicitudes
+          registradas</small
+        >
+      </div>
+    </div>
+    <!--
           <div class="row justify-content-md-center">
             <div class="col-md-6 text-left" style="padding-left: 15px">
               <small
@@ -142,18 +130,15 @@
             <div class="col-md-6 text-right" style="padding-right: 15px"></div>
           </div>
           -->
-          <div class="text-center">
-            <button
-              routerLinkActive="router-link-active"
-              type="button"
-              class="btn btn-primary"
-              (click)="obtenerSolicitudes()"
-            >
-              Actualizar lista de solicitudes
-            </button>
-          </div>
-        </div>
-      </div>
+    <div class="text-center">
+      <button
+        routerLinkActive="router-link-active"
+        type="button"
+        class="btn btn-primary"
+        (click)="obtenerSolicitudes()"
+      >
+        Actualizar lista de solicitudes
+      </button>
     </div>
   </div>
 </div>
