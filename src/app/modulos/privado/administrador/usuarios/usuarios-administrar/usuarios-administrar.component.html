@@ -1,104 +1,94 @@
 <div class="container-fluid">
   <div class="row g-3 mt-1">
-    <div class="col-1"></div>
-    <div class="col-10">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a [routerLink]="['/administrador/inicio']"
-              ><i class="fas fa-home"></i
-            ></a>
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">
-            Administrador
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
-        </ol>
-      </nav>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/administrador/inicio']"
+            ><i class="fas fa-home"></i
+          ></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Administrador
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
+      </ol>
+    </nav>
+  </div>
+  <div class="row justify-content-center">
+    <h4 class="mb-3 fw-bold mb-0 text-center">Administrar Usuarios</h4>
 
-      <h4 class="mb-3 fw-bold mb-0 text-center">Administrar Usuarios</h4>
-
-      <div class="input-group-sm text-center mb-2">
-        <span class="badge rounded-pill bg-success">
-          <i class="fas fa-search"></i>
-        </span>
-        <input
-          class="form-control-sm form-control-borderless"
-          type="search"
-          placeholder="Buscar usuarios"
-          aria-label="Buscar"
-          [(ngModel)]="searchBar"
-        />
-      </div>
+    <div class="input-group-sm text-center mb-2">
+      <span class="badge rounded-pill bg-success">
+        <i class="fas fa-search"></i>
+      </span>
+      <input
+        class="form-control-sm form-control-borderless"
+        type="search"
+        placeholder="Buscar usuarios"
+        aria-label="Buscar"
+        [(ngModel)]="searchBar"
+      />
     </div>
   </div>
 
-  <div class="row g-3">
-    <div class="col-1"></div>
-    <div class="col-10">
-      <div class="card">
-        <div class="card-body">
-          <div class="table-responsive-sm">
-            <table
-              class="table table-striped table-hover table-sm justify-content-center table-bordered"
-            >
-              <thead class="bg-dark text-white">
-                <tr>
-                  <th style="width: 10%">Codigo</th>
-                  <th style="width: 30%">Nombres</th>
-                  <th style="width: 20%">Documento</th>
-                  <th style="width: 20%">Telefono</th>
-                  <th style="width: 20%"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  *ngFor="
-                    let objUsu of arregloUsuarios
-                      | filterBy
-                        : [
-                            'usuarioNombres',
-                            'usuarioApellidos',
-                            'usuarioDocumento'
-                          ]
-                        : searchBar
-                  "
-                  (click)="seleccionarUsuario(objUsu)"
-                >
-                  <td>{{ objUsu.usuarioId }}</td>
-                  <td>
-                    {{
-                      objUsu.usuarioNombres + " " + objUsu.usuarioApellidos
-                    }}&nbsp;
-                  </td>
-                  <td>{{ objUsu.usuarioDocumento }}</td>
-                  <td>{{ objUsu.usuarioTelefono }}</td>
-                  <td style="text-align: center">
-                    <span
-                      class="badge bg-warning text-dark"
-                      style="cursor: pointer"
-                      [routerLink]="[
-                        '/administrador/usuarios/actualizar/',
-                        objUsu.usuarioId
-                      ]"
-                      routerLinkActive="router-link-active"
-                    >
-                      <i class="fa-solid fa-user-gear"></i>
-                      Editar usuario
-                    </span>
-                    &nbsp;
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            <div>
-              <small
-                ><strong> {{ arregloUsuarios.length }} </strong> usuarios
-                registrados</small
+  <div class="row">
+    <div class="table-responsive-sm">
+      <table
+        class="table table-striped table-hover table-sm justify-content-center table-bordered"
+      >
+        <thead class="bg-dark text-white">
+          <tr>
+            <th style="width: 10%">Codigo</th>
+            <th style="width: 30%">Nombres</th>
+            <th style="width: 20%">Documento</th>
+            <th style="width: 20%">Telefono</th>
+            <th style="width: 20%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let objUsu of arregloUsuarios
+                | filterBy
+                  : ['usuarioNombres', 'usuarioApellidos', 'usuarioDocumento']
+                  : searchBar
+            "
+            (click)="seleccionarUsuario(objUsu)"
+          >
+            <td>{{ objUsu.usuarioId }}</td>
+            <td>
+              {{ objUsu.usuarioNombres + " " + objUsu.usuarioApellidos }}
+              <br />
+              <small class="text-muted">{{ objUsu.rolNombre }}</small>
+            </td>
+            <td>{{ objUsu.usuarioDocumento }}</td>
+            <td>{{ objUsu.usuarioTelefono }}</td>
+            <td style="text-align: center">
+              <span
+                class="badge bg-warning text-dark"
+                style="cursor: pointer"
+                [routerLink]="[
+                  '/administrador/usuarios/actualizar/',
+                  objUsu.usuarioId
+                ]"
+                routerLinkActive="router-link-active"
               >
-            </div>
-          </div>
-          <!--
+                <i class="fa-solid fa-user-gear"></i>
+                Editar usuario
+              </span>
+              &nbsp;
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div>
+        <small
+          ><strong> {{ arregloUsuarios.length }} </strong> usuarios
+          registrados</small
+        >
+      </div>
+    </div>
+    <!--
           <div class="row justify-content-md-center">
             <div class="col-md-6 text-left" style="padding-left: 15px">
               <small
@@ -112,44 +102,41 @@
             <div class="col-md-6 text-right" style="padding-right: 15px"></div>
           </div>
           -->
-          <div class="text-center">
-            <button
-              routerLinkActive="router-link-active"
-              type="button"
-              class="btn btn-primary"
-              (click)="obtenerUsuarios()"
-            >
-              Actualizar lista de usuarios
-            </button>
-          </div>
+    <div class="text-center">
+      <button
+        routerLinkActive="router-link-active"
+        type="button"
+        class="btn btn-primary"
+        (click)="obtenerUsuarios()"
+      >
+        Actualizar lista de usuarios
+      </button>
+    </div>
+
+    <ng-template #eliminarUsuario>
+      <div class="modal-content rounded-4 shadow">
+        <div class="modal-body p-4 text-center">
+          <h5 class="mb-0">{{ modalTitulo }}</h5>
+          <p class="mb-0">{{ modalContenido }}</p>
+        </div>
+        <div class="modal-footer flex-nowrap p-0">
+          <button
+            type="button"
+            class="btn btn-lg fs-6 text-primary col-6 m-0 rounded-0 border-right"
+            (click)="confirmarEliminar()"
+          >
+            <strong>Si, eliminar</strong>
+          </button>
+          <button
+            type="button"
+            class="btn btn-lg fs-6 text-danger col-6 m-0 rounded-0"
+            data-bs-dismiss="modal"
+            (click)="cancelar()"
+          >
+            Cancelar
+          </button>
         </div>
       </div>
-    </div>
+    </ng-template>
   </div>
-
-  <ng-template #eliminarUsuario>
-    <div class="modal-content rounded-4 shadow">
-      <div class="modal-body p-4 text-center">
-        <h5 class="mb-0">{{ modalTitulo }}</h5>
-        <p class="mb-0">{{ modalContenido }}</p>
-      </div>
-      <div class="modal-footer flex-nowrap p-0">
-        <button
-          type="button"
-          class="btn btn-lg fs-6 text-primary col-6 m-0 rounded-0 border-right"
-          (click)="confirmarEliminar()"
-        >
-          <strong>Si, eliminar</strong>
-        </button>
-        <button
-          type="button"
-          class="btn btn-lg fs-6 text-danger col-6 m-0 rounded-0"
-          data-bs-dismiss="modal"
-          (click)="cancelar()"
-        >
-          Cancelar
-        </button>
-      </div>
-    </div>
-  </ng-template>
 </div>

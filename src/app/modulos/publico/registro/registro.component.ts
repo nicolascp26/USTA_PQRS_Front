@@ -39,7 +39,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
-  //El siguiente metodo hace parte del ciclo de vida de angular y se aplica al destruir el componente con el fin de cancelar la subcripcion al servicio
   ngOnDestroy(): void {
     if (this.subscription) {
       this.subscription.unsubscribe();

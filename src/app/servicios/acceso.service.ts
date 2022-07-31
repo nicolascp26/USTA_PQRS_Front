@@ -26,9 +26,6 @@ export class AccesoService {
     return new Acceso('', '');
   }
 
-  public obtenerAcceso(): Acceso {
-    return this.objAcceso;
-  }
   //******* Logica del negocio */
 
   public logout(): void {

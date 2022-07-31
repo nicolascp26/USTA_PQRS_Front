@@ -1,14 +1,13 @@
 import { RolService } from './../../../../../servicios/rol.service';
-import { BsModalRef } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/mensajes-toast.func';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { observadorAny } from '../../../../../utilidades/observable/observable-any';
 import { ToastrService } from 'ngx-toastr';
 import { Usuario } from '../../../../../modelos/usuario';
 import { Rol } from '../../../../../modelos/rol';
 import { UsuarioService } from '../../../../../servicios/usuario.service';
-import { AccesoService } from '../../../../../servicios/acceso.service';
 import { Subscription, finalize, map, catchError } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
@@ -20,6 +19,7 @@ import { NgForm } from '@angular/forms';
 export class UsuariosActualizarComponent implements OnInit {
   //Atributos requeridos
   public usuarioSeleccionado: Usuario;
+  public accesoSeleccionado: any;
   public rolSeleccionado: Rol;
   public arregloRoles: Rol[];
 
@@ -35,8 +35,10 @@ export class UsuariosActualizarComponent implements OnInit {
 
   constructor(
     private ruta: ActivatedRoute,
+    public router: Router,
     private usuarioService: UsuarioService,
     private rolService: RolService,
+    public modalService: BsModalService,
     private miMensaje: ToastrService
   ) {
     //Inicializar Usuario
@@ -156,7 +158,17 @@ export class UsuariosActualizarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
+  public abrirModalEliminar(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
+    this.modalTitulo = 'Advertencia';
+    this.modalContenido = 'Seguro que quieres eliminar la cuenta?';
+  }
   public cancelar(): void {
     this.modalRef.hide();
+  }
+  public confirmarEliminar(): void {
+    //this.eliminarUsuario();
+    this.modalRef.hide();
+    this.router.navigate(['/administrador/usuarios']);
   }
 }

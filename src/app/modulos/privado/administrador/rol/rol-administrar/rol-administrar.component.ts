@@ -82,7 +82,6 @@ export class RolAdministrarComponent implements OnInit {
       .pipe(
         map((resultado: Rol[]) => {
           this.arregloRoles = resultado;
-          console.log(this.arregloRoles);
         }),
         finalize(() => {
           this.cargaFinalizada = true;

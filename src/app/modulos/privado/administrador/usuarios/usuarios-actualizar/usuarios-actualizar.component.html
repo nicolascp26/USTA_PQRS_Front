@@ -1,365 +1,396 @@
 <div class="container-fluid">
   <div class="row g-3 mt-1">
-    <div class="col-1"></div>
-    <div class="col-10">
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item">
-            <a [routerLink]="['/administrador/inicio']"
-              ><i class="fas fa-home"></i
-            ></a>
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">
-            Administrador
-          </li>
-          <li
-            class="breadcrumb-item active"
-            style="cursor: pointer"
-            aria-current="page"
-            [routerLink]="['/administrador/usuarios']"
-          >
-            Usuarios
-          </li>
-          <li class="breadcrumb-item active" aria-current="page">
-            Actualizar usuario
-          </li>
-        </ol>
-      </nav>
-
-      <h4 class="mb-3 fw-bold mb-0 text-center">Actualizar Usuario</h4>
-    </div>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/administrador/inicio']"
+            ><i class="fas fa-home"></i
+          ></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Administrador
+        </li>
+        <li
+          class="breadcrumb-item active"
+          style="cursor: pointer"
+          aria-current="page"
+          [routerLink]="['/administrador/usuarios']"
+        >
+          Usuarios
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Actualizar usuario
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <div class="row justify-content-center">
+    <h4 class="mb-3 fw-bold mb-0 text-center">Actualizar Usuario</h4>
   </div>
 
   <div class="row g-3">
-    <div class="col-1"></div>
-    <div class="col-10">
-      <div class="card">
-        <div class="card-body">
-          <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-              <button
-                class="nav-link active"
-                id="nav-home-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-home"
-                type="button"
-                role="tab"
-                aria-controls="nav-home"
-                aria-selected="true"
-              >
-                <i class="fas fa-chart-pie fa-fw me-2"></i>Resumen
-              </button>
-              <button
-                class="nav-link"
-                id="nav-profile-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-profile"
-                type="button"
-                role="tab"
-                aria-controls="nav-profile"
-                aria-selected="false"
-              >
-                <i class="fas fa-user fa-fw me-2"></i>Perfil
-              </button>
-              <button
-                class="nav-link"
-                id="nav-security-tab"
-                data-bs-toggle="tab"
-                data-bs-target="#nav-security"
-                type="button"
-                role="tab"
-                aria-controls="nav-security"
-                aria-selected="false"
-              >
-                <i class="fas fa-lock fa-fw me-2"></i>Seguridad
-              </button>
-            </div>
-          </nav>
-          <div class="tab-content" id="nav-tabContent">
-            <div
-              class="tab-pane fade show active"
-              id="nav-home"
-              role="tabpanel"
-              aria-labelledby="nav-home-tab"
-            >
-              ...
-            </div>
-            <!-- TAB DE PERFIL -->
-            <div
-              class="tab-pane fade"
-              id="nav-profile"
-              role="tabpanel"
-              aria-labelledby="nav-profile-tab"
-            >
-              <div class="container-xl px-4 mt-4">
-                <div class="row">
-                  <div class="col-xl-4">
-                    <!-- Profile picture card-->
-                    <div class="card mb-4 mb-xl-0">
-                      <div class="card-header">Imagen de usuario</div>
-                      <div class="card-body text-center">
-                        <!-- Profile picture image-->
-                        <img
-                          class="img-account-profile rounded-circle mb-2"
-                          src="http://bootdey.com/img/Content/avatar/avatar1.png"
-                          alt=""
-                        />
-                        <!-- Profile picture help block-->
-                        <div class="small font-italic text-muted mb-4">
-                          JPG o PNG tamaño maximo 5 MB
-                        </div>
-                        <!-- Profile picture upload button-->
-                        <button
-                          class="btn btn-primary"
-                          type="button"
-                          (click)="cajaOculta.click()"
-                        >
-                          <span class="text-white"
-                            ><i class="fa fa-camera" style="color: white"></i>
-                            Cambiar foto
-                          </span>
-                          <input
-                            type="file"
-                            class="form-control"
-                            style="display: none"
-                            id="fotoUsuario"
-                            name="fotoUsuario"
-                            accept="image/x-png, image/jpeg"
-                            #cajaOculta
-                          />
-                        </button>
-                      </div>
+    <div>
+      <nav>
+        <div class="nav nav-tabs" id="nav-tab" role="tablist">
+          <button
+            class="nav-link active"
+            id="nav-home-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-home"
+            type="button"
+            role="tab"
+            aria-controls="nav-home"
+            aria-selected="true"
+          >
+            <i class="fas fa-chart-pie fa-fw me-2"></i>Resumen
+          </button>
+          <button
+            class="nav-link"
+            id="nav-profile-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-profile"
+            type="button"
+            role="tab"
+            aria-controls="nav-profile"
+            aria-selected="false"
+          >
+            <i class="fas fa-user fa-fw me-2"></i>Perfil
+          </button>
+          <button
+            class="nav-link"
+            id="nav-security-tab"
+            data-bs-toggle="tab"
+            data-bs-target="#nav-security"
+            type="button"
+            role="tab"
+            aria-controls="nav-security"
+            aria-selected="false"
+          >
+            <i class="fas fa-lock fa-fw me-2"></i>Seguridad
+          </button>
+        </div>
+      </nav>
+      <div class="tab-content" id="nav-tabContent">
+        <div
+          class="tab-pane fade show active"
+          id="nav-home"
+          role="tabpanel"
+          aria-labelledby="nav-home-tab"
+        >
+          ...
+        </div>
+        <!-- TAB DE PERFIL -->
+        <div
+          class="tab-pane fade"
+          id="nav-profile"
+          role="tabpanel"
+          aria-labelledby="nav-profile-tab"
+        >
+          <div class="container-xl px-4 mt-4">
+            <div class="row">
+              <div class="col-xl-4">
+                <!-- Profile picture card-->
+                <div class="card mb-4 mb-xl-0">
+                  <div class="card-header">Imagen de usuario</div>
+                  <div class="card-body text-center">
+                    <!-- Profile picture image-->
+                    <img
+                      class="img-account-profile rounded-circle mb-2"
+                      src="http://bootdey.com/img/Content/avatar/avatar1.png"
+                      alt=""
+                    />
+                    <!-- Profile picture help block-->
+                    <div class="small font-italic text-muted mb-4">
+                      JPG o PNG tamaño maximo 5 MB
                     </div>
+                    <!-- Profile picture upload button-->
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      (click)="cajaOculta.click()"
+                    >
+                      <span class="text-white"
+                        ><i class="fa fa-camera" style="color: white"></i>
+                        Cambiar foto
+                      </span>
+                      <input
+                        type="file"
+                        class="form-control"
+                        style="display: none"
+                        id="fotoUsuario"
+                        name="fotoUsuario"
+                        accept="image/x-png, image/jpeg"
+                        #cajaOculta
+                      />
+                    </button>
                   </div>
-                  <div class="col-xl-8">
-                    <!-- Account details card-->
-                    <div class="card mb-4">
-                      <div class="card-header">Datos de usuario</div>
-                      <div class="card-body">
-                        <form
-                          #frmActualizarUsuario="ngForm"
-                          class="needs-validation"
-                          (ngSubmit)="
-                            frmActualizarUsuario.form.valid &&
-                              actualizarUsuario(frmActualizarUsuario)
-                          "
-                        >
-                          <div class="row gx-3 mb-3">
-                            <!-- Form Group (first name)-->
-                            <div class="col-md-6">
-                              <label class="small mb-1" for="usuarioNombres"
-                                >Nombres</label
-                              >
-                              <input
-                                name="usuarioNombres"
-                                id="usuarioNombres"
-                                class="form-control rounded-4"
-                                type="text"
-                                [(ngModel)]="usuarioSeleccionado.usuarioNombres"
-                                #usuarioNombres="ngModel"
-                                [ngClass]="{
-                                  'is-invalid':
-                                    frmActualizarUsuario.submitted &&
-                                    usuarioNombres.invalid
-                                }"
-                                required
-                              />
-                              <div
-                                class="text-danger error"
-                                *ngIf="
-                                  frmActualizarUsuario.submitted &&
-                                  usuarioNombres.invalid
-                                "
-                              >
-                                <span
-                                  *ngIf="usuarioNombres.errors?.['required']"
-                                  >Ingrese nombre de usuario</span
-                                >
-                              </div>
-                            </div>
-                            <!-- Form Group (last name)-->
-                            <div class="col-md-6">
-                              <label class="small mb-1" for="usuarioApellidos"
-                                >Apellidos</label
-                              >
-                              <input
-                                class="form-control"
-                                name="usuarioApellidos"
-                                id="usuarioApellidos"
-                                type="text"
-                                [(ngModel)]="
-                                  usuarioSeleccionado.usuarioApellidos
-                                "
-                              />
-                            </div>
+                </div>
+              </div>
+              <div class="col-xl-8">
+                <!-- Account details card-->
+                <div class="card mb-4">
+                  <div class="card-header">Datos de usuario</div>
+                  <div class="card-body">
+                    <form
+                      #frmActualizarUsuario="ngForm"
+                      class="needs-validation"
+                      (ngSubmit)="
+                        frmActualizarUsuario.form.valid &&
+                          actualizarUsuario(frmActualizarUsuario)
+                      "
+                    >
+                      <div class="row gx-3 mb-3">
+                        <!-- Form Group (first name)-->
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="usuarioNombres"
+                            >Nombres</label
+                          >
+                          <input
+                            name="usuarioNombres"
+                            id="usuarioNombres"
+                            class="form-control rounded-4"
+                            type="text"
+                            [(ngModel)]="usuarioSeleccionado.usuarioNombres"
+                            #usuarioNombres="ngModel"
+                            [ngClass]="{
+                              'is-invalid':
+                                frmActualizarUsuario.submitted &&
+                                usuarioNombres.invalid
+                            }"
+                            required
+                          />
+                          <div
+                            class="text-danger error"
+                            *ngIf="
+                              frmActualizarUsuario.submitted &&
+                              usuarioNombres.invalid
+                            "
+                          >
+                            <span *ngIf="usuarioNombres.errors?.['required']"
+                              >Ingrese nombre de usuario</span
+                            >
                           </div>
-                          <!-- Form Row        -->
-                          <div class="row gx-3 mb-3">
-                            <!-- Form Group (phone number)-->
-                            <div class="col-md-6">
-                              <label class="small mb-1" for="usuarioTelefono"
-                                >Telefono</label
-                              >
-                              <input
-                                class="form-control"
-                                id="usuarioTelefono"
-                                name="usuarioTelefono"
-                                type="tel"
-                                maxlength="10"
-                                [(ngModel)]="
-                                  usuarioSeleccionado.usuarioTelefono
-                                "
-                              />
-                            </div>
-                            <!-- Form Group (location)-->
-                            <div class="col-md-6">
-                              <label class="small mb-1" for="usuarioDocumento"
-                                >Documento</label
-                              >
-                              <input
-                                class="form-control"
-                                id="usuarioDocumento"
-                                name="usuarioDocumento"
-                                type="text"
-                                maxlength="10"
-                                [(ngModel)]="
-                                  usuarioSeleccionado.usuarioDocumento
-                                "
-                              />
-                            </div>
-                          </div>
-                          <!-- Form Row-->
-                          <div class="row gx-3 mb-3">
-                            <!-- Form Group (phone number)-->
-                            <div class="col-md-6">
-                              <label class="small mb-1" for="usuarioTelefono"
-                                >Tipo de usuario</label
-                              >
-                              <select
-                                class="form-control form-select"
-                                id="rol"
-                                name="rol"
-                                [(ngModel)]="usuarioSeleccionado.rolId"
-                              >
-                                <option
-                                  *ngFor="
-                                    let rol of arregloRoles;
-                                    let indice = index
-                                  "
-                                  [ngValue]="rol.rolId"
-                                >
-                                  {{ rol.rolNombre }}
-                                </option>
-                              </select>
-                            </div>
-                          </div>
-                          <!-- Save changes button-->
-                          <button class="btn btn-primary" type="submit">
-                            Guardar cambios
-                          </button>
-                        </form>
+                        </div>
+                        <!-- Form Group (last name)-->
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="usuarioApellidos"
+                            >Apellidos</label
+                          >
+                          <input
+                            class="form-control"
+                            name="usuarioApellidos"
+                            id="usuarioApellidos"
+                            type="text"
+                            [(ngModel)]="usuarioSeleccionado.usuarioApellidos"
+                          />
+                        </div>
                       </div>
-                    </div>
+                      <!-- Form Row        -->
+                      <div class="row gx-3 mb-3">
+                        <!-- Form Group (phone number)-->
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="usuarioTelefono"
+                            >Telefono</label
+                          >
+                          <input
+                            class="form-control"
+                            id="usuarioTelefono"
+                            name="usuarioTelefono"
+                            type="tel"
+                            maxlength="10"
+                            [(ngModel)]="usuarioSeleccionado.usuarioTelefono"
+                          />
+                        </div>
+                        <!-- Form Group (location)-->
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="usuarioDocumento"
+                            >Documento</label
+                          >
+                          <input
+                            class="form-control"
+                            id="usuarioDocumento"
+                            name="usuarioDocumento"
+                            type="text"
+                            maxlength="10"
+                            [(ngModel)]="usuarioSeleccionado.usuarioDocumento"
+                          />
+                        </div>
+                      </div>
+                      <!-- Form Row-->
+                      <div class="row gx-3 mb-3">
+                        <!-- Form Group (phone number)-->
+                        <div class="col-md-6">
+                          <label class="small mb-1" for="usuarioTelefono"
+                            >Tipo de usuario</label
+                          >
+                          <select
+                            class="form-control form-select"
+                            id="rol"
+                            name="rol"
+                            [(ngModel)]="usuarioSeleccionado.rolId"
+                          >
+                            <option
+                              *ngFor="
+                                let rol of arregloRoles;
+                                let indice = index
+                              "
+                              [ngValue]="rol.rolId"
+                            >
+                              {{ rol.rolNombre }}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <!-- Save changes button-->
+                      <button class="btn btn-primary" type="submit">
+                        Guardar cambios
+                      </button>
+                    </form>
                   </div>
                 </div>
               </div>
             </div>
-            <!-- TAB DE SEGURIDAD -->
-            <div
-              class="tab-pane fade"
-              id="nav-security"
-              role="tabpanel"
-              aria-labelledby="nav-security-tab"
-            >
-              <div class="container-xl px-4 mt-4">
-                <div class="row">
-                  <div class="col-lg-8">
-                    <!-- Change access data card-->
-                    <div class="card mb-4">
-                      <div class="card-header">Cambiar contraseña</div>
-                      <div class="card-body">
-                        <form
-                          #frmActualizarAcceso="ngForm"
-                          class="needs-validation"
-                          (ngSubmit)="
-                            frmActualizarAcceso.form.valid &&
-                              actualizarAcceso(frmActualizarAcceso)
+          </div>
+        </div>
+        <!-- TAB DE SEGURIDAD -->
+        <div
+          class="tab-pane fade"
+          id="nav-security"
+          role="tabpanel"
+          aria-labelledby="nav-security-tab"
+        >
+          <div class="container-xl px-4 mt-4">
+            <div class="row">
+              <div class="col-lg-8">
+                <!-- Change access data card-->
+                <div class="card mb-4">
+                  <div class="card-header">Cambiar contraseña</div>
+                  <div class="card-body">
+                    <form
+                      #frmActualizarAcceso="ngForm"
+                      class="needs-validation"
+                      (ngSubmit)="
+                        frmActualizarAcceso.form.valid &&
+                          actualizarAcceso(frmActualizarAcceso)
+                      "
+                    >
+                      <!-- Form Group (email address)
+                      <div class="mb-3">
+                        <label class="small mb-1" for="usuarioAccesoCorreo"
+                          >Correo electronico</label
+                        >
+                        <input
+                          class="form-control"
+                          name="usuarioAccesoCorreo"
+                          id="usuarioAccesoCorreo"
+                          type="email"
+                          [(ngModel)]="accesoSeleccionado.correoUsuario"
+                          readonly
+                        />
+                      </div>-->
+                      <!-- Form Group (current password)-->
+                      <div class="mb-3">
+                        <label class="small mb-1" for="currentPassword"
+                          >Contraseña actual</label
+                        >
+                        <input
+                          class="form-control"
+                          id="currentPassword"
+                          name="currentPassword"
+                          type="password"
+                          placeholder="Ingresa la contraseña actual"
+                        />
+                      </div>
+                      <!-- Form Group (new password)
+                      <div class="mb-3">
+                        <label class="small mb-1" for="newPassword"
+                          >Nueva contraseña</label
+                        >
+                        <input
+                          class="form-control"
+                          id="newPassword"
+                          name="newPassword"
+                          type="password"
+                          placeholder="Ingresa una nueva contraseña"
+                          [(ngModel)]="accesoSeleccionado.claveUsuario"
+                          [ngClass]="{
+                            'is-invalid':
+                              frmActualizarAcceso.submitted &&
+                              newPassword.invalid
+                          }"
+                          #newPassword="ngModel"
+                          required
+                        />
+                        <div
+                          class="text-danger error"
+                          *ngIf="
+                            frmActualizarAcceso.submitted && newPassword.invalid
                           "
                         >
-                          <!-- Form Group (current password)-->
-                          <!-- Form Group (email address)-->
-                          <div class="mb-3">
-                            <label class="small mb-1" for="usuarioAccesoCorreo"
-                              >Correo electronico</label
-                            >
-                            <input
-                              class="form-control"
-                              name="usuarioAccesoCorreo"
-                              id="usuarioAccesoCorreo"
-                              type="email"
-                              value="aaa@email.com"
-                              aria-label="Disabled input example"
-                              readonly
-                            />
-                          </div>
-                          <div class="mb-3">
-                            <label class="small mb-1" for="currentPassword"
-                              >Contraseña actual</label
-                            >
-                            <input
-                              class="form-control"
-                              id="currentPassword"
-                              type="password"
-                              placeholder="Ingresa la contraseña actual"
-                            />
-                          </div>
-                          <!-- Form Group (new password)-->
-                          <div class="mb-3">
-                            <label class="small mb-1" for="newPassword"
-                              >Nueva contraseña</label
-                            >
-                            <input
-                              class="form-control"
-                              id="newPassword"
-                              type="password"
-                              placeholder="Ingresa una nueva contraseña"
-                            />
-                          </div>
-                          <!-- Form Group (confirm password)-->
-                          <div class="mb-3">
-                            <label class="small mb-1" for="confirmPassword"
-                              >Confirmar contraseña nueva</label
-                            >
-                            <input
-                              class="form-control"
-                              id="confirmPassword"
-                              type="password"
-                              placeholder="Confirmar nueva contraseña"
-                            />
-                          </div>
-                          <button class="btn btn-primary" type="button">
-                            Confirmar cambio
-                          </button>
-                        </form>
-                      </div>
-                    </div>
+                          <span *ngIf="newPassword.errors?.['required']"
+                            >Contraseña nueva requerida</span
+                          >
+                        </div>
+                      </div>-->
+                      <!-- Form Group (confirm password)
+                      <div class="mb-3">
+                        <label class="small mb-1" for="confirmPassword"
+                          >Confirmar contraseña nueva</label
+                        >
+                        <input
+                          class="form-control"
+                          id="rePassword"
+                          name="rePassword"
+                          type="password"
+                          placeholder="Confirmar nueva contraseña"
+                          [(ngModel)]="accesoSeleccionado.reClave"
+                          [ngClass]="{
+                            'is-invalid':
+                              frmActualizarAcceso.submitted &&
+                              rePassword.invalid
+                          }"
+                          #rePassword="ngModel"
+                          required
+                          pattern="{{ accesoSeleccionado.claveUsuario }}"
+                        />
+                        <div
+                          class="text-danger error"
+                          *ngIf="
+                            frmActualizarAcceso.submitted && rePassword.invalid
+                          "
+                        >
+                          <span *ngIf="rePassword.errors?.['required']"
+                            >Confirmar contraseña requerido</span
+                          >
+                          <span *ngIf="rePassword.errors?.['pattern']"
+                            >Contraseña nueva no coincide</span
+                          >
+                        </div>
+                      </div>-->
+                      <button class="btn btn-primary" type="submit">
+                        Confirmar cambio
+                      </button>
+                    </form>
                   </div>
-                  <div class="col-lg-4">
-                    <!-- Delete account card-->
-                    <div class="card mb-4">
-                      <div class="card-header">Eliminar cuenta</div>
-                      <div class="card-body">
-                        <p>
-                          La eliminación de su cuenta es una acción permanente y
-                          no puede no se puede deshacer. Si está seguro de
-                          querer eliminar su cuenta, seleccione el botón de
-                          abajo.
-                        </p>
-                        <button class="btn btn-outline-danger" type="button">
-                          Entiendo, deseo eliminar mi cuenta
-                        </button>
-                      </div>
-                    </div>
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <!-- Delete account card-->
+                <div class="card mb-4">
+                  <div class="card-header">Eliminar cuenta</div>
+                  <div class="card-body">
+                    <p>
+                      La eliminación de esta cuenta es una acción permanente y
+                      no puede no se puede deshacer. Si está seguro de querer
+                      eliminar la cuenta, seleccione el botón de abajo.
+                    </p>
+                    <button
+                      class="btn btn-outline-danger"
+                      type="button"
+                      (click)="abrirModalEliminar(eliminarUsuario)"
+                    >
+                      Entiendo, deseo eliminar la cuenta
+                    </button>
                   </div>
                 </div>
               </div>
@@ -380,6 +411,7 @@
         <button
           type="button"
           class="btn btn-lg fs-6 text-primary col-6 m-0 rounded-0 border-right"
+          (click)="confirmarEliminar()"
         >
           <strong>Si, eliminar</strong>
         </button>
