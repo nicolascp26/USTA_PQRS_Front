@@ -9,6 +9,7 @@ export class Mensaje {
   public mensajePrioridad?: number;
   public usuarioNombres?: string;
   public usuarioApellidos?: string;
+  public tipoId?:number;
   public tipoClase?: string;
   public tipoNombre?: string;
   public constructor(
