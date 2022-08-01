@@ -52,7 +52,6 @@ export class MensajeTiposComponent implements OnInit {
   ) {
     //Inicializar atributos requeridos
     this.arregloTipos = [];
-    //this.arregloEstados = ARREGLO_ESTADOS_ROL;
     this.tipoSeleccionado = this.inicializarTipo();
     this.objTipo = this.inicializarTipo();
 
