@@ -1,3 +1,4 @@
+import { PreguntasModule } from './../../modulos/privado/administrador/preguntas/preguntas.module';
 import { Routes } from '@angular/router';
 
 export const RUTAS_DASHBOARD_ADMINISTRADOR: Routes = [
@@ -28,6 +29,13 @@ export const RUTAS_DASHBOARD_ADMINISTRADOR: Routes = [
       import(
         '../../modulos/privado/administrador/usuarios/usuarios.module'
       ).then((m) => m.UsuariosModule),
+  },
+  {
+    path: 'preguntas-frecuentes',
+    loadChildren: () =>
+      import(
+        '../../modulos/privado/administrador/preguntas/preguntas.module'
+      ).then((m) => m.PreguntasModule),
   },
   { path: '**', redirectTo: 'inicio', pathMatch: 'full' },
 ];

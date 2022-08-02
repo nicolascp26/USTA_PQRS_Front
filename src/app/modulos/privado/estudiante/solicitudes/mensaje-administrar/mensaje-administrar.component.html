@@ -28,8 +28,11 @@
     </div>
   </div>
 
-  <div class="row g-3">
-    <div class="table-responsive-sm">
+  <div class="row g-3" *ngIf="cargaFinalizada == true; else spinner">
+    <div
+      class="table-responsive-sm"
+      *ngIf="arregloSolicitudes.length !== 0; else sinRegistros"
+    >
       <table
         class="table table-striped table-hover table-sm justify-content-center table-bordered"
       >
@@ -99,6 +102,16 @@
           registradas</small
         >
       </div>
+      <div class="text-center">
+        <button
+          routerLinkActive="router-link-active"
+          type="button"
+          class="btn btn-primary"
+          (click)="obtenerSolicitudes()"
+        >
+          Actualizar lista de solicitudes
+        </button>
+      </div>
     </div>
     <!--
           <div class="row justify-content-md-center">
@@ -114,15 +127,29 @@
             <div class="col-md-6 text-right" style="padding-right: 15px"></div>
           </div>
           -->
-    <div class="text-center">
-      <button
-        routerLinkActive="router-link-active"
-        type="button"
-        class="btn btn-primary"
-        (click)="obtenerSolicitudes()"
-      >
-        Actualizar lista de solicitudes
-      </button>
-    </div>
   </div>
 </div>
+
+<ng-template #spinner>
+  <div class="col-md text-center">
+    <div
+      class="spinner-grow ms-auto text-primary"
+      role="status"
+      style="width: 4rem; height: 4rem"
+      aria-hidden="true"
+    ></div>
+  </div>
+  <div class="col-md text-center">
+    <h4>Cargando...</h4>
+  </div>
+</ng-template>
+
+<ng-template #sinRegistros>
+  <div class="alert alert-primary" role="alert">
+    Aún no tienes solicitudes registradas. Si tienes alguna petición, queja,
+    reclamo o sugerencia para la facultad, puedes dar click
+    <a [routerLink]="['/estudiante/solicitudes/crear']" class="alert-link"
+      >aquí</a
+    >.
+  </div>
+</ng-template>
