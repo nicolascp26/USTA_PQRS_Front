@@ -8,6 +8,14 @@
           ></a>
         </li>
         <li class="breadcrumb-item active" aria-current="page">Estudiante</li>
+        <li
+          class="breadcrumb-item active"
+          aria-current="page"
+          [routerLink]="['/estudiante/solicitudes']"
+          style="cursor: pointer;"
+        >
+          Solicitudes
+        </li>
         <li class="breadcrumb-item active" aria-current="page">
           Crear Solicitud
         </li>
@@ -123,7 +131,9 @@
             </div>
           </div>
           <!-- Save changes button-->
-          <button class="btn btn-primary" type="submit">Registrar solicitud</button>
+          <button class="btn btn-primary" type="submit">
+            Registrar solicitud
+          </button>
         </form>
       </div>
     </div>

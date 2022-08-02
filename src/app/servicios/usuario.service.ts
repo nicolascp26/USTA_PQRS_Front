@@ -14,8 +14,8 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) {}
 
-  public obtenerUsuarioUnico(idUsuario: any): Observable<Usuario> {
-    return this.http.get<Usuario>(this.appUser + '/getSingle/' + idUsuario);
+  public obtenerUsuarioUnico(usuarioId: number): Observable<Usuario> {
+    return this.http.get<Usuario>(this.appUser + '/getSingle/' + usuarioId);
   }
 
   public cargarUsuarios(): Observable<Usuario[]> {
@@ -45,5 +45,9 @@ export class UsuarioService {
 
   public eliminarUsuario(usuarioId: number): Observable<Usuario> {
     return this.http.delete<Usuario>(this.appUser + '/' + usuarioId);
+  }
+
+  public estadisticasUsuario(usuarioId: number): Observable<any>{
+    return this.http.get<any[]>(this.appUser + '/getStats/' + usuarioId);
   }
 }

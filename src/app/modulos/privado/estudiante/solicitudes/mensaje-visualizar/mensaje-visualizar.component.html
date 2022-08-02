@@ -1,1 +1,138 @@
-<p>mensaje-visualizar works!</p>
+<div class="container-fluid">
+  <div class="row g-3 mt-1">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/administrador/inicio']"
+            ><i class="fas fa-home"></i
+          ></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Estudiante
+        </li>
+        <li
+          class="breadcrumb-item active"
+          style="cursor: pointer"
+          aria-current="page"
+          [routerLink]="['/estudiante/solicitudes']"
+        >
+          Solicitudes
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <div>
+    <h4 class="mb-3 fw-bold mb-0 text-center"></h4>
+  </div>
+
+  <div class="row g-3" *ngIf="cargaFinalizada == true; else spinner">
+    <div class="card mb-3">
+      <div class="card-header bg-dark text-white text-center">
+        Solicitud #{{ arregloHiloMensajes[0].mensajeId }}:
+        <strong>{{ arregloHiloMensajes[0].mensajeTitulo }}</strong>
+      </div>
+      <div class="card-body">
+        <ul class="timeline">
+          <li *ngFor="let msj of arregloHiloMensajes">
+            <!-- begin timeline-time -->
+            <div class="timeline-time">
+              <span class="date">{{
+                msj.mensajeFecha | date: "MMM d, y"
+              }}</span>
+              <span class="tie">{{ msj.mensajeFecha | date: "h:mm a" }}</span>
+            </div>
+            <!-- end timeline-time -->
+            <!-- begin timeline-icon -->
+            <div class="timeline-icon">
+              <a href="javascript:;">&nbsp;</a>
+            </div>
+            <!-- end timeline-icon -->
+            <!-- begin timeline-body -->
+            <div class="timeline-body">
+              <div class="timeline-header">
+                <span class="userimage"
+                  ><img
+                    src="https://bootdey.com/img/Content/avatar/avatar1.png"
+                    alt=""
+                /></span>
+                <span class="text-start">{{
+                  msj.usuarioNombres + " " + msj.usuarioApellidos
+                }}</span>
+                <h5 class="text-sm text-muted">{{ msj.mensajeTitulo }}</h5>
+              </div>
+              <div class="timeline-content">
+                <p>{{ msj.mensajeDetalle }}</p>
+              </div>
+            </div>
+            <!-- end timeline-body -->
+          </li>
+        </ul>
+      </div>
+      <div
+        class="card-footer"
+        *ngIf="
+          arregloHiloMensajes[0].mensajeEstado != 3;
+          else solicitudTerminada
+        "
+      >
+        <form
+          #frmResponderMsj="ngForm"
+          (ngSubmit)="
+            frmResponderMsj.valid && responderMensaje(frmResponderMsj)
+          "
+        >
+          <div class="input-group mb-3">
+            <input
+              class="form-control"
+              id="mensajeDetalle"
+              name="mensajeDetalle"
+              type="text"
+              placeholder="Escribe un mensaje..."
+              [(ngModel)]="nuevoMensaje.mensajeDetalle"
+              #mensajeDetalle="ngModel"
+              [ngClass]="{
+                'is-invalid':
+                  frmResponderMsj.submitted && mensajeDetalle.invalid
+              }"
+              required
+              aria-describedby="button-addon2"
+            />
+            <button class="btn btn-primary" id="button-addon2" type="submit">
+              <i class="fa-solid fa-paper-plane mx-1"></i>
+              Enviar
+            </button>
+          </div>
+
+          <div
+            class="text-danger error"
+            *ngIf="frmResponderMsj.submitted && mensajeDetalle.invalid"
+          >
+            <span *ngIf="mensajeDetalle.errors?.['required']"
+              >El mensaje no puede ser vacio</span
+            >
+          </div>
+        </form>
+      </div>
+      <ng-template #solicitudTerminada>
+        <div class="card-footer text-lg-center text-white bg-success">
+          <i class="fa-solid fa-circle-check"></i>
+          Esta solicitud ha finalizado
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>
+
+<ng-template #spinner>
+  <div class="col-md text-center">
+    <div
+      class="spinner-grow ms-auto text-primary"
+      role="status"
+      style="width: 4rem; height: 4rem"
+      aria-hidden="true"
+    ></div>
+  </div>
+  <div class="col-md text-center">
+    <h4>Cargando...</h4>
+  </div>
+</ng-template>
