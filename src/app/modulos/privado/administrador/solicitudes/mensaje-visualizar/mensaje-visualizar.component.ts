@@ -137,7 +137,7 @@ export class MensajeVisualizarComponent implements OnInit {
   public abrirModalEliminar(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
     this.modalTitulo = 'Advertencia';
-    this.modalContenido = 'Seguro que quieres terminar la solicitud?';
+    this.modalContenido = 'Seguro que quieres terminar la solicitud? Esta no podra volver a abrirse.';
   }
   public cancelar(): void {
     this.modalRef.hide();

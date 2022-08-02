@@ -1,0 +1,104 @@
+<div class="container-fluid">
+  <div class="row g-3 mt-1">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/administrador/inicio']"
+            ><i class="fas fa-home"></i
+          ></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Administrador</li>
+        <li
+          class="breadcrumb-item active"
+          aria-current="page"
+          [routerLink]="['/administrador/preguntas-frecuentes']"
+          style="cursor: pointer;"
+        >
+          Preguntas frecuentes
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Crear pregunta
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <div>
+    <h4 class="mb-3 fw-bold mb-0 text-center">Crear Pregunta Frecuente</h4>
+  </div>
+
+  <div class="row">
+    <div class="card mb-4">
+      <div class="card-body">
+        <form
+          #frmCrearPregunta="ngForm"
+          class="needs-validation"
+          (ngSubmit)="
+          frmCrearPregunta.form.valid && crearPregunta(frmCrearPregunta)
+          "
+        >
+          <div class="row gx-3 mb-3">
+            <!-- Form Group (Titulo)-->
+            <div class="col-md-6">
+              <label class="small mb-1" for="mensajeTitulo">Titulo de la pregunta frecuente</label>
+              <input
+                name="prefTitulo"
+                id="prefTitulo"
+                class="form-control rounded-4"
+                type="text"
+                [(ngModel)]="objPregunta.prefTitulo"
+                #prefTitulo="ngModel"
+                [ngClass]="{
+                  'is-invalid':
+                  frmCrearPregunta.submitted && prefTitulo.invalid
+                }"
+                required
+              />
+              <div
+                class="text-danger error"
+                *ngIf="frmCrearPregunta.submitted && prefTitulo.invalid"
+              >
+                <span *ngIf="prefTitulo.errors?.['required']"
+                  >Ingrese el titulo de la pregunta</span
+                >
+              </div>
+            </div>
+          </div>
+          <!-- Form Row -->
+          <div class="row gx-3 mb-3">
+            <!-- Form Group (location)-->
+            <label class="small mb-1" for="mensajeDetalle"
+              >Respuesta de la pregunta frecuente</label
+            >
+            <textarea
+              class="form-control"
+              id="prefDetalle"
+              name="prefDetalle"
+              type="text"
+              rows="8"
+              [(ngModel)]="objPregunta.prefDetalle"
+              #prefDetalle="ngModel"
+              [ngClass]="{
+                'is-invalid':
+                frmCrearPregunta.submitted && prefDetalle.invalid
+              }"
+              required
+            >
+            </textarea>
+            <div
+              class="text-danger error"
+              *ngIf="frmCrearPregunta.submitted && frmCrearPregunta.invalid"
+            >
+              <span *ngIf="prefDetalle.errors?.['required']"
+                >Ingrese la respuesta de la pregunta frecuente</span
+              >
+            </div>
+          </div>
+          <!-- Save changes button-->
+          <button class="btn btn-primary" type="submit">
+            Crear pregunta frecuente
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

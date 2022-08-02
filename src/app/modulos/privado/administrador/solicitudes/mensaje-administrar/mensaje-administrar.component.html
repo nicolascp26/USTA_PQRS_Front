@@ -31,7 +31,7 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" *ngIf="cargaFinalizada == true; else spinner">
     <div class="table-responsive-sm">
       <table
         class="table table-striped table-hover table-sm justify-content-center table-bordered"
@@ -142,3 +142,17 @@
     </div>
   </div>
 </div>
+
+<ng-template #spinner>
+  <div class="col-md text-center">
+    <div
+      class="spinner-grow ms-auto text-primary"
+      role="status"
+      style="width: 4rem; height: 4rem"
+      aria-hidden="true"
+    ></div>
+  </div>
+  <div class="col-md text-center">
+    <h4>Cargando...</h4>
+  </div>
+</ng-template>

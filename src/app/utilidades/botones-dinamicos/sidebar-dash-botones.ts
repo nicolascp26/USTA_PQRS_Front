@@ -3,7 +3,8 @@ export const ADMINISTRADOR_BOTONES: any = [
   { id: 2, name: 'Solicitudes', icon: 'fa fa-clipboard-list', route: '/administrador/solicitudes' },
   { id: 3, name: 'Usuarios', icon: 'fa fa-users-gear', route: '/administrador/usuarios' },
   { id: 4, name: 'Roles', icon: 'fa fa-solid fa-user-group', route: '/administrador/roles' },
-  { id: 5, name: 'Tipos de solicitudes', icon: 'fa fa-solid fa-envelope', route: '/administrador/solicitudes/tipos' }
+  { id: 5, name: 'Tipos de solicitudes', icon: 'fa fa-solid fa-envelope', route: '/administrador/solicitudes/tipos' },
+  { id: 6, name: 'Preguntas frecuentes', icon: 'fa fa-question-circle', route: '/administrador/preguntas-frecuentes' }
 ];
 
 export const ESTUDIANTE_BOTONES: any = [

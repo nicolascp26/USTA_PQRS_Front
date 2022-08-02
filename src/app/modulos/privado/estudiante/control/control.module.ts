@@ -1,3 +1,4 @@
+import { NgPipesModule } from 'ngx-pipes';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -10,6 +11,6 @@ import { PreguntasFrecuentesComponent } from './preguntas-frecuentes/preguntas-f
 
 @NgModule({
   declarations: [InicioComponent, ErrorSeguridadComponent, PerfilComponent, PreguntasFrecuentesComponent],
-  imports: [CommonModule, ControlRoutingModule,FormsModule]
+  imports: [CommonModule, ControlRoutingModule,FormsModule, NgPipesModule]
 })
 export class ControlModule {}

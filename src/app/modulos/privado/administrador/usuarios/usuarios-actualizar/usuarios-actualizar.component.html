@@ -28,7 +28,7 @@
     <h4 class="mb-3 fw-bold mb-0 text-center">Actualizar Usuario</h4>
   </div>
 
-  <div class="row g-3">
+  <div class="row g-3" *ngIf="cargaFinalizada == true; else spinner">
     <div>
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
@@ -427,3 +427,17 @@
     </div>
   </ng-template>
 </div>
+
+<ng-template #spinner>
+  <div class="col-md text-center">
+    <div
+      class="spinner-grow ms-auto text-primary"
+      role="status"
+      style="width: 4rem; height: 4rem"
+      aria-hidden="true"
+    ></div>
+  </div>
+  <div class="col-md text-center">
+    <h4>Cargando...</h4>
+  </div>
+</ng-template>
