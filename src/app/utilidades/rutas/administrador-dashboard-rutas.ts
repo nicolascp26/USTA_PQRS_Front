@@ -1,4 +1,3 @@
-import { PreguntasModule } from './../../modulos/privado/administrador/preguntas/preguntas.module';
 import { Routes } from '@angular/router';
 
 export const RUTAS_DASHBOARD_ADMINISTRADOR: Routes = [

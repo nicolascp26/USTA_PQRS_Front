@@ -53,6 +53,7 @@ export class AccesoService {
         this.objAcceso.claveUsuario = obj.clave;
         this.objAcceso.usuarioRol = obj.usuarioRol;
         this.objAcceso.usuarioNombres = obj.usuarioNombres;
+        console.log(obj);
         return true;
       } catch (error) {
         return false;
@@ -62,7 +63,19 @@ export class AccesoService {
   }
 
   public iniciarSesion(objAcceso: Acceso): Observable<AccesoRespuesta> {
-    return this.http.post<AccesoRespuesta>(this.appLogin+'/login', objAcceso);
+    return this.http.post<AccesoRespuesta>(this.appLogin + '/login', objAcceso);
+  }
+
+  public accederRutasAdmin(): boolean {
+    if (this.objAcceso.usuarioRol == 'Administrador') {
+      return true;
+    } else return false;
+  }
+
+  public accederRutasEstudiante(): boolean {
+    if (this.objAcceso.usuarioRol == 'Estudiante') {
+      return true;
+    } else return false;
   }
 
   public actualizarAcceso(objAcceso: Acceso): Observable<Acceso> {

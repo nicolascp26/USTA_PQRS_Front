@@ -1,7 +1,6 @@
-import { AccesoService } from './servicios/acceso.service';
+import { AccesoService } from '../../servicios/acceso.service';
 import { Injectable } from '@angular/core';
 import {CanActivate,Router,} from '@angular/router';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

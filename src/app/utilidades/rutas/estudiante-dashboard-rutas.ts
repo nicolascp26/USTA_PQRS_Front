@@ -1,5 +1,3 @@
-import { ControlModule } from './../../modulos/privado/estudiante/control/control.module';
-import { SolicitudesModule } from '../../modulos/privado/estudiante/solicitudes/solicitudes.module';
 import { Routes } from '@angular/router';
 
 export const RUTAS_DASHBOARD_ESTUDIANTE: Routes = [
