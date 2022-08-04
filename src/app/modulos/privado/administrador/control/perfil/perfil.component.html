@@ -7,25 +7,17 @@
             ><i class="fas fa-home"></i
           ></a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">
-          Administrador
-        </li>
-        <li
-          class="breadcrumb-item active"
-          style="cursor: pointer"
-          aria-current="page"
-          [routerLink]="['/administrador/usuarios']"
-        >
-          Usuarios
+        <li class="breadcrumb-item active" style="cursor: pointer" aria-current="page">
+          Perfil
         </li>
         <li class="breadcrumb-item active" aria-current="page">
-          Actualizar usuario
+          Actualizar perfil
         </li>
       </ol>
     </nav>
   </div>
   <div>
-    <h4 class="mb-3 fw-bold mb-0 text-center">Actualizar Usuario</h4>
+    <h4 class="mb-3 fw-bold mb-0 text-center">Actualizar perfil de usuario</h4>
   </div>
 
   <div class="row g-3">
@@ -74,9 +66,9 @@
                 <div class="card-body text-center">
                   <!-- Profile picture image-->
                   <img
-                    [src]="'data:image/png;base64,' + base64"
-                    onerror="this.src='../../assets/imagenes/noDisponible.png'"
+                    [src]="'data:image/png;base64,' + this.base64"
                     alt=""
+                    height="200"
                     width="200"
                     class="img-thumbnail rounded-circle me-2"
                   />
@@ -86,12 +78,12 @@
                   </div>
                   <!-- Profile picture upload button-->
                   <button
-                    class="btn btn-primary"
+                    class="btn btn-outline-primary"
                     type="button"
-                    (click)="cajaOculta.click()"
+                    (click)="cajaImagen.click()"
                   >
-                    <span class="text-white"
-                      ><i class="fa fa-camera" style="color: white"></i>
+                    <span
+                      ><i class="fa fa-camera"></i>
                       Cambiar foto
                     </span>
                     <input
@@ -101,10 +93,17 @@
                       id="fotoUsuario"
                       name="fotoUsuario"
                       accept="image/x-png, image/jpeg"
-                      #cajaOculta
+                      #cajaImagen
+                      (change)="seleccionarFoto($event)"
                     />
                   </button>
                 </div>
+                <button
+                  *ngIf="this.imagenSeleccionada"
+                  class="btn btn-primary"
+                  type="button"
+                  (click)="this.agregarImagenPerfil()"
+                ><i class="fa fa-upload"></i> Subir imagen</button>
               </div>
             </div>
             <div class="col-xl-8">
@@ -177,6 +176,7 @@
                           class="form-control"
                           id="usuarioTelefono"
                           name="usuarioTelefono"
+                          maxlength="10"
                           type="tel"
                           [(ngModel)]="usuarioSeleccionado.usuarioTelefono"
                         />
@@ -190,6 +190,7 @@
                           class="form-control"
                           id="usuarioDocumento"
                           name="usuarioDocumento"
+                          maxlength="10"
                           type="text"
                           [(ngModel)]="usuarioSeleccionado.usuarioDocumento"
                         />
