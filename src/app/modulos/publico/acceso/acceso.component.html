@@ -1,8 +1,5 @@
-<div
-class="bg"
->
-  <div class="d-flex justify-content-center">
-    <div class="mt-5 mb-5">
+  <div class="d-flex align-items-center">
+    <div class="mt-4 mb-4 mx-auto">
       <div class="card text-center" style="width: 20rem">
         <div class="card-body">
           <form
@@ -38,7 +35,9 @@ class="bg"
                   class="text-danger error"
                   *ngIf="frmAcceso.submitted && usu.invalid"
                 >
-                  <span *ngIf="usu.errors?.['required']">Usuario requerido</span>
+                  <span *ngIf="usu.errors?.['required']"
+                    >Usuario requerido</span
+                  >
                   <span *ngIf="usu.errors?.['pattern']">Correo inválido</span>
                 </div>
               </div>
@@ -61,7 +60,9 @@ class="bg"
                   class="text-danger error"
                   *ngIf="frmAcceso.submitted && cla.invalid"
                 >
-                  <span *ngIf="cla.errors?.['required']">Contraseña requerida</span>
+                  <span *ngIf="cla.errors?.['required']"
+                    >Contraseña requerida</span
+                  >
                 </div>
               </div>
             </div>
@@ -89,4 +90,3 @@ class="bg"
       </div>
     </div>
   </div>
-</div>

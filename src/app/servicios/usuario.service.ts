@@ -44,7 +44,7 @@ export class UsuarioService {
   }
 
   public eliminarUsuario(usuarioId: number): Observable<Usuario> {
-    return this.http.delete<Usuario>(this.appUser + '/' + usuarioId);
+    return this.http.delete<Usuario>(this.appUser + '/delete/' + usuarioId);
   }
 
   public estadisticasUsuario(usuarioId: number): Observable<any>{

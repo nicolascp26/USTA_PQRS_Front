@@ -95,7 +95,8 @@
                   <div class="card-body text-center">
                     <!-- Profile picture image-->
                     <img
-                      class="img-account-profile rounded-circle mb-2"
+                      width="200"
+                      class="img-thumbnail rounded-circle me-2"
                       src="http://bootdey.com/img/Content/avatar/avatar1.png"
                       alt=""
                     />
@@ -140,7 +141,7 @@
                       "
                     >
                       <div class="row gx-3 mb-3">
-                        <!-- Form Group (first name)-->
+                        <!-- Form Group (Nombres)-->
                         <div class="col-md-6">
                           <label class="small mb-1" for="usuarioNombres"
                             >Nombres</label
@@ -167,11 +168,11 @@
                             "
                           >
                             <span *ngIf="usuarioNombres.errors?.['required']"
-                              >Ingrese nombre de usuario</span
+                              >Ingrese nombre del usuario</span
                             >
                           </div>
                         </div>
-                        <!-- Form Group (last name)-->
+                        <!-- Form Group (Apellidos)-->
                         <div class="col-md-6">
                           <label class="small mb-1" for="usuarioApellidos"
                             >Apellidos</label
@@ -182,12 +183,30 @@
                             id="usuarioApellidos"
                             type="text"
                             [(ngModel)]="usuarioSeleccionado.usuarioApellidos"
+                            #usuarioApellidos="ngModel"
+                            [ngClass]="{
+                              'is-invalid':
+                                frmActualizarUsuario.submitted &&
+                                usuarioApellidos.invalid
+                            }"
+                            required
                           />
+                          <div
+                            class="text-danger error"
+                            *ngIf="
+                              frmActualizarUsuario.submitted &&
+                              usuarioApellidos.invalid
+                            "
+                          >
+                            <span *ngIf="usuarioApellidos.errors?.['required']"
+                              >Ingrese apellidos del usuario</span
+                            >
+                          </div>
                         </div>
                       </div>
-                      <!-- Form Row        -->
+                      <!-- Form Row -->
                       <div class="row gx-3 mb-3">
-                        <!-- Form Group (phone number)-->
+                        <!-- Form Group (Telefono)-->
                         <div class="col-md-6">
                           <label class="small mb-1" for="usuarioTelefono"
                             >Telefono</label
@@ -199,9 +218,31 @@
                             type="tel"
                             maxlength="10"
                             [(ngModel)]="usuarioSeleccionado.usuarioTelefono"
+                            #usuarioTelefono="ngModel"
+                            [ngClass]="{
+                              'is-invalid':
+                                frmActualizarUsuario.submitted &&
+                                usuarioTelefono.invalid
+                            }"
+                            required
+                            pattern="^[0-9]*$"
                           />
+                          <div
+                            class="text-danger error"
+                            *ngIf="
+                              frmActualizarUsuario.submitted &&
+                              usuarioTelefono.invalid
+                            "
+                          >
+                            <span *ngIf="usuarioTelefono.errors?.['required']"
+                              >Ingrese numero de telefono</span
+                            >
+                            <span *ngIf="usuarioTelefono.errors?.['pattern']"
+                              >Solo se permiten numeros</span
+                            >
+                          </div>
                         </div>
-                        <!-- Form Group (location)-->
+                        <!-- Form Group (Documento)-->
                         <div class="col-md-6">
                           <label class="small mb-1" for="usuarioDocumento"
                             >Documento</label
@@ -213,7 +254,29 @@
                             type="text"
                             maxlength="10"
                             [(ngModel)]="usuarioSeleccionado.usuarioDocumento"
+                            #usuarioDocumento="ngModel"
+                            [ngClass]="{
+                              'is-invalid':
+                                frmActualizarUsuario.submitted &&
+                                usuarioDocumento.invalid
+                            }"
+                            required
+                            pattern="^[0-9]*$"
                           />
+                          <div
+                            class="text-danger error"
+                            *ngIf="
+                              frmActualizarUsuario.submitted &&
+                              usuarioDocumento.invalid
+                            "
+                          >
+                            <span *ngIf="usuarioDocumento.errors?.['required']"
+                              >Ingrese numero de documento</span
+                            >
+                            <span *ngIf="usuarioDocumento.errors?.['pattern']"
+                              >Solo se permiten numeros</span
+                            >
+                          </div>
                         </div>
                       </div>
                       <!-- Form Row-->
@@ -228,6 +291,12 @@
                             id="rol"
                             name="rol"
                             [(ngModel)]="usuarioSeleccionado.rolId"
+                            #rol="ngModel"
+                            [ngClass]="{
+                              'is-invalid':
+                                frmActualizarUsuario.submitted && rol.invalid
+                            }"
+                            required
                           >
                             <option
                               *ngFor="
@@ -239,6 +308,16 @@
                               {{ rol.rolNombre }}
                             </option>
                           </select>
+                          <div
+                            class="text-danger error"
+                            *ngIf="
+                              frmActualizarUsuario.submitted && rol.invalid
+                            "
+                          >
+                            <span *ngIf="rol.errors?.['required']"
+                              >Selecciona el rol del usuario</span
+                            >
+                          </div>
                         </div>
                       </div>
                       <!-- Save changes button-->
@@ -381,8 +460,10 @@
                   <div class="card-body">
                     <p>
                       La eliminación de esta cuenta es una acción permanente y
-                      no puede no se puede deshacer. Si está seguro de querer
-                      eliminar la cuenta, seleccione el botón de abajo.
+                      no se puede deshacer. Esto eliminará todas las
+                      solicitudes hechas por el usuario y sus mensajes. Si está
+                      seguro de querer eliminar la cuenta, seleccione el botón
+                      de abajo.
                     </p>
                     <button
                       class="btn btn-outline-danger"
