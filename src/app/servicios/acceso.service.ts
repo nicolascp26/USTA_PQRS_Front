@@ -53,7 +53,6 @@ export class AccesoService {
         this.objAcceso.claveUsuario = obj.clave;
         this.objAcceso.usuarioRol = obj.usuarioRol;
         this.objAcceso.usuarioNombres = obj.usuarioNombres;
-        console.log(obj);
         return true;
       } catch (error) {
         return false;
