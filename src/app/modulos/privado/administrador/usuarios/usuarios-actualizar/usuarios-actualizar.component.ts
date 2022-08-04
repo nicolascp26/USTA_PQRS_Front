@@ -83,7 +83,6 @@ export class UsuariosActualizarComponent implements OnInit {
       .pipe(
         map((resultado: Usuario) => {
           this.usuarioSeleccionado = resultado;
-          console.log(this.usuarioSeleccionado);
         }),
         finalize(() => {
           this.cargaFinalizada = true;
@@ -109,6 +108,34 @@ export class UsuariosActualizarComponent implements OnInit {
           mostrarMensaje(
             'error',
             'No se pudo actualizar',
+            'Fallo',
+            this.miMensaje
+          );
+          throw err;
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
+  public eliminarUsuario(usuarioId: number): void {
+    this.miSuscripcion = this.usuarioService
+      .eliminarUsuario(usuarioId)
+      .pipe(
+        map((respuesta) => {
+          mostrarMensaje(
+            'success',
+            'Usuario eliminado Correctamente',
+            'Satisfactorio',
+            this.miMensaje
+          );
+          this.router.navigate(['/administrador/usuarios']);
+          console.log(respuesta);
+          return respuesta;
+        }),
+        catchError((err) => {
+          mostrarMensaje(
+            'error',
+            'No se pudo eliminar',
             'Fallo',
             this.miMensaje
           );
@@ -167,8 +194,7 @@ export class UsuariosActualizarComponent implements OnInit {
     this.modalRef.hide();
   }
   public confirmarEliminar(): void {
-    //this.eliminarUsuario();
+    this.eliminarUsuario(this.usuarioSeleccionado.usuarioId);
     this.modalRef.hide();
-    this.router.navigate(['/administrador/usuarios']);
   }
 }
