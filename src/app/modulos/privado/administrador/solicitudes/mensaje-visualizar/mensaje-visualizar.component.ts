@@ -79,7 +79,6 @@ export class MensajeVisualizarComponent implements OnInit {
       .pipe(
         map((resultado: Mensaje[]) => {
           this.arregloHiloMensajes = resultado;
-          console.log(this.arregloHiloMensajes);
         }),
         finalize(() => {
           this.cargaFinalizada = true;
