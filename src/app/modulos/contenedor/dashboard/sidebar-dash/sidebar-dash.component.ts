@@ -8,8 +8,6 @@ import { Rol } from '../../../../modelos/rol';
 import { Usuario } from '../../../../modelos/usuario';
 import { Imagen } from '../../../../modelos/imagen';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-sidebar-dash',
   templateUrl: './sidebar-dash.component.html',
@@ -20,7 +18,7 @@ export class SidebarDashComponent implements OnInit {
   public base64: string;
   public nombreUsuario: string | any;
   public rolUsuario: string | any;
-  public botonesCargados:any = [];
+  public botonesCargados: any = [];
 
   constructor(public accesoService: AccesoService) {
     this.usuarioSeleccionado = this.inicializarUsuario();
@@ -30,11 +28,10 @@ export class SidebarDashComponent implements OnInit {
     this.inicializarSidebar();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public inicializarImagen(): Imagen {
-    return new Imagen(0, this.inicializarUsuario(), '', '', '', '');
+    return new Imagen(0, 0, '', '', '', '');
   }
 
   public inicializarUsuario(): Usuario {

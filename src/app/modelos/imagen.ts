@@ -1,7 +1,6 @@
-import { Usuario } from './usuario';
 export class Imagen {
   public imgId: number;
-  public imgUsuario: Usuario;
+  public imgUsuarioId: number;
   public imgNombrePublico: string;
   public imgNombrePrivado: string;
   public imgTipo: string;
@@ -10,14 +9,14 @@ export class Imagen {
 
   constructor(
     codImg: number,
-    usu: Usuario,
+    usu: number,
     nomPub: string,
     nomPri: string,
     tipo: string,
     base: string
   ) {
     this.imgId = codImg;
-    this.imgUsuario = usu;
+    this.imgUsuarioId = usu;
     this.imgNombrePublico = nomPub;
     this.imgNombrePrivado = nomPri;
     this.imgTipo = tipo;

@@ -1,8 +1,5 @@
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
-  <a
-    [routerLink]="['inicio']"
-    class="navbar-brand col-md-3 col-lg-2 me-0 px-3"
-  >
+  <a [routerLink]="['inicio']" class="navbar-brand col-md-3 col-lg-2 me-0 px-3">
     <img
       class=""
       src="../../../../assets/images/logo-white.png"
@@ -52,8 +49,7 @@
           aria-expanded="false"
         >
           <img
-            [src]="'data:image/png;base64,' + base64"
-            onerror="this.src='../../assets/imagenes/noDisponible.png'"
+            [src]="'data:image/png;base64,' + this.base64"
             alt=""
             width="32"
             height="32"
