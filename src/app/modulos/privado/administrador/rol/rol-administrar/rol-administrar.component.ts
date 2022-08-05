@@ -38,7 +38,6 @@ export class RolAdministrarComponent implements OnInit {
   ) {
     //Inicializar atributos requeridos
     this.arregloRoles = [];
-    //this.arregloEstados = ARREGLO_ESTADOS_ROL;
     this.rolSeleccionado = this.inicializarRol();
     this.objRol = this.inicializarRol();
 

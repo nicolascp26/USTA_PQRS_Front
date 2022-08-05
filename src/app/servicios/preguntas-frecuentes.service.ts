@@ -16,6 +16,12 @@ export class PreguntasFrecuentesService {
     return this.http.get<Pregunta[]>(this.apiPregunta + '/getAll');
   }
 
+  public obtenerPreguntaUnica(preguntaId: number): Observable<Pregunta> {
+    return this.http.get<Pregunta>(
+      this.apiPregunta + '/getSingle/' + preguntaId
+    );
+  }
+
   public crearPregunta(objPregunta: Pregunta): Observable<Pregunta> {
     return this.http.post<Pregunta>(this.apiPregunta + '/create', objPregunta);
   }
