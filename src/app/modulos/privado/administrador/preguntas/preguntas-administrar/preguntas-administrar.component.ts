@@ -16,7 +16,6 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 export class PreguntasAdministrarComponent implements OnInit {
   //Atributos requeridos
   public arregloPreguntas: Pregunta[];
-  public objPregunta: Pregunta;
   public preguntaSeleccionada: Pregunta;
 
   //Atributos modales
@@ -39,9 +38,7 @@ export class PreguntasAdministrarComponent implements OnInit {
   ) {
     //Inicializar atributos requeridos
     this.arregloPreguntas = [];
-    //this.arregloEstados = ARREGLO_ESTADOS_ROL;
-    this.preguntaSeleccionada = this.inicializarRol();
-    this.objPregunta = this.inicializarRol();
+    this.preguntaSeleccionada = this.inicializarPregunta();
 
     //Inicializar modales
     this.modalTitulo = '';
@@ -54,7 +51,7 @@ export class PreguntasAdministrarComponent implements OnInit {
   }
 
   //Métodos obligatorios
-  public inicializarRol(): Pregunta {
+  public inicializarPregunta(): Pregunta {
     return new Pregunta(0, '', '');
   }
 
@@ -84,48 +81,19 @@ export class PreguntasAdministrarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  public actualizarPregunta(formulario: NgForm): void {
-    this.miSuscripcion = this.preguntaService
-      .actualizarPregunta(this.preguntaSeleccionada)
-      .pipe(
-        map((respuesta) => {
-          mostrarMensaje(
-            'success',
-            'Rol actualizado Correctamente',
-            'Satisfactorio',
-            this.toastr
-          );
-          this.obtenerPreguntas();
-          this.modalRef.hide();
-          formulario.reset();
-          return respuesta;
-        }),
-        catchError((err) => {
-          mostrarMensaje(
-            'error',
-            'No se pudo actualizar',
-            'Fallo',
-            this.toastr
-          );
-          throw err;
-        })
-      )
-      .subscribe(observadorAny);
-  }
-
   public eliminarPregunta(preguntaId: number): void {
     this.miSuscripcion = this.preguntaService
       .eliminarPregunta(preguntaId)
       .pipe(
         map((respuesta) => {
           this.obtenerPreguntas();
-          mostrarMensaje('success', 'Rol eliminado', 'Exito', this.toastr);
+          mostrarMensaje('success', 'Pregunta eliminada', 'Exito', this.toastr);
           return respuesta;
         }),
         catchError((miError) => {
           mostrarMensaje(
             'error',
-            'Rol no eliminado',
+            'Pregunta no eliminada',
             'Advertencia',
             this.toastr
           );
@@ -154,7 +122,7 @@ export class PreguntasAdministrarComponent implements OnInit {
 
   public confirmarEliminar(): void {
     this.eliminarPregunta(this.preguntaSeleccionada.prefId);
-    this.preguntaSeleccionada = this.inicializarRol();
+    this.preguntaSeleccionada = this.inicializarPregunta();
     this.modalRef.hide();
   }
 }
