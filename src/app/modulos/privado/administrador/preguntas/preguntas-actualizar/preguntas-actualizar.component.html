@@ -1,1 +1,119 @@
-<p>preguntas-actualizar works!</p>
+<div class="container-fluid">
+  <div class="row g-3 mt-1">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a [routerLink]="['/administrador/inicio']"
+            ><i class="fas fa-home"></i
+          ></a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Administrador</li>
+        <li
+          class="breadcrumb-item active"
+          aria-current="page"
+          [routerLink]="['/administrador/preguntas-frecuentes']"
+          style="cursor: pointer;"
+        >
+          Preguntas Frecuentes
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Actualizar pregunta
+        </li>
+      </ol>
+    </nav>
+  </div>
+  <div>
+    <h4 class="mb-3 fw-bold mb-0 text-center">Actualizar pregunta</h4>
+  </div>
+
+  <div class="row" *ngIf="cargaFinalizada == true; else spinner">
+    <div class="card mb-4">
+      <div class="card-header">Formulario</div>
+      <div class="card-body">
+        <form
+          #frmActualizarPregunta="ngForm"
+          class="needs-validation"
+          (ngSubmit)="
+            frmActualizarPregunta.form.valid && actualizarPregunta(frmActualizarPregunta)
+          "
+        >
+          <div class="row gx-3 mb-3">
+            <!-- Form Group (Titulo)-->
+            <div class="col-md-6">
+              <label class="small mb-1" for="prefTitulo">Titulo de la pregunta frecuente</label>
+              <input
+                name="prefTitulo"
+                id="prefTitulo"
+                class="form-control rounded-4"
+                type="text"
+                [(ngModel)]="preguntaSeleccionada.prefTitulo"
+                #prefTitulo="ngModel"
+                [ngClass]="{
+                  'is-invalid':
+                    frmActualizarPregunta.submitted && prefTitulo.invalid
+                }"
+                required
+              />
+              <div
+                class="text-danger error"
+                *ngIf="frmActualizarPregunta.submitted && prefTitulo.invalid"
+              >
+                <span *ngIf="prefTitulo.errors?.['required']"
+                  >Ingrese el titulo de la pregunta</span
+                >
+              </div>
+            </div>
+          </div>
+          <!-- Form Row -->
+          <div class="row gx-3 mb-3">
+            <!-- Form Group (location)-->
+            <label class="small mb-1" for="prefDetalle"
+              >Respuesta de la pregunta frecuente</label
+            >
+            <textarea
+              class="form-control"
+              id="prefDetalle"
+              name="prefDetalle"
+              type="text"
+              rows="8"
+              [(ngModel)]="preguntaSeleccionada.prefDetalle"
+              #prefDetalle="ngModel"
+              [ngClass]="{
+                'is-invalid':
+                  frmActualizarPregunta.submitted && prefDetalle.invalid
+              }"
+              required
+            >
+            </textarea>
+            <div
+              class="text-danger error"
+              *ngIf="frmActualizarPregunta.submitted && prefDetalle.invalid"
+            >
+              <span *ngIf="prefDetalle.errors?.['required']"
+                >Ingrese la respuesta de la pregunta frecuente</span
+              >
+            </div>
+          </div>
+          <!-- Save changes button-->
+          <button class="btn btn-primary" type="submit">
+            Actualizar pregunta
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #spinner>
+  <div class="col-md text-center">
+    <div
+      class="spinner-grow ms-auto text-primary"
+      role="status"
+      style="width: 4rem; height: 4rem"
+      aria-hidden="true"
+    ></div>
+  </div>
+  <div class="col-md text-center">
+    <h4>Cargando...</h4>
+  </div>
+</ng-template>
