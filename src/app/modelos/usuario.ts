@@ -1,6 +1,3 @@
-import { Rol } from './rol';
-import { Imagen } from './imagen';
-
 export class Usuario {
   public usuarioId: number;
   public usuarioNombres: string;
