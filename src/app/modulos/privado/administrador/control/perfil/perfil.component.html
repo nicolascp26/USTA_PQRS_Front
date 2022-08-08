@@ -63,7 +63,7 @@
               <!-- Profile picture card-->
               <div class="card mb-4 mb-xl-0">
                 <div class="card-header">Imagen de usuario</div>
-                <div class="card-body text-center">
+                <div class="card-body text-center" *ngIf="cargaImagen == true;else spinner">
                   <!-- Profile picture image-->
                   <img
                     [src]="'data:image/png;base64,' + this.base64"
@@ -356,3 +356,16 @@
     </div>
   </div>
 </div>
+<ng-template #spinner>
+  <div class="col-md text-center">
+    <div
+      class="spinner-grow ms-auto text-primary"
+      role="status"
+      style="width: 4rem; height: 4rem"
+      aria-hidden="true"
+    ></div>
+  </div>
+  <div class="col-md text-center">
+    <h4>Cargando...</h4>
+  </div>
+</ng-template>
