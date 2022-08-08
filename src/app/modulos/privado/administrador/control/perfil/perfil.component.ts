@@ -33,6 +33,7 @@ export class PerfilComponent implements OnInit {
   public imagenSeleccionada: boolean;
   public base64: string;
   public tmpBase64: any;
+  public cargaImagen: boolean;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -50,6 +51,7 @@ export class PerfilComponent implements OnInit {
     this.nuevaImagen = this.inicializarImagen();
     this.imagenSeleccionada = false;
     this.base64 = localStorage.getItem('foto') as string;
+    this.cargaImagen = true;
 
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
@@ -177,12 +179,12 @@ export class PerfilComponent implements OnInit {
       this.tmpBase64 = reader.result;
       this.base64 = this.tmpBase64.split(',')[1];
       this.nuevaImagen.base64 = this.base64;
-      this.imagenSeleccionada=true;
+      this.imagenSeleccionada = true;
     };
-    console.log(this.nuevaImagen);
   }
 
   public agregarImagenPerfil() {
+    this.cargaImagen = false;
     this.miSuscripcion = this.imgService
       .agregarImagenPerfil(this.nuevaImagen)
       .pipe(
@@ -194,6 +196,9 @@ export class PerfilComponent implements OnInit {
             this.miMensaje
           );
           return respuesta;
+        }),
+        finalize(() => {
+          this.cargaImagen = true;
         }),
         catchError((err) => {
           mostrarMensaje(

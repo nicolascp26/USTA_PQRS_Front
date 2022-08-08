@@ -34,6 +34,13 @@ export class MensajeCrearComponent implements OnInit {
   public searchBar = '';
   public defaultTipo = 'Seleccione el tipo';
 
+  public arregloTipoClases = [
+    { id: 1, nom: 'Peticion' },
+    { id: 2, nom: 'Queja' },
+    { id: 3, nom: 'Reclamo' },
+    { id: 4, nom: 'Sugerencia' },
+  ];
+
   constructor(
     private mensajesService: MensajesService,
     private accesoService: AccesoService,
