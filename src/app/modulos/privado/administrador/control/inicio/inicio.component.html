@@ -17,7 +17,10 @@
   </div>
   <!----->
 
-  <div class="col-md-10 justify-content-center">
+  <div
+    class="col-md-10 justify-content-center"
+    *ngIf="cargaFinalizada == true; else spinner"
+  >
     <h5 class="mb-4">Resumen</h5>
     <div class="row">
       <div class="col-xl-3 col-lg-6">
@@ -31,8 +34,18 @@
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
-                <h2 class="d-flex align-items-center mb-0">112</h2>
+                <h2 class="d-flex align-items-center mb-0">
+                  {{ estadisticas.activos }}
+                </h2>
               </div>
+            </div>
+            <div>
+              <button
+                class="btn btn-outline-light"
+                [routerLink]="['/administrador/usuarios']"
+              >
+                Ir a usuarios
+              </button>
             </div>
           </div>
         </div>
@@ -42,15 +55,29 @@
         <div class="card l-bg-green-dark">
           <div class="card-statistic-3 p-4">
             <div class="card-icon card-icon-large">
-              <i class="fas fa-clipboard-check"></i>
+              <i class="fas fa-circle-exclamation"></i>
             </div>
             <div class="mb-4">
               <h5 class="card-title mb-0">Solicitudes Nuevas</h5>
             </div>
             <div class="row align-items-center mb-2 d-flex">
-              <div class="col-8">
-                <h2 class="d-flex align-items-center mb-0">578</h2>
+              <div class="col-6">
+                <h2 class="d-flex align-items-center mb-0">
+                  {{ estadisticas.nuevos }}
+                </h2>
               </div>
+            </div>
+            <div class="mb-2">
+              <progressbar
+                [max]="estadisticas.totales * 1"
+                [value]="estadisticas.nuevos * 1"
+              >
+                <span class="text-nowrap"
+                  >{{
+                    (estadisticas.nuevos * 100) / estadisticas.totales | number: '1.0-0'
+                  }}%</span
+                >
+              </progressbar>
             </div>
           </div>
         </div>
@@ -67,8 +94,22 @@
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
-                <h2 class="d-flex align-items-center mb-0">25</h2>
+                <h2 class="d-flex align-items-center mb-0">
+                  {{ estadisticas.progreso }}
+                </h2>
               </div>
+            </div>
+            <div class="mb-2">
+              <progressbar
+                [max]="estadisticas.totales * 1"
+                [value]="estadisticas.progreso * 1"
+              >
+                <span class="text-nowrap"
+                  >{{
+                    (estadisticas.progreso * 100) / estadisticas.totales | number: '1.0-0'
+                  }}%</span
+                >
+              </progressbar>
             </div>
           </div>
         </div>
@@ -78,15 +119,29 @@
         <div class="card l-bg-cherry">
           <div class="card-statistic-3 p-4">
             <div class="card-icon card-icon-large">
-              <i class="fas fa-circle-exclamation"></i>
+              <i class="fas fa-clipboard-check"></i>
             </div>
             <div class="mb-4">
               <h5 class="card-title mb-0">Solicitudes Finalizadas</h5>
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
-                <h2 class="d-flex align-items-center mb-0">51</h2>
+                <h2 class="d-flex align-items-center mb-0">
+                  {{ estadisticas.terminados }}
+                </h2>
               </div>
+            </div>
+            <div class="mb-2">
+              <progressbar
+                [max]="estadisticas.totales * 1"
+                [value]="estadisticas.terminados * 1"
+              >
+                <span class="text-nowrap"
+                  >{{
+                    (estadisticas.terminados * 100) / estadisticas.totales | number: '1.0-0'
+                  }}%</span
+                >
+              </progressbar>
             </div>
           </div>
         </div>
@@ -94,3 +149,16 @@
     </div>
   </div>
 </div>
+<ng-template #spinner>
+  <div class="col-md text-center">
+    <div
+      class="spinner-grow ms-auto text-primary"
+      role="status"
+      style="width: 4rem; height: 4rem"
+      aria-hidden="true"
+    ></div>
+  </div>
+  <div class="col-md text-center">
+    <h4>Cargando...</h4>
+  </div>
+</ng-template>

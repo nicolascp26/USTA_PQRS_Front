@@ -47,6 +47,10 @@ export class UsuarioService {
     return this.http.delete<Usuario>(this.appUser + '/delete/' + usuarioId);
   }
 
+  public estadisticasAdmin(): Observable<any>{
+    return this.http.get<any[]>(this.appUser + '/getStats');
+  }
+
   public estadisticasUsuario(usuarioId: number): Observable<any>{
     return this.http.get<any[]>(this.appUser + '/getStats/' + usuarioId);
   }
