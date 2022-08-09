@@ -27,7 +27,7 @@ export class PreguntasCrearComponent implements OnInit {
     private toastr: ToastrService,
     public router: Router
   ) {
-    this.objPregunta = this.inicializarRol();
+    this.objPregunta = this.inicializarPregunta();
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
     this.cargaFinalizada = false;
@@ -36,7 +36,7 @@ export class PreguntasCrearComponent implements OnInit {
   ngOnInit(): void {}
 
   //Métodos obligatorios
-  public inicializarRol(): Pregunta {
+  public inicializarPregunta(): Pregunta {
     return new Pregunta(0, '', '');
   }
 
@@ -45,7 +45,7 @@ export class PreguntasCrearComponent implements OnInit {
       .crearPregunta(this.objPregunta)
       .pipe(
         map((respuesta) => {
-          mostrarMensaje('success', 'Rol Creado', 'Exito', this.toastr);
+          mostrarMensaje('success', 'Pregunta Frecuente Creada', 'Exito', this.toastr);
           this.router.navigate(['/administrador/preguntas-frecuentes']);
           formulario.reset();
           return respuesta;
@@ -53,7 +53,7 @@ export class PreguntasCrearComponent implements OnInit {
         catchError((miError) => {
           mostrarMensaje(
             'error',
-            'Rol no pudo ser creado',
+            'Pregunta Frecuente no pudo ser creada',
             'Advertencia',
             this.toastr
           );
