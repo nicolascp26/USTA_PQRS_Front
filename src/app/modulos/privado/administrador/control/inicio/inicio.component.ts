@@ -21,6 +21,7 @@ export class InicioComponent implements OnInit {
     public accesoService: AccesoService,
     private usuarioService: UsuarioService
   ) {
+    //Inicializar atributos
     this.nombreUsuario = accesoService.objAcceso.usuarioNombres;
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
@@ -41,7 +42,6 @@ export class InicioComponent implements OnInit {
         }),
         finalize(() => {
           this.cargaFinalizada = true;
-          //Deberíamos analizar la paginación
         })
       )
       .subscribe(observadorAny);
