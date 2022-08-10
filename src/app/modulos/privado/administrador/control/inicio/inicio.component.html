@@ -15,7 +15,6 @@
       >
     </div>
   </div>
-  <!----->
 
   <div
     class="col-md-10 justify-content-center"
@@ -61,7 +60,7 @@
               <h5 class="card-title mb-0">Solicitudes Nuevas</h5>
             </div>
             <div class="row align-items-center mb-2 d-flex">
-              <div class="col-6">
+              <div class="col-8">
                 <h2 class="d-flex align-items-center mb-0">
                   {{ estadisticas.nuevos }}
                 </h2>
@@ -74,7 +73,8 @@
               >
                 <span class="text-nowrap"
                   >{{
-                    (estadisticas.nuevos * 100) / estadisticas.totales | number: '1.0-0'
+                    (estadisticas.nuevos * 100) / estadisticas.totales
+                      | number: "1.0-0"
                   }}%</span
                 >
               </progressbar>
@@ -106,7 +106,8 @@
               >
                 <span class="text-nowrap"
                   >{{
-                    (estadisticas.progreso * 100) / estadisticas.totales | number: '1.0-0'
+                    (estadisticas.progreso * 100) / estadisticas.totales
+                      | number: "1.0-0"
                   }}%</span
                 >
               </progressbar>
@@ -138,7 +139,8 @@
               >
                 <span class="text-nowrap"
                   >{{
-                    (estadisticas.terminados * 100) / estadisticas.totales | number: '1.0-0'
+                    (estadisticas.terminados * 100) / estadisticas.totales
+                      | number: "1.0-0"
                   }}%</span
                 >
               </progressbar>
