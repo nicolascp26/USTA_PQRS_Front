@@ -38,11 +38,12 @@
       >
         <thead class="bg-dark text-white">
           <tr>
-            <th style="width: 10%">Codigo</th>
+            <th style="width: 5%">Codigo</th>
             <th style="width: 10%">Estado</th>
-            <th style="width: 30%">Solicitud</th>
-            <th style="width: 20%">Detalle</th>
-            <th style="width: 30%">Tipo de solicitud</th>
+            <th style="width: 25%">Solicitud</th>
+            <th style="width: 30%">Detalle</th>
+            <th style="width: 10%">Clase</th>
+            <th style="width: 20%">Tipo de solicitud</th>
           </tr>
         </thead>
         <tbody>
@@ -92,7 +93,8 @@
                 </div>
               </span>
             </td>
-            <td>{{ soli.tipoClase }}-{{ soli.tipoNombre }}</td>
+            <td>{{ soli.tipoClase }}</td>
+            <td>{{ soli.tipoNombre }}</td>
           </tr>
         </tbody>
       </table>
