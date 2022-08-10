@@ -1,3 +1,5 @@
+import { Mensaje } from './../../../../../modelos/mensaje';
+import { MensajesService } from './../../../../../servicios/mensajes.service';
 import { RolService } from './../../../../../servicios/rol.service';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
@@ -22,6 +24,7 @@ export class UsuariosActualizarComponent implements OnInit {
   public accesoSeleccionado: any;
   public rolSeleccionado: Rol;
   public arregloRoles: Rol[];
+  public arregloSolicitudes: Mensaje[];
 
   //Atributos consumo servicios
   public tmp: any;
@@ -37,6 +40,7 @@ export class UsuariosActualizarComponent implements OnInit {
     private ruta: ActivatedRoute,
     public router: Router,
     private usuarioService: UsuarioService,
+    private mensajesService:MensajesService,
     private rolService: RolService,
     public modalService: BsModalService,
     private miMensaje: ToastrService
@@ -45,6 +49,7 @@ export class UsuariosActualizarComponent implements OnInit {
     this.usuarioSeleccionado = this.inicializarUsuario();
     this.rolSeleccionado = this.inicializarRol();
     this.arregloRoles = [];
+    this.arregloSolicitudes = [];
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
     this.cargaFinalizada = false;
@@ -59,6 +64,7 @@ export class UsuariosActualizarComponent implements OnInit {
       const miCodigo = String(parametro.get('usuarioId'));
       const miCodigoNumerico = parseFloat(miCodigo);
       this.obtenerUsuarioUnico(miCodigoNumerico);
+      this.obtenerSolicitudes(miCodigoNumerico);
       this.obtenerRoles();
     });
   }
@@ -169,6 +175,21 @@ export class UsuariosActualizarComponent implements OnInit {
         })
       )
       .subscribe(observadorAny);*/
+  }
+
+  public obtenerSolicitudes(usuarioId: number): void {
+    this.miSuscripcion = this.mensajesService
+      .obtenerSolicitudesUsuario(usuarioId)
+      .pipe(
+        map((resultado: Mensaje[]) => {
+          this.arregloSolicitudes = resultado;
+        }),
+        finalize(() => {
+          this.cargaFinalizada = true;
+          //Deberíamos analizar la paginación
+        })
+      )
+      .subscribe(observadorAny);
   }
 
   public obtenerRoles(): void {

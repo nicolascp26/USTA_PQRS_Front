@@ -33,7 +33,7 @@
       <nav>
         <div class="nav nav-tabs" id="nav-tab" role="tablist">
           <button
-            class="nav-link active"
+            class="nav-link"
             id="nav-home-tab"
             data-bs-toggle="tab"
             data-bs-target="#nav-home"
@@ -41,11 +41,12 @@
             role="tab"
             aria-controls="nav-home"
             aria-selected="true"
+            *ngIf="usuarioSeleccionado.rolId == 2"
           >
             <i class="fas fa-chart-pie fa-fw me-2"></i>Resumen
           </button>
           <button
-            class="nav-link"
+            class="nav-link active"
             id="nav-profile-tab"
             data-bs-toggle="tab"
             data-bs-target="#nav-profile"
@@ -72,16 +73,63 @@
       </nav>
       <div class="tab-content" id="nav-tabContent">
         <div
-          class="tab-pane fade show active"
+          class="tab-pane fade"
           id="nav-home"
           role="tabpanel"
           aria-labelledby="nav-home-tab"
+          *ngIf="usuarioSeleccionado.rolId == 2"
         >
-          ...
+          <div class="container-xl px-4 mt-4">
+            <div class="row">
+              <div class="list-group mb-3">
+                <div
+                  class="card-header fw-bold"
+                  *ngIf="arregloSolicitudes.length !== 0; else sinRegistros"
+                >
+                  Solicitudes
+                </div>
+                <a
+                  [routerLink]="[
+                    '/administrador/solicitudes/visualizar/' + soli.mensajeId
+                  ]"
+                  class="list-group-item list-group-item-action"
+                  *ngFor="let soli of arregloSolicitudes"
+                >
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{ soli.mensajeTitulo }}</h5>
+                    <small class="text-muted">{{
+                      soli.mensajeFecha | date: "mediumDate"
+                    }}</small>
+                  </div>
+                  <div class="d-flex w-100 justify-content-between">
+                    <small class="text-muted"
+                      ><strong>Clase: </strong>{{ soli.tipoClase }}
+                      <strong>Tipo: </strong>{{ soli.tipoNombre }}</small
+                    >
+                    <span
+                      class="badge rounded-pill bg-success"
+                      *ngIf="soli.mensajeEstado == 1"
+                      >Nueva</span
+                    >
+                    <span
+                      class="badge rounded-pill bg-warning"
+                      *ngIf="soli.mensajeEstado == 2"
+                      >En progreso</span
+                    >
+                    <span
+                      class="badge rounded-pill bg-danger"
+                      *ngIf="soli.mensajeEstado == 3"
+                      >Terminada</span
+                    >
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- TAB DE PERFIL -->
         <div
-          class="tab-pane fade"
+          class="tab-pane fade show active"
           id="nav-profile"
           role="tabpanel"
           aria-labelledby="nav-profile-tab"
@@ -421,10 +469,9 @@
                   <div class="card-body">
                     <p>
                       La eliminación de esta cuenta es una acción permanente y
-                      no se puede deshacer. Esto eliminará todas las
-                      solicitudes hechas por el usuario y sus mensajes. Si está
-                      seguro de querer eliminar la cuenta, seleccione el botón
-                      de abajo.
+                      no se puede deshacer. Esto eliminará todas las solicitudes
+                      hechas por el usuario y sus mensajes. Si está seguro de
+                      querer eliminar la cuenta, seleccione el botón de abajo.
                     </p>
                     <button
                       class="btn btn-outline-danger"
@@ -481,5 +528,12 @@
   </div>
   <div class="col-md text-center">
     <h4>Cargando...</h4>
+  </div>
+</ng-template>
+
+<ng-template #sinRegistros>
+  <div class="alert alert-primary" role="alert">
+    <i class="fa fa-circle-info"></i>
+    El usuario no tiene solicitudes recientes.
   </div>
 </ng-template>
