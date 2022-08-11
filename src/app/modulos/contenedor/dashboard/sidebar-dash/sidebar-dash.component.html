@@ -33,13 +33,14 @@
             [routerLink]="['' + item.route]"
             class="nav-link text-white"
             routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
           >
             <i class="{{ item.icon }}"></i
             ><span class="ms-2">{{ item.name }} </span>
           </a>
         </li>
       </ul>
-      <hr style="color: white;"/>
+      <hr style="color: white" />
       <div class="dropdown">
         <a
           href="#"
