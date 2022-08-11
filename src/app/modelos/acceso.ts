@@ -2,6 +2,7 @@ export class Acceso {
   public correoUsuario: string;
   public claveUsuario: string;
   public reClave?: string;
+  public nuevaClave?:string;
 
   public usuarioNombres?: string;
   public usuarioRol?: string | any;
@@ -11,5 +12,6 @@ export class Acceso {
     this.correoUsuario = corr;
     this.claveUsuario = clav;
     this.reClave = '';
+    this.nuevaClave='';
   }
 }

@@ -50,7 +50,7 @@ export class AccesoService {
         const obj: any = jwtDecode(miToken);
         this.objAcceso.usuarioId = obj.id;
         this.objAcceso.correoUsuario = obj.correo;
-        this.objAcceso.claveUsuario = obj.clave;
+        this.objAcceso.claveUsuario = '';
         this.objAcceso.usuarioRol = obj.usuarioRol;
         this.objAcceso.usuarioNombres = obj.usuarioNombres;
         return true;
@@ -77,10 +77,14 @@ export class AccesoService {
     } else return false;
   }
 
-  public actualizarAcceso(objAcceso: Acceso): Observable<Acceso> {
+  public actualizarClave(
+    objAcceso: Acceso,
+    usuarioId: number,
+    nuevaClave: string
+  ): Observable<Acceso> {
     return this.http.put<Acceso>(
-      this.appLogin + '/update/' + objAcceso.usuarioId,
-      objAcceso
+      this.appLogin + '/updatePassword/' + usuarioId,
+      [objAcceso, nuevaClave]
     );
   }
 }

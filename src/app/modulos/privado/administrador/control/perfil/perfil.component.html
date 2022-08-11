@@ -245,11 +245,11 @@
                 <div class="card-header">Cambiar contraseña</div>
                 <div class="card-body">
                   <form
-                    #frmActualizarAcceso="ngForm"
+                    #frmActualizarClave="ngForm"
                     class="needs-validation"
                     (ngSubmit)="
-                      frmActualizarAcceso.form.valid &&
-                        actualizarAcceso(frmActualizarAcceso)
+                      frmActualizarClave.form.valid &&
+                      actualizarClave(frmActualizarClave)
                     "
                   >
                     <!-- Form Group (email address)-->
@@ -262,7 +262,7 @@
                         name="usuarioAccesoCorreo"
                         id="usuarioAccesoCorreo"
                         type="email"
-                        [(ngModel)]="accesoSeleccionado.correoUsuario"
+                        [(ngModel)]="objAcceso.correoUsuario"
                         readonly
                       />
                     </div>
@@ -273,72 +273,91 @@
                       >
                       <input
                         class="form-control"
-                        id="currentPassword"
-                        name="currentPassword"
+                        id="claveUsuario"
+                        name="claveUsuario"
                         type="password"
                         placeholder="Ingresa la contraseña actual"
-                      />
-                    </div>
-                    <!-- Form Group (new password)-->
-                    <div class="mb-3">
-                      <label class="small mb-1" for="newPassword"
-                        >Nueva contraseña</label
-                      >
-                      <input
-                        class="form-control"
-                        id="newPassword"
-                        name="newPassword"
-                        type="password"
-                        placeholder="Ingresa una nueva contraseña"
-                        [(ngModel)]="accesoSeleccionado.claveUsuario"
+                        [(ngModel)]="objAcceso.claveUsuario"
                         [ngClass]="{
                           'is-invalid':
-                            frmActualizarAcceso.submitted && newPassword.invalid
+                            frmActualizarClave.submitted &&
+                            claveUsuario.invalid
                         }"
-                        #newPassword="ngModel"
+                        #claveUsuario="ngModel"
                         required
                       />
                       <div
                         class="text-danger error"
                         *ngIf="
-                          frmActualizarAcceso.submitted && newPassword.invalid
+                          frmActualizarClave.submitted &&
+                          claveUsuario.invalid
                         "
                       >
-                        <span *ngIf="newPassword.errors?.['required']"
+                        <span *ngIf="claveUsuario.errors?.['required']"
+                          >Contraseña actual requerida</span
+                        >
+                      </div>
+                    </div>
+                    <!-- Form Group (new password)-->
+                    <div class="mb-3">
+                      <label class="small mb-1" for="nuevaClave"
+                        >Nueva contraseña</label
+                      >
+                      <input
+                        class="form-control"
+                        id="nuevaClave"
+                        name="nuevaClave"
+                        type="password"
+                        placeholder="Ingresa una nueva contraseña"
+                        [(ngModel)]="objAcceso.nuevaClave"
+                        [ngClass]="{
+                          'is-invalid':
+                            frmActualizarClave.submitted && nuevaClave.invalid
+                        }"
+                        #nuevaClave="ngModel"
+                        required
+                      />
+                      <div
+                        class="text-danger error"
+                        *ngIf="
+                          frmActualizarClave.submitted && nuevaClave.invalid
+                        "
+                      >
+                        <span *ngIf="nuevaClave.errors?.['required']"
                           >Contraseña nueva requerida</span
                         >
                       </div>
                     </div>
                     <!-- Form Group (confirm password)-->
                     <div class="mb-3">
-                      <label class="small mb-1" for="confirmPassword"
+                      <label class="small mb-1" for="reClave"
                         >Confirmar contraseña nueva</label
                       >
                       <input
                         class="form-control"
-                        id="rePassword"
-                        name="rePassword"
+                        id="reClave"
+                        name="reClave"
                         type="password"
                         placeholder="Confirmar nueva contraseña"
-                        [(ngModel)]="accesoSeleccionado.reClave"
+                        [(ngModel)]="objAcceso.reClave"
                         [ngClass]="{
                           'is-invalid':
-                            frmActualizarAcceso.submitted && rePassword.invalid
+                            frmActualizarClave.submitted && reClave.invalid
                         }"
-                        #rePassword="ngModel"
+                        #reClave="ngModel"
                         required
-                        pattern="{{ accesoSeleccionado.claveUsuario }}"
+                        pattern="{{ objAcceso.nuevaClave }}"
                       />
                       <div
                         class="text-danger error"
                         *ngIf="
-                          frmActualizarAcceso.submitted && rePassword.invalid
+                          frmActualizarClave.submitted && reClave.invalid
                         "
                       >
-                        <span *ngIf="rePassword.errors?.['required']"
+                        <span *ngIf="reClave.errors?.['required']"
                           >Confirmar contraseña requerido</span
                         >
-                        <span *ngIf="rePassword.errors?.['pattern']"
+                        <span *ngIf="reClave.errors?.['pattern']"
                           >Contraseña nueva no coincide</span
                         >
                       </div>

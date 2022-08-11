@@ -1,17 +1,20 @@
+import { Acceso } from './../../../../../modelos/acceso';
+import { Rol } from '../../../../../modelos/rol';
+import { Imagen } from '../../../../../modelos/imagen';
+import { Usuario } from '../../../../../modelos/usuario';
+
 import { ImagenService } from './../../../../../servicios/imagen.service';
-import { mostrarMensaje } from 'src/app/utilidades/mensajes/mensajes-toast.func';
-import { NgForm } from '@angular/forms';
-import { observadorAny } from 'src/app/utilidades/observable/observable-any';
-import { ToastrService } from 'ngx-toastr';
 import { RolService } from './../../../../../servicios/rol.service';
 import { AccesoService } from './../../../../../servicios/acceso.service';
 import { UsuarioService } from './../../../../../servicios/usuario.service';
-import { Rol } from '../../../../../modelos/rol';
+
+import { mostrarMensaje } from 'src/app/utilidades/mensajes/mensajes-toast.func';
+import { observadorAny } from 'src/app/utilidades/observable/observable-any';
+import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { map, Subscription, finalize, catchError } from 'rxjs';
-import { Imagen } from '../../../../../modelos/imagen';
-import { Usuario } from '../../../../../modelos/usuario';
 import { Component, OnInit } from '@angular/core';
-//import * as internal from 'stream';
+import * as cifrado from 'js-sha512';
 
 @Component({
   selector: 'app-perfil',
@@ -21,7 +24,7 @@ import { Component, OnInit } from '@angular/core';
 export class PerfilComponent implements OnInit {
   //Atributos requeridos
   public usuarioSeleccionado: Usuario;
-  public accesoSeleccionado: any;
+  public objAcceso: any;
   public arregloRoles: Rol[];
 
   //Atributos consumo servicios
@@ -41,11 +44,11 @@ export class PerfilComponent implements OnInit {
     private accesoService: AccesoService,
     private rolService: RolService,
     private imgService: ImagenService,
-    private miMensaje: ToastrService
+    private toastr: ToastrService
   ) {
     //Inicializar Usuario
     this.usuarioSeleccionado = this.inicializarUsuario();
-    this.accesoSeleccionado = accesoService.objAcceso;
+    this.objAcceso = this.accesoService.objAcceso;
     this.arregloRoles = [];
 
     //Inicializar imagen
@@ -109,7 +112,7 @@ export class PerfilComponent implements OnInit {
             'success',
             'Usuario actualizado Correctamente',
             'Satisfactorio',
-            this.miMensaje
+            this.toastr
           );
           return respuesta;
         }),
@@ -118,7 +121,7 @@ export class PerfilComponent implements OnInit {
             'error',
             'No se pudo actualizar',
             'Fallo',
-            this.miMensaje
+            this.toastr
           );
           throw err;
         })
@@ -126,25 +129,32 @@ export class PerfilComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  public actualizarAcceso(formulario: NgForm): void {
+  public actualizarClave(formulario: NgForm): void {
+    const actual = cifrado.sha512(this.objAcceso.claveUsuario);
+    const nueva = cifrado.sha512(this.objAcceso.nuevaClave);
+    const acceso = new Acceso(
+      this.accesoService.objAcceso.correoUsuario,
+      actual
+    );
     this.miSuscripcion = this.accesoService
-      .actualizarAcceso(this.accesoSeleccionado)
+      .actualizarClave(acceso, this.accesoService.objAcceso.usuarioId, nueva)
       .pipe(
         map((respuesta) => {
           mostrarMensaje(
             'success',
-            'Datos de acceso actualizados correctamente',
+            'Contraseña actualizada correctamente',
             'Satisfactorio',
-            this.miMensaje
+            this.toastr
           );
+          formulario.reset();
           return respuesta;
         }),
         catchError((err) => {
           mostrarMensaje(
             'error',
-            'No se pudo actualizar',
+            'La contraseña actual no es correcta',
             'Fallo',
-            this.miMensaje
+            this.toastr
           );
           throw err;
         })
@@ -197,7 +207,7 @@ export class PerfilComponent implements OnInit {
             'success',
             'Imagen de perfil actualizada',
             'Satisfactorio',
-            this.miMensaje
+            this.toastr
           );
           return respuesta;
         }),
@@ -209,7 +219,7 @@ export class PerfilComponent implements OnInit {
             'error',
             'No se pudo actualizar',
             'Fallo',
-            this.miMensaje
+            this.toastr
           );
           throw err;
         })
