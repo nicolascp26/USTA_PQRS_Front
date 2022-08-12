@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid mb-3">
   <div class="row g-3 mt-1">
     <nav aria-label="breadcrumb">
       <ol class="breadcrumb">
@@ -14,10 +14,11 @@
       </ol>
     </nav>
   </div>
-  <div class="row justify-content-center">
-    <h4 class="mb-3 fw-bold mb-0 text-center">Administrar Usuarios</h4>
 
-    <div class="input-group-sm text-center mb-2">
+  <h4 class="mb-3 fw-bold mb-0 text-center">Administrar Usuarios</h4>
+
+  <div class="d-flex justify-content-around mb-2">
+    <div class="p-2">
       <span class="badge rounded-pill bg-success">
         <i class="fas fa-search"></i>
       </span>
@@ -28,6 +29,17 @@
         aria-label="Buscar"
         [(ngModel)]="searchBar"
       />
+    </div>
+    <div class="p-2">
+      Usuarios por página:
+      <select
+        style="border: transparent; padding: 5px"
+        (change)="handlePageSizeChange($event)"
+      >
+        <option *ngFor="let cantidad of tamano" [ngValue]="cantidadMostrar">
+          {{ cantidad }}
+        </option>
+      </select>
     </div>
   </div>
 
@@ -50,8 +62,19 @@
             *ngFor="
               let objUsu of arregloUsuarios
                 | filterBy
-                  : ['usuarioNombres', 'usuarioApellidos', 'usuarioDocumento']
+                  : [
+                      'usuarioNombres',
+                      'usuarioApellidos',
+                      'usuarioDocumento',
+                      'usuarioTelefono'
+                    ]
                   : searchBar
+                | paginate
+                  : {
+                      itemsPerPage: cantidadMostrar,
+                      currentPage: paginaActual,
+                      totalItems: cantidadTotal
+                    }
             "
             (click)="seleccionarUsuario(objUsu)"
           >
@@ -81,27 +104,23 @@
           </tr>
         </tbody>
       </table>
-      <div>
-        <small
-          ><strong> {{ arregloUsuarios.length }} </strong> usuarios
-          registrados</small
-        >
+      <div class="d-flex justify-content-around mb-2">
+        <div class="p-2">
+          <strong> {{ cantidadTotal }} </strong> usuarios registrados en
+          <strong> {{ cantidadPaginas }}</strong> páginas.
+        </div>
+
+        <div class="p-2">
+          <pagination-controls
+            class="my-pagination"
+            previousLabel=""
+            nextLabel=""
+            [responsive]="true"
+            (pageChange)="handlePageChange($event)"
+          ></pagination-controls>
+        </div>
       </div>
     </div>
-    <!--
-          <div class="row justify-content-md-center">
-            <div class="col-md-6 text-left" style="padding-left: 15px">
-              <small
-                >
-
-                <strong>{{ cantidadTotalRegistros }}</strong> Registros
-                encontrados en
-                <strong>{{ cantidadPaginas }}</strong> paginas</small
-              >
-            </div>
-            <div class="col-md-6 text-right" style="padding-right: 15px"></div>
-          </div>
-          -->
     <div class="text-center">
       <button
         routerLinkActive="router-link-active"

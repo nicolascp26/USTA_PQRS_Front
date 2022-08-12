@@ -171,13 +171,13 @@ export class RolAdministrarComponent implements OnInit {
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
     this.modalTitulo = 'Advertencia';
     this.modalContenido =
-      'Seguro que quieres eliminar ' + this.rolSeleccionado.rolNombre + '?';
+      '¿Seguro que quieres eliminar ' + this.rolSeleccionado.rolNombre + '?';
   }
 
   public abrirModalCrear(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
     this.modalTitulo = 'Crear nuevo rol';
-    this.modalContenido = 'Seguro que quiere crear este rol?';
+    this.modalContenido = '¿Seguro que quiere crear este rol?';
   }
 
   public abrirModalActualizar(template: TemplateRef<any>, objActualizar: Rol): void {

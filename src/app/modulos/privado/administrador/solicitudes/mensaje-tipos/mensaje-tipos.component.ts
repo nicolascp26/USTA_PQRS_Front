@@ -201,13 +201,13 @@ export class MensajeTiposComponent implements OnInit {
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
     this.modalTitulo = 'Advertencia';
     this.modalContenido =
-      'Seguro que quieres eliminar ' + this.tipoSeleccionado.tipoNombre + '?';
+      '¿Seguro que quieres eliminar '+ this.tipoSeleccionado.tipoClase + ': ' +this.tipoSeleccionado.tipoNombre + '?';
   }
 
   public abrirModalCrear(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
     this.modalTitulo = 'Crear nuevo tipo';
-    this.modalContenido = 'Seguro que quiere crear este tipo de solicitud?';
+    this.modalContenido = '¿Seguro que quiere crear este tipo de solicitud?';
   }
 
   public abrirModalActualizar(
@@ -217,7 +217,7 @@ export class MensajeTiposComponent implements OnInit {
     this.tipoSeleccionado = objActualizar;
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
     this.modalTitulo = 'Actualizar tipo de solicitud';
-    this.modalContenido = 'Guardar los cambios?';
+    this.modalContenido = '¿Guardar los cambios?';
   }
 
   public cancelar(): void {
