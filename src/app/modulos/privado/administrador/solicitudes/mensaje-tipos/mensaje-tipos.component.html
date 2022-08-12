@@ -74,6 +74,7 @@
                 class="fa fa-edit"
                 style="cursor: pointer"
                 (click)="abrirModalActualizar(ActualizarTipo, objTipo)"
+                title="Editar tipo de solicitud"
               ></i>
               &nbsp;
               <i
@@ -81,11 +82,13 @@
                 class="fa fa-trash"
                 style="color: #dc143c; cursor: pointer"
                 (click)="abrirModalEliminar(eliminarTipo, objTipo)"
+                title="Eliminar tipo de solicitud"
               ></i>
               <i
                 *ngIf="objTipo.cantTipo != 0"
                 class="fa fa-trash"
                 style="color: #707070; cursor: pointer"
+                title="No se puede eliminar mientras tenga registros"
               ></i>
             </td>
           </tr>

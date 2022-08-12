@@ -112,7 +112,7 @@ export class PreguntasAdministrarComponent implements OnInit {
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
     this.modalTitulo = 'Advertencia';
     this.modalContenido =
-      'Seguro que quieres eliminar: ' +
+      '¿Seguro que quieres eliminar: ' +
       this.preguntaSeleccionada.prefTitulo;
   }
 

@@ -25,7 +25,10 @@ export class UsuariosAdministrarComponent implements OnInit {
   public paginaActual: number;
   public cantidadMostrar: number;
   public cantidadPaginas: number;
-  public cantidadTotalRegistros: number;
+  public cantidadTotal: number;
+  public tamano = [5, 10, 15];
+
+  //Atributos de filtrado
   public searchBar = '';
 
   //Atributos modales
@@ -52,10 +55,10 @@ export class UsuariosAdministrarComponent implements OnInit {
     this.usuarioSeleccionado = this.inicializarUsuario();
     this.rolSeleccionado = this.inicializarRol();
     //Inicializar atributos paginación
-    this.paginaActual = 0;
-    this.cantidadMostrar = 0;
+    this.paginaActual = 1;
+    this.cantidadMostrar = 5;
     this.cantidadPaginas = 0;
-    this.cantidadTotalRegistros = 0;
+    this.cantidadTotal = 0;
 
     //Inicializar modales
     this.modalTitulo = '';
@@ -97,12 +100,12 @@ export class UsuariosAdministrarComponent implements OnInit {
     this.miSuscripcion = this.usuarioService
       .cargarUsuarios()
       .pipe(
-        map((resultado: Usuario[]) => {
-          this.arregloUsuarios = resultado;
+        map((respuesta: any) => {
+          this.arregloUsuarios = respuesta.usuarios;
+          this.cantidadTotal = respuesta.count;
         }),
         finalize(() => {
           this.cargaFinalizada = true;
-          //Deberíamos analizar la paginación
         })
       )
       .subscribe(observadorAny);
@@ -114,7 +117,12 @@ export class UsuariosAdministrarComponent implements OnInit {
       .pipe(
         map((respuesta) => {
           this.obtenerUsuarios();
-          mostrarMensaje('success', 'Usuario eliminado', 'Exito', this.miMensaje);
+          mostrarMensaje(
+            'success',
+            'Usuario eliminado',
+            'Exito',
+            this.miMensaje
+          );
           return respuesta;
         }),
         catchError((miError) => {
@@ -168,5 +176,16 @@ export class UsuariosAdministrarComponent implements OnInit {
     this.eliminarUsuario(this.usuarioSeleccionado.usuarioId);
     this.usuarioSeleccionado = this.inicializarUsuario();
     this.modalRef.hide();
+  }
+
+  //Metodos paginacion
+  handlePageChange(event: number): void {
+    this.paginaActual = event;
+    this.obtenerUsuarios();
+  }
+  handlePageSizeChange(event: any): void {
+    this.cantidadMostrar = event.target.value;
+    this.paginaActual = 1;
+    this.obtenerUsuarios();
   }
 }

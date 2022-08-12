@@ -209,7 +209,7 @@ export class UsuariosActualizarComponent implements OnInit {
   public abrirModalEliminar(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
     this.modalTitulo = 'Advertencia';
-    this.modalContenido = 'Seguro que quieres eliminar la cuenta?';
+    this.modalContenido = '¿Seguro que quieres eliminar la cuenta?';
   }
   public cancelar(): void {
     this.modalRef.hide();
