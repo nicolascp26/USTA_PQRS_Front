@@ -5,6 +5,7 @@ import { UsuariosActualizarComponent } from './usuarios-actualizar/usuarios-actu
 import { UsuariosRoutingModule } from './usuarios-routing.module';
 import { FormsModule } from '@angular/forms';
 import { NgPipesModule } from 'ngx-pipes';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { NgPipesModule } from 'ngx-pipes';
     CommonModule,
     FormsModule,
     UsuariosRoutingModule,
+    NgxPaginationModule,
     NgPipesModule
   ]
 })
