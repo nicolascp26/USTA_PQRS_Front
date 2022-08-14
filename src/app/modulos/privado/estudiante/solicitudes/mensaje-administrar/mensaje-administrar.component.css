@@ -9,3 +9,13 @@
   outline: none;
   box-shadow: none;
 }
+
+.my-pagination ::ng-deep .ngx-pagination .current {
+  border-radius: 20px;
+  background-color: #0d6efd;
+}
+
+.my-pagination ::ng-deep .ngx-pagination a:hover {
+  border-radius: 20px;
+  background-color: #d9d9d9;
+}

@@ -152,32 +152,6 @@ export class UsuariosAdministrarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
-  //Metodos Modales
-  public abrirModalEliminar(
-    template: TemplateRef<any>,
-    objBorrar: Usuario
-  ): void {
-    this.usuarioSeleccionado = objBorrar;
-    this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
-    this.modalTitulo = 'Advertencia';
-    this.modalContenido =
-      'Seguro que quieres eliminar ' +
-      this.usuarioSeleccionado.usuarioNombres +
-      ' ' +
-      this.usuarioSeleccionado.usuarioApellidos +
-      '?';
-  }
-
-  public cancelar(): void {
-    this.modalRef.hide();
-  }
-
-  public confirmarEliminar(): void {
-    this.eliminarUsuario(this.usuarioSeleccionado.usuarioId);
-    this.usuarioSeleccionado = this.inicializarUsuario();
-    this.modalRef.hide();
-  }
-
   //Metodos paginacion
   handlePageChange(event: number): void {
     this.paginaActual = event;

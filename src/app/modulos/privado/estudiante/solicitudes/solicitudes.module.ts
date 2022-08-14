@@ -6,6 +6,7 @@ import { MensajeAdministrarComponent } from './mensaje-administrar/mensaje-admin
 import { MensajeCrearComponent } from './mensaje-crear/mensaje-crear.component';
 import { MensajeVisualizarComponent } from './mensaje-visualizar/mensaje-visualizar.component';
 import { NgPipesModule } from 'ngx-pipes';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,12 @@ import { NgPipesModule } from 'ngx-pipes';
     MensajeCrearComponent,
     MensajeVisualizarComponent,
   ],
-  imports: [CommonModule, SolicitudesRoutingModule, FormsModule,NgPipesModule],
+  imports: [
+    CommonModule,
+    SolicitudesRoutingModule,
+    FormsModule,
+    NgxPaginationModule,
+    NgPipesModule,
+  ],
 })
 export class SolicitudesModule {}
