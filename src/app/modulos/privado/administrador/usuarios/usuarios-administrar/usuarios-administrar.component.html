@@ -131,32 +131,6 @@
         Actualizar lista de usuarios
       </button>
     </div>
-
-    <ng-template #eliminarUsuario>
-      <div class="modal-content rounded-4 shadow">
-        <div class="modal-body p-4 text-center">
-          <h5 class="mb-0">{{ modalTitulo }}</h5>
-          <p class="mb-0">{{ modalContenido }}</p>
-        </div>
-        <div class="modal-footer flex-nowrap p-0">
-          <button
-            type="button"
-            class="btn btn-lg fs-6 text-primary col-6 m-0 rounded-0 border-right"
-            (click)="confirmarEliminar()"
-          >
-            <strong>Si, eliminar</strong>
-          </button>
-          <button
-            type="button"
-            class="btn btn-lg fs-6 text-danger col-6 m-0 rounded-0"
-            data-bs-dismiss="modal"
-            (click)="cancelar()"
-          >
-            Cancelar
-          </button>
-        </div>
-      </div>
-    </ng-template>
   </div>
 </div>
 
