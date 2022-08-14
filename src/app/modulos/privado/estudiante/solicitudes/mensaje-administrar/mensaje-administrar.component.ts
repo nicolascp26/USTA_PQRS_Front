@@ -21,14 +21,31 @@ export class MensajeAdministrarComponent implements OnInit {
   public miSuscripcion: Subscription;
   public cargaFinalizada: boolean;
 
+  //Atributos paginación
+  public paginaActual: number;
+  public cantidadMostrar: number;
+  public cantidadPaginas: number;
+  public cantidadTotal: number;
+  public tamano = [5, 10, 15];
+
   //Atributos de filtrado
   public searchBar = '';
 
-  constructor(private mensajesService: MensajesService,private accesoService: AccesoService,) {
+  constructor(
+    private mensajesService: MensajesService,
+    private accesoService: AccesoService
+  ) {
     //Inicializar atributos requeridos
     this.solicitudSeleccionada = this.inicializarMensaje();
     this.arregloSolicitudes = [];
     this.accesoSeleccionado = accesoService.objAcceso;
+
+    //Inicializar atributos paginación
+    this.paginaActual = 1;
+    this.cantidadMostrar = 5;
+    this.cantidadPaginas = 0;
+    this.cantidadTotal = 0;
+
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
     this.cargaFinalizada = false;
@@ -57,8 +74,9 @@ export class MensajeAdministrarComponent implements OnInit {
     this.miSuscripcion = this.mensajesService
       .obtenerSolicitudesUsuario(this.accesoSeleccionado.usuarioId)
       .pipe(
-        map((resultado: Mensaje[]) => {
-          this.arregloSolicitudes = resultado;
+        map((respuesta: any) => {
+          this.arregloSolicitudes = respuesta.solicitudes;
+          this.cantidadTotal = respuesta.count;
         }),
         finalize(() => {
           this.cargaFinalizada = true;
@@ -66,5 +84,11 @@ export class MensajeAdministrarComponent implements OnInit {
         })
       )
       .subscribe(observadorAny);
+  }
+
+  //Metodos paginacion
+  handlePageChange(event: number): void {
+    this.paginaActual = event;
+    this.obtenerSolicitudes();
   }
 }

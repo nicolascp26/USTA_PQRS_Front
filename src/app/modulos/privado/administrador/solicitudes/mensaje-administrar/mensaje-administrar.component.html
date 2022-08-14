@@ -14,10 +14,10 @@
       </ol>
     </nav>
   </div>
-  <div class="row justify-content-center">
-    <h4 class="mb-3 fw-bold text-center">Administrar Solicitudes</h4>
 
-    <div class="input-group-sm text-center mb-2">
+  <h4 class="mb-3 fw-bold text-center">Administrar Solicitudes</h4>
+  <div class="d-flex justify-content-around mb-2">
+    <div class="p-2">
       <span class="badge rounded-pill bg-success">
         <i class="fas fa-search"></i>
       </span>
@@ -28,6 +28,17 @@
         aria-label="Buscar"
         [(ngModel)]="searchBar"
       />
+    </div>
+    <div class="p-2">
+      Solicitudes por página:
+      <select
+        style="border: transparent; padding: 5px"
+        (change)="handlePageSizeChange($event)"
+      >
+        <option *ngFor="let cantidad of tamano" [ngValue]="cantidadMostrar">
+          {{ cantidad }}
+        </option>
+      </select>
     </div>
   </div>
 
@@ -59,6 +70,12 @@
                       'tipoNombre'
                     ]
                   : searchBar
+                | paginate
+                  : {
+                      itemsPerPage: cantidadMostrar,
+                      currentPage: paginaActual,
+                      totalItems: cantidadTotal
+                    }
             "
             (click)="seleccionarSolicitud(soli)"
           >
@@ -113,27 +130,22 @@
           </tr>
         </tbody>
       </table>
-      <div>
-        <small
-          ><strong> {{ arregloSolicitudes.length }} </strong> solicitudes
-          registradas</small
-        >
+      <div class="d-flex justify-content-around mb-2">
+        <div class="p-2">
+          <strong> {{ cantidadTotal }} </strong> solicitudes registrados en
+          <strong> {{ cantidadPaginas }}</strong> páginas.
+        </div>
+        <div class="p-2">
+          <pagination-controls
+            class="my-pagination"
+            previousLabel=""
+            nextLabel=""
+            [responsive]="true"
+            (pageChange)="handlePageChange($event)"
+          ></pagination-controls>
+        </div>
       </div>
     </div>
-    <!--
-          <div class="row justify-content-md-center">
-            <div class="col-md-6 text-left" style="padding-left: 15px">
-              <small
-                >
-
-                <strong>{{ cantidadTotalRegistros }}</strong> Registros
-                encontrados en
-                <strong>{{ cantidadPaginas }}</strong> paginas</small
-              >
-            </div>
-            <div class="col-md-6 text-right" style="padding-right: 15px"></div>
-          </div>
-          -->
     <div class="text-center">
       <button
         routerLinkActive="router-link-active"
@@ -160,7 +172,6 @@
     <h4>Cargando...</h4>
   </div>
 </ng-template>
-
 <ng-template #sinRegistros>
   <div class="alert alert-primary" role="alert">
     <i class="fa fa-circle-info"></i>
