@@ -3,7 +3,6 @@ import { PreguntasFrecuentesService } from './../../../../../servicios/preguntas
 import { map, Subscription, finalize } from 'rxjs';
 import { Pregunta } from './../../../../../modelos/pregunta';
 import { Component, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-preguntas-frecuentes',
   templateUrl: './preguntas-frecuentes.component.html',

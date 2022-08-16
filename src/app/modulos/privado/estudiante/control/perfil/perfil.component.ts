@@ -1,3 +1,4 @@
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Acceso } from './../../../../../modelos/acceso';
 import { Rol } from '../../../../../modelos/rol';
 import { Imagen } from '../../../../../modelos/imagen';
@@ -13,8 +14,9 @@ import { observadorAny } from 'src/app/utilidades/observable/observable-any';
 import { NgForm } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { map, Subscription, finalize, catchError } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import * as cifrado from 'js-sha512';
+import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-perfil',
@@ -32,18 +34,28 @@ export class PerfilComponent implements OnInit {
   public miSuscripcion: Subscription;
   public cargaFinalizada: boolean;
 
+  //Atributos modales
+  public modalTitulo: string;
+  public modalContenido: string;
+  public modalRef: BsModalRef;
+
   //Atributos Imagen
   public nuevaImagen: Imagen;
   public imagenSeleccionada: boolean;
-  public base64: string;
+  public base64: any;
   public tmpBase64: any;
   public cargaImagen: boolean;
+
+  //Atributos image cropper
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
 
   constructor(
     private usuarioService: UsuarioService,
     private accesoService: AccesoService,
     private rolService: RolService,
     private imgService: ImagenService,
+    public modalService: BsModalService,
     private toastr: ToastrService
   ) {
     //Inicializar Usuario
@@ -60,6 +72,11 @@ export class PerfilComponent implements OnInit {
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
     this.cargaFinalizada = false;
+
+    //Inicializar modales
+    this.modalTitulo = '';
+    this.modalContenido = '';
+    this.modalRef = this.tmp;
   }
 
   ngOnInit(): void {
@@ -177,25 +194,6 @@ export class PerfilComponent implements OnInit {
   }
 
   //Metodos para cargar la foto
-  public seleccionarFoto(objeto: any): void {
-    let caja = objeto.target.files[0];
-    if (!caja || caja.length == 0) {
-      return;
-    }
-    this.tmpBase64 = { fileName: caja.name, fileType: caja.type };
-    this.nuevaImagen.imgNombrePublico = this.tmpBase64.fileName;
-    this.nuevaImagen.imgTipo = this.tmpBase64.fileType;
-    this.nuevaImagen.imgUsuarioId = this.usuarioSeleccionado.usuarioId;
-    const reader = new FileReader();
-    reader.readAsDataURL(caja);
-    reader.onload = () => {
-      this.tmpBase64 = reader.result;
-      this.base64 = this.tmpBase64.split(',')[1];
-      this.nuevaImagen.base64 = this.base64;
-      this.imagenSeleccionada = true;
-    };
-    console.log(this.nuevaImagen);
-  }
 
   public agregarImagenPerfil() {
     this.cargaImagen = false;
@@ -213,6 +211,7 @@ export class PerfilComponent implements OnInit {
         }),
         finalize(() => {
           this.cargaImagen = true;
+          this.imagenSeleccionada = false;
         }),
         catchError((err) => {
           mostrarMensaje(
@@ -225,5 +224,52 @@ export class PerfilComponent implements OnInit {
         })
       )
       .subscribe(observadorAny);
+  }
+
+  //Metodos modal
+  public abrirModalActualizar(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
+    this.modalTitulo = 'Cortar imagen';
+    this.modalContenido = '¿Confirmar imagen?';
+  }
+
+  public cancelar(): void {
+    this.croppedImage = '';
+    this.imageChangedEvent = '';
+    this.imagenSeleccionada = false;
+    this.modalRef.hide();
+  }
+
+  public confirmarCortar(): void {
+    this.base64 = this.croppedImage.split(',')[1];
+    this.nuevaImagen.base64 = this.base64;
+    this.modalRef.hide();
+  }
+
+  //Metodos de cropper
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+    let caja = event.target.files[0];
+    if (!caja || caja.length == 0) {
+      return;
+    }
+    this.tmpBase64 = { fileName: caja.name, fileType: caja.type };
+    this.nuevaImagen.imgNombrePublico = this.tmpBase64.fileName;
+    this.nuevaImagen.imgTipo = this.tmpBase64.fileType;
+    this.nuevaImagen.imgUsuarioId = this.usuarioSeleccionado.usuarioId;
+    this.imagenSeleccionada = true;
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+  imageLoaded(image: LoadedImage) {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
   }
 }

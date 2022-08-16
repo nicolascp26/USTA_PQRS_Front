@@ -80,22 +80,12 @@
                   <button
                     class="btn btn-outline-primary"
                     type="button"
-                    (click)="cajaImagen.click()"
+                    (click)="abrirModalActualizar(cortarImagen)"
                   >
                     <span
-                      ><i class="fa fa-camera"></i>
+                      ><i class="fa fa-camera-rotate"></i>
                       Cambiar foto
                     </span>
-                    <input
-                      type="file"
-                      class="form-control"
-                      style="display: none"
-                      id="fotoUsuario"
-                      name="fotoUsuario"
-                      accept="image/x-png, image/jpeg"
-                      #cajaImagen
-                      (change)="seleccionarFoto($event)"
-                    />
                   </button>
                 </div>
                 <button
@@ -375,6 +365,74 @@
     </div>
   </div>
 </div>
+
+<ng-template #cortarImagen>
+  <div class="modal-content rounded-4 shadow">
+    <div class="modal-body p-4 text-center">
+      <h5 class="mb-0">{{ modalTitulo }}</h5>
+    </div>
+    <!--<form
+      #frmActualizarRol="ngForm"
+      (ngSubmit)="frmActualizarRol.valid && actualizarRol(frmActualizarRol)"
+    >-->
+    <div class="mb-2 mx-4 text-center">
+      <button
+        class="btn btn-warning mb-2"
+        type="button"
+        (click)="cajaImagen.click()"
+      >
+        <span
+          ><i class="fa fa-file-image"></i>
+          Seleccionar imagen
+        </span>
+        <input
+          type="file"
+          style="display: none"
+          id="fotoUsuario"
+          name="fotoUsuario"
+          accept="image/x-png, image/jpeg"
+          #cajaImagen
+          (change)="fileChangeEvent($event)"
+        />
+      </button>
+      <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="4 / 4"
+        format="jpeg"
+        [resizeToWidth]="200"
+        (imageCropped)="imageCropped($event)"
+        (cropperReady)="cropperReady()"
+        (loadImageFailed)="loadImageFailed()"
+      ></image-cropper>
+    </div>
+    <div class="modal-body p-4 text-center" *ngIf="imagenSeleccionada">
+      <p>Previsualizar imagen:</p>
+      <img [src]="croppedImage" />
+      <p class="mb-0">{{ modalContenido }}</p>
+    </div>
+    <div class="modal-footer flex-nowrap p-0">
+      <button
+        type="button"
+        class="btn btn-lg fs-6 text-primary col-6 m-0 rounded-0 border-right"
+        (click)="confirmarCortar()"
+        *ngIf="imagenSeleccionada"
+      >
+        <strong>Confirmar</strong>
+      </button>
+      <button
+        type="button"
+        class="btn btn-lg fs-6 text-danger col-6 m-0 rounded-0"
+        data-bs-dismiss="modal"
+        (click)="cancelar()"
+      >
+        Cancelar
+      </button>
+    </div>
+    <!--</form>-->
+  </div>
+</ng-template>
+
 <ng-template #spinner>
   <div class="col-md text-center">
     <div

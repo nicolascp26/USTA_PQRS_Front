@@ -11,6 +11,7 @@ import {
   ProgressbarModule,
   ProgressbarConfig,
 } from 'ngx-bootstrap/progressbar';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {
     FormsModule,
     ProgressbarModule,
     NgPipesModule,
+    ImageCropperModule
   ],
   providers: [ProgressbarConfig],
 })

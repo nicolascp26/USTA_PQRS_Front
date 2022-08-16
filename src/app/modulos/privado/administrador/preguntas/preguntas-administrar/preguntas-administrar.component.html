@@ -54,7 +54,7 @@
                 class="accordion-button collapsed"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#collapse"
+                attr.data-bs-target="#collapse{{ pref.prefId }}"
                 aria-expanded="true"
                 aria-controls="collapseOne"
               >
@@ -62,7 +62,7 @@
               </button>
             </h2>
             <div
-              id="collapse"
+              id="collapse{{ pref.prefId }}"
               class="accordion-collapse collapse"
               aria-labelledby="headingOne"
               data-bs-parent="#accordionExample"
