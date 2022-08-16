@@ -4,13 +4,13 @@ import { Usuario } from './../modelos/usuario';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import * as uris from '../utilidades/dominios/uris';
+import { API_USUARIO } from './../utilidades/dominios/uris';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsuarioService {
-  public appUser = uris.API_USUARIO;
+  public appUser = API_USUARIO;
 
   constructor(private http: HttpClient) {}
 
