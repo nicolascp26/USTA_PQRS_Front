@@ -6,10 +6,11 @@ import { InicioComponent } from './inicio/inicio.component';
 import { ErrorSeguridadComponent } from './error-seguridad/error-seguridad.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { ProgressbarModule,ProgressbarConfig } from 'ngx-bootstrap/progressbar';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [InicioComponent, ErrorSeguridadComponent, PerfilComponent],
-  imports: [CommonModule, FormsModule, ProgressbarModule, ControlRoutingModule],
+  imports: [CommonModule, FormsModule, ProgressbarModule, ControlRoutingModule,ImageCropperModule],
   providers:[ProgressbarConfig]
 })
 export class ControlModule {}
