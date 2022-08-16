@@ -21,6 +21,7 @@ export class MensajeVisualizarComponent implements OnInit {
   public nuevoMensaje: Mensaje;
   public arregloHiloMensajes: Mensaje[];
   public usuarioId: number;
+  public base64:string;
 
   //Atributos modales
   public modalTitulo: string;
@@ -43,6 +44,7 @@ export class MensajeVisualizarComponent implements OnInit {
     this.nuevoMensaje = this.inicializarMensaje();
     this.arregloHiloMensajes = [];
     this.usuarioId = accesoService.objAcceso.usuarioId;
+    this.base64 = localStorage.getItem('foto') as string;
 
     //Inicializar modales
     this.modalTitulo = '';
