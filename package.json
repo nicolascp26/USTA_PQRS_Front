@@ -28,6 +28,7 @@
     "jwt-decode": "^3.1.2",
     "nanoid": "^3.3.4",
     "ngx-bootstrap": "^8.0.0",
+    "ngx-image-cropper": "^6.2.2",
     "ngx-pagination": "^5.1.1",
     "ngx-pipes": "^3.0.0",
     "ngx-toastr": "^14.3.0",
