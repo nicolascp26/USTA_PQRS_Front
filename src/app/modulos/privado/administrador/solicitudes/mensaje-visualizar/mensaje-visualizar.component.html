@@ -52,14 +52,20 @@
               <div class="timeline-header">
                 <span class="userimage"
                   ><img
-                    src="https://bootdey.com/img/Content/avatar/avatar1.png"
-                    alt=""
+                    *ngIf="msj.mensajeIdUsuario == usuarioId"
+                    [src]="'data:image/png;base64,' + this.base64" />
+
+                  <img
+                    *ngIf="msj.mensajeIdUsuario != usuarioId"
+                    src="https://cdn-icons-png.flaticon.com/128/64/64572.png"
                 /></span>
                 <span class="text-start">{{
                   msj.usuarioNombres + " " + msj.usuarioApellidos
                 }}</span>
                 &nbsp;
-                <small class="text-muted fst-italic">{{ msj.mensajeTitulo }}</small>
+                <small class="text-muted fst-italic">{{
+                  msj.mensajeTitulo
+                }}</small>
               </div>
               <div class="timeline-content">
                 <p>{{ msj.mensajeDetalle }}</p>

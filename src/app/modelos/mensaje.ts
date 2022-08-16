@@ -7,6 +7,7 @@ export class Mensaje {
   public mensajeFecha: string;
   public mensajeEstado?: number;
   public mensajePrioridad?: number;
+  public mensajeIdUsuario?:number;
   public usuarioNombres?: string;
   public usuarioApellidos?: string;
   public tipoId?:number;
