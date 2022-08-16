@@ -212,6 +212,8 @@ export class PerfilComponent implements OnInit {
         finalize(() => {
           this.cargaImagen = true;
           this.imagenSeleccionada = false;
+          localStorage.setItem('foto', this.base64);
+          location.reload();
         }),
         catchError((err) => {
           mostrarMensaje(
