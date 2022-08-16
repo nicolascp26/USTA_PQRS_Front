@@ -1,6 +1,5 @@
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/mensajes-toast.func';
 import { ToastrService } from 'ngx-toastr';
-import { NgForm } from '@angular/forms';
 import { observadorAny } from './../../../../../utilidades/observable/observable-any';
 import { catchError, map, Subscription, finalize } from 'rxjs';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';

@@ -34,21 +34,21 @@ export class PerfilComponent implements OnInit {
   public miSuscripcion: Subscription;
   public cargaFinalizada: boolean;
 
-    //Atributos modales
-    public modalTitulo: string;
-    public modalContenido: string;
-    public modalRef: BsModalRef;
+  //Atributos modales
+  public modalTitulo: string;
+  public modalContenido: string;
+  public modalRef: BsModalRef;
 
   //Atributos Imagen
   public nuevaImagen: Imagen;
   public imagenSeleccionada: boolean;
-  public base64: string;
+  public base64: any;
   public tmpBase64: any;
   public cargaImagen: boolean;
 
-    //Atributos image cropper
-    imageChangedEvent: any = '';
-    croppedImage: any = '';
+  //Atributos image cropper
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
 
   constructor(
     private usuarioService: UsuarioService,
