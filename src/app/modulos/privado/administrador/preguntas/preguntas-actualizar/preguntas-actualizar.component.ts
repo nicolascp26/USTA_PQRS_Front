@@ -7,7 +7,7 @@ import { PreguntasFrecuentesService } from './../../../../../servicios/preguntas
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { catchError, map, Subscription, finalize } from 'rxjs';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { BsModalService } from 'ngx-bootstrap/modal';
 
 @Component({
   selector: 'app-preguntas-actualizar',
@@ -23,11 +23,6 @@ export class PreguntasActualizarComponent implements OnInit {
   public miSuscripcion: Subscription;
   public cargaFinalizada: boolean;
 
-  //Atributos modales
-  public modalTitulo: string;
-  public modalContenido: string;
-  public modalRef: BsModalRef;
-
   constructor(
     private preguntaService: PreguntasFrecuentesService,
     private ruta: ActivatedRoute,
@@ -40,10 +35,6 @@ export class PreguntasActualizarComponent implements OnInit {
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
     this.cargaFinalizada = false;
-    //Inicializar modales
-    this.modalTitulo = '';
-    this.modalContenido = '';
-    this.modalRef = this.tmp;
   }
 
   ngOnInit(): void {
