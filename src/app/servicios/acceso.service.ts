@@ -35,7 +35,7 @@ export class AccesoService {
   }
 
   public obtenerToken(): any {
-    return localStorage.getItem('token') as string;
+    return localStorage.getItem('token');
   }
 
   public obtenerRolporToken(): any {
@@ -45,7 +45,6 @@ export class AccesoService {
   public verificarAcceso(): boolean {
     if (localStorage.getItem('token')) {
       const miToken: any = localStorage.getItem('token');
-
       try {
         const obj: any = jwtDecode(miToken);
         this.objAcceso.usuarioId = obj.id;
@@ -67,6 +66,12 @@ export class AccesoService {
 
   public accederRutasAdmin(): boolean {
     if (this.objAcceso.usuarioRol == 'Administrador') {
+      return true;
+    } else return false;
+  }
+
+  public accederRutasDocente(): boolean {
+    if (this.objAcceso.usuarioRol == 'Docente') {
       return true;
     } else return false;
   }

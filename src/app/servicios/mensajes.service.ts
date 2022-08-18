@@ -46,4 +46,11 @@ export class MensajesService {
       objMensaje
     );
   }
+
+  public reabrirSolicitud(objMensaje: Mensaje): Observable<Mensaje> {
+    return this.http.put<Mensaje>(
+      this.apiMensajes + '/reopenRequest/' + objMensaje.mensajeCodpadre,
+      objMensaje
+    );
+  }
 }

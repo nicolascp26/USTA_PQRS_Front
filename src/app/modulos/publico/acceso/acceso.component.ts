@@ -74,8 +74,8 @@ export class AccesoComponent implements OnInit, OnDestroy {
             case 'Estudiante':
               this.router.navigate(['/estudiante']);
               break;
-            case 'Invitado':
-              this.router.navigate(['/invitado']);
+            case 'Docente':
+              this.router.navigate(['/administrador']);
               break;
           }
         }),

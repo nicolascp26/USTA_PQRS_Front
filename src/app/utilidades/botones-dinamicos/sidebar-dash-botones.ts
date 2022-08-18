@@ -14,8 +14,13 @@ export const ESTUDIANTE_BOTONES: any = [
   { id: 4, name: 'Preguntas frecuentes', icon: 'fa fa-question-circle', route: '/estudiante/inicio/preguntas-frecuentes' }
 ];
 
-export const DEFAULT_BOTONES: any = [
+export const DOCENTE_BOTONES: any = [
+  { id: 1, name: 'Inicio', icon: 'fa fa-home', route: '/administrador/inicio' },
+  { id: 2, name: 'Mis solicitudes', icon: 'fa fa-clipboard-list', route: '/administrador/solicitudes' },
+  { id: 3, name: 'Preguntas frecuentes', icon: 'fa fa-question-circle', route: '/administrador/preguntas-frecuentes' }
+];
+
+export const INVITADO_BOTONES: any = [
   { id: 1, name: 'Inicio', icon: 'fa fa', route: '/inicio' },
-  { id: 2, name: 'Inicio', icon: 'fa fa', route: '/inicio' },
-  { id: 3, name: 'Inicio', icon: 'fa fa', route: '/inicio' },
+  { id: 2, name: 'Preguntas frecuentes', icon: 'fa fa-question-circle', route: '/estudiante/inicio/preguntas-frecuentes' }
 ];
