@@ -26,9 +26,10 @@ export class AdminGuard implements CanActivateChild {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    if (this.accesoService.accederRutasAdmin()) {
+    if (this.accesoService.accederRutasAdmin() || this.accesoService.accederRutasDocente()) {
       return true;
-    } else {
+    }
+    else {
       this.location.back();
       return false;
     }

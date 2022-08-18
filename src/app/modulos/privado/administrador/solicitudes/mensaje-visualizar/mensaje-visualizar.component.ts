@@ -20,7 +20,7 @@ export class MensajeVisualizarComponent implements OnInit {
   public nuevoMensaje: Mensaje;
   public arregloHiloMensajes: Mensaje[];
   public usuarioId: number;
-  public base64:string;
+  public base64: string;
 
   //Atributos modales
   public modalTitulo: string;
@@ -117,14 +117,36 @@ export class MensajeVisualizarComponent implements OnInit {
       .terminarSolicitud(this.nuevoMensaje)
       .pipe(
         map((respuesta) => {
-          mostrarMensaje('success', 'Mensaje enviado', 'Exito', this.toastr);
+          mostrarMensaje('success', 'Solicitud Terminada', 'Exito', this.toastr);
           this.obtenerHiloMensajes(this.nuevoMensaje.mensajeCodpadre);
           return respuesta;
         }),
         catchError((miError) => {
           mostrarMensaje(
             'error',
-            'El mensaje no fue enviado',
+            'La solicitud no fue terminada',
+            'Advertencia',
+            this.toastr
+          );
+          throw miError;
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
+  public reabrirSolicitud(): void {
+    this.miSuscripcion = this.mensajesService
+      .reabrirSolicitud(this.nuevoMensaje)
+      .pipe(
+        map((respuesta) => {
+          mostrarMensaje('success', 'Solicitud Reabierta', 'Exito', this.toastr);
+          this.obtenerHiloMensajes(this.nuevoMensaje.mensajeCodpadre);
+          return respuesta;
+        }),
+        catchError((miError) => {
+          mostrarMensaje(
+            'error',
+            'La solicitud no fue reabierta',
             'Advertencia',
             this.toastr
           );
@@ -135,16 +157,29 @@ export class MensajeVisualizarComponent implements OnInit {
   }
 
   //Metodos de las modales
-  public abrirModalTerminar(template: TemplateRef<any>): void {
-    this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
-    this.modalTitulo = 'Advertencia';
-    this.modalContenido = '¿Seguro que quieres terminar la solicitud? Esta no podra volver a abrirse.';
-  }
   public cancelar(): void {
     this.modalRef.hide();
   }
+
+  public abrirModalTerminar(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
+    this.modalTitulo = 'Advertencia';
+    this.modalContenido = '¿Seguro que quieres terminar la solicitud?';
+  }
+
   public confirmarTerminar(): void {
     this.terminarSolicitud();
+    this.modalRef.hide();
+  }
+
+  public abrirModalReabrir(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
+    this.modalTitulo = 'Advertencia';
+    this.modalContenido = '¿Seguro que quieres reabrir la solicitud?';
+  }
+
+  public confirmarReabrir(): void {
+    this.reabrirSolicitud();
     this.modalRef.hide();
   }
 }

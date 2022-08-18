@@ -19,3 +19,16 @@
   border-radius: 20px;
   background-color: #d9d9d9;
 }
+
+.badge-success {
+  background-color: #bcfed5;
+  color: #0b3c1e;
+}
+.badge-warning {
+  background-color: #fff8ad;
+  color: #412c07;
+}
+.badge-danger {
+  background-color: #fec1c6;
+  color: #6d0517;
+}

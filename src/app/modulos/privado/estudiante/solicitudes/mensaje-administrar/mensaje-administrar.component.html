@@ -62,17 +62,17 @@
             <td>{{ soli.mensajeId }}</td>
             <td class="text-center">
               <span
-                class="badge rounded-pill bg-success"
+                class="badge rounded-pill badge-success"
                 *ngIf="soli.mensajeEstado == 1"
-                >Nueva</span
+                >Esperando respuesta</span
               >
               <span
-                class="badge rounded-pill bg-warning text-dark"
+                class="badge rounded-pill badge-warning"
                 *ngIf="soli.mensajeEstado == 2"
                 >En progreso</span
               >
               <span
-                class="badge rounded-pill bg-danger"
+                class="badge rounded-pill badge-danger"
                 *ngIf="soli.mensajeEstado == 3"
                 >Terminada</span
               >
