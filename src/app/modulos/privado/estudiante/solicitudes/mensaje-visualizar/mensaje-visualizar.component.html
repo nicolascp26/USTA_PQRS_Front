@@ -85,13 +85,18 @@
           (ngSubmit)="
             frmResponderMsj.valid && responderMensaje(frmResponderMsj)
           "
+          *ngIf="
+            arregloHiloMensajes[0].mensajeEstado == 2;
+            else solicitudEnEspera
+          "
         >
           <div class="input-group mb-3">
-            <input
+            <textarea
               class="form-control"
               id="mensajeDetalle"
               name="mensajeDetalle"
               type="text"
+              rows="6"
               placeholder="Escribe un mensaje..."
               [(ngModel)]="nuevoMensaje.mensajeDetalle"
               #mensajeDetalle="ngModel"
@@ -101,7 +106,8 @@
               }"
               required
               aria-describedby="button-addon2"
-            />
+            >
+            </textarea>
             <button class="btn btn-primary" id="button-addon2" type="submit">
               <i class="fa-solid fa-paper-plane mx-1"></i>
               Enviar
@@ -122,6 +128,17 @@
         <div class="card-footer text-lg-center text-white bg-success">
           <i class="fa-solid fa-circle-check"></i>
           Esta solicitud ha finalizado
+        </div>
+      </ng-template>
+      <ng-template #solicitudEnEspera>
+        <div class="alert alert-primary" role="alert">
+          <i class="fa fa-circle-info"></i>
+          Esta solicitud esta en espera de respuesta. Por favor ten paciencia,
+          la facultad responderá lo más pronto posible. Mientras esperas puedes
+          revisar las preguntas frecuentes
+          <a [routerLink]="['/estudiante/inicio/preguntas-frecuentes']" class="alert-link">
+            aquí</a
+          >.
         </div>
       </ng-template>
     </div>

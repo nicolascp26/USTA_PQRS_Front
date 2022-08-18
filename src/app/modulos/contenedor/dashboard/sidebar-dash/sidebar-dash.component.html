@@ -73,14 +73,21 @@
           </li>
           <li class="nav-item">
             <a
-              *ngIf="rolUsuario == 'Estudiante'"
+              *ngIf="rolUsuario === 'Estudiante'"
               class="dropdown-item"
               [routerLink]="['/estudiante/inicio/perfil']"
               routerLinkActive="text-white"
               >Editar perfil</a
             >
             <a
-              *ngIf="rolUsuario == 'Administrador'"
+              *ngIf="rolUsuario === 'Administrador'"
+              class="dropdown-item"
+              [routerLink]="['/administrador/inicio/perfil']"
+              routerLinkActive="text-white"
+              >Editar perfil</a
+            >
+            <a
+              *ngIf="rolUsuario === 'Docente'"
               class="dropdown-item"
               [routerLink]="['/administrador/inicio/perfil']"
               routerLinkActive="text-white"
@@ -90,7 +97,6 @@
           <li>
             <hr class="dropdown-divider" />
           </li>
-
           <li>
             <a
               (click)="cerrarSesion()"

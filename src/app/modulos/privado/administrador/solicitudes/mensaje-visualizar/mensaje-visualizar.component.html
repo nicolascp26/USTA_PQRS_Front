@@ -89,11 +89,12 @@
           "
         >
           <div class="input-group mb-3">
-            <input
+            <textarea
               class="form-control"
               id="mensajeDetalle"
               name="mensajeDetalle"
               type="text"
+              rows="6"
               placeholder="Escribe un mensaje..."
               [(ngModel)]="nuevoMensaje.mensajeDetalle"
               #mensajeDetalle="ngModel"
@@ -103,7 +104,8 @@
               }"
               required
               aria-describedby="button-addon2"
-            />
+            >
+            </textarea>
             <button class="btn btn-primary" id="button-addon2" type="submit">
               <i class="fa-solid fa-paper-plane mx-1"></i>
               Enviar
@@ -121,7 +123,6 @@
           <div class="d-flex justify-content-center">
             <button
               class="btn btn-danger text-center"
-              id="button-addon2"
               type="button"
               (click)="abrirModalTerminar(terminarSolicitud)"
             >
@@ -133,8 +134,15 @@
       </div>
       <ng-template #solicitudTerminada>
         <div class="card-footer text-lg-center text-white bg-success">
-          <i class="fa-solid fa-circle-check"></i>
-          Esta solicitud ha finalizado
+          <i class="fa-solid fa-circle-check"></i> Esta solicitud ha finalizado
+          <button
+            class="btn btn-outline-light text-center mx-2"
+            type="button"
+            (click)="abrirModalReabrir(reabrirSolicitud)"
+          >
+            <i class="fa-solid fa-arrow-rotate-backward mx-1"></i>
+            Reabrir solicitud
+          </button>
         </div>
       </ng-template>
     </div>
@@ -153,6 +161,32 @@
           (click)="confirmarTerminar()"
         >
           <strong>Si, terminar</strong>
+        </button>
+        <button
+          type="button"
+          class="btn btn-lg fs-6 text-danger col-6 m-0 rounded-0"
+          data-bs-dismiss="modal"
+          (click)="cancelar()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #reabrirSolicitud>
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-body p-4 text-center">
+        <h5 class="mb-0">{{ modalTitulo }}</h5>
+        <p class="mb-0">{{ modalContenido }}</p>
+      </div>
+      <div class="modal-footer flex-nowrap p-0">
+        <button
+          type="button"
+          class="btn btn-lg fs-6 text-primary col-6 m-0 rounded-0 border-right"
+          (click)="confirmarReabrir()"
+        >
+          <strong>Si, reabrirla</strong>
         </button>
         <button
           type="button"

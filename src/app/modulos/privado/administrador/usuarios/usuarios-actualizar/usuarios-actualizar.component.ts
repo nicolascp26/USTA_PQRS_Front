@@ -181,12 +181,11 @@ export class UsuariosActualizarComponent implements OnInit {
     this.miSuscripcion = this.mensajesService
       .obtenerSolicitudesUsuario(usuarioId)
       .pipe(
-        map((resultado: Mensaje[]) => {
-          this.arregloSolicitudes = resultado;
+        map((resultado: any) => {
+          this.arregloSolicitudes = resultado.solicitudes;
         }),
         finalize(() => {
           this.cargaFinalizada = true;
-          //Deberíamos analizar la paginación
         })
       )
       .subscribe(observadorAny);
