@@ -80,7 +80,9 @@ export class MensajeAdministrarComponent implements OnInit {
         }),
         finalize(() => {
           this.cargaFinalizada = true;
-          //Deberíamos analizar la paginación
+          this.cantidadPaginas = Math.ceil(
+            this.cantidadTotal / this.cantidadMostrar
+          );
         })
       )
       .subscribe(observadorAny);

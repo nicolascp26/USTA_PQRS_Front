@@ -56,8 +56,14 @@
             <div class="card-icon card-icon-large">
               <i class="fas fa-circle-exclamation"></i>
             </div>
-            <div class="mb-4">
-              <h5 class="card-title mb-0">Solicitudes Nuevas</h5>
+            <div
+              class="mb-4 title-link"
+              [routerLink]="['/administrador/solicitudes']"
+              [queryParams]="{ estado: 1 }"
+            >
+              <h5 class="card-title mb-0">
+                Solicitudes Nuevas <i class="fa fa-arrow-right"></i>
+              </h5>
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
@@ -89,9 +95,16 @@
             <div class="card-icon card-icon-large">
               <i class="fas fa-business-time"></i>
             </div>
-            <div class="mb-4">
-              <h5 class="card-title mb-0">Solicitudes en progreso</h5>
+            <div
+              class="mb-4 title-link"
+              [routerLink]="['/administrador/solicitudes']"
+              [queryParams]="{ estado: 2 }"
+            >
+              <h5 class="card-title mb-0">
+                Solicitudes en progreso <i class="fa fa-arrow-right"></i>
+              </h5>
             </div>
+
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
                 <h2 class="d-flex align-items-center mb-0">
@@ -122,8 +135,14 @@
             <div class="card-icon card-icon-large">
               <i class="fas fa-clipboard-check"></i>
             </div>
-            <div class="mb-4">
-              <h5 class="card-title mb-0">Solicitudes Finalizadas</h5>
+            <div
+              class="mb-4 title-link"
+              [routerLink]="['/administrador/solicitudes']"
+              [queryParams]="{ estado: 3 }"
+            >
+              <h5 class="card-title mb-0">
+                Solicitudes Finalizadas <i class="fa fa-arrow-right"></i>
+              </h5>
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">

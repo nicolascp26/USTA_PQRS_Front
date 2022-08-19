@@ -15,16 +15,4 @@ export class RolService {
   public cargarRoles(): Observable<Rol[]> {
     return this.http.get<Rol[]>(this.apiRol + '/getAll');
   }
-
-  public crearRol(objRol: Rol): Observable<Rol> {
-    return this.http.post<Rol>(this.apiRol + '/create', objRol);
-  }
-
-  public actualizarRol(objRol: Rol): Observable<Rol> {
-    return this.http.put<Rol>(this.apiRol + '/update/' + objRol.rolId, objRol);
-  }
-
-  public eliminarRol(rolID: number): Observable<Rol> {
-    return this.http.delete<Rol>(this.apiRol + '/delete/' + rolID);
-  }
 }

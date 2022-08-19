@@ -3,6 +3,7 @@ import { Subscription, finalize, map } from 'rxjs';
 import { Mensaje } from './../../../../../modelos/mensaje';
 import { MensajesService } from './../../../../../servicios/mensajes.service';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mensaje-administrar',
@@ -27,9 +28,15 @@ export class MensajeAdministrarComponent implements OnInit {
   public tamano = [5, 10, 15];
 
   //Atributos de filtrado
-  public searchBar = '';
+  public searchBar: string = '';
+  public solicitudFiltrarEstado: number = 0;
+  public arregloEstados = [
+    { id: 1, nom: 'Nueva' },
+    { id: 2, nom: 'En progreso' },
+    { id: 3, nom: 'Terminada' }
+  ];
 
-  constructor(private mensajesService: MensajesService) {
+  constructor(private ruta: ActivatedRoute,private mensajesService: MensajesService) {
     //Inicializar atributos requeridos
     this.solicitudSeleccionada = this.inicializarMensaje();
     this.arregloSolicitudes = [];
@@ -47,6 +54,14 @@ export class MensajeAdministrarComponent implements OnInit {
 
   ngOnInit(): void {
     this.obtenerSolicitudes();
+    this.ruta.queryParamMap.subscribe((parametro) => {
+      const estadoQuery = String(parametro.get('estado'));
+      const estadoNumerico = parseFloat(estadoQuery);
+      console.log(estadoNumerico);
+      if (estadoNumerico != null) {
+        this.solicitudFiltrarEstado = estadoNumerico;
+      } else this.solicitudFiltrarEstado = NaN;
+    });
   }
 
   ngOnDestroy(): void {
@@ -74,7 +89,9 @@ export class MensajeAdministrarComponent implements OnInit {
         }),
         finalize(() => {
           this.cargaFinalizada = true;
-          //Deberíamos analizar la paginación
+          this.cantidadPaginas = Math.ceil(
+            this.cantidadTotal / this.cantidadMostrar
+          );
         })
       )
       .subscribe(observadorAny);
@@ -88,6 +105,11 @@ export class MensajeAdministrarComponent implements OnInit {
   handlePageSizeChange(event: any): void {
     this.cantidadMostrar = event.target.value;
     this.paginaActual = 1;
+    this.obtenerSolicitudes();
+  }
+
+  handlePageSizeFilter(event: any): void {
+    this.paginaActual = event;
     this.obtenerSolicitudes();
   }
 }
