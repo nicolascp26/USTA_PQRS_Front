@@ -105,12 +105,15 @@
                   frmResponderMsj.submitted && mensajeDetalle.invalid
               }"
               required
-              aria-describedby="button-addon2"
             >
             </textarea>
-            <button class="btn btn-primary" id="button-addon2" type="submit">
+            <button class="btn btn-sm btn-primary" type="submit"  [disabled]="!mensajeEnviado">
               <i class="fa-solid fa-paper-plane mx-1"></i>
               Enviar
+            </button>
+            <button class="btn btn-sm btn-secondary" type="file">
+              <i class="fa-solid fa-file-arrow-up"></i>
+              Anexar un<br> archivo
             </button>
           </div>
 

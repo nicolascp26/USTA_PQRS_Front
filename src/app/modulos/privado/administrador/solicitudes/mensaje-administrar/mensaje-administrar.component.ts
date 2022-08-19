@@ -1,3 +1,5 @@
+import { Tipo } from './../../../../../modelos/tipo';
+import { TipoService } from './../../../../../servicios/tipo.service';
 import { observadorAny } from 'src/app/utilidades/observable/observable-any';
 import { Subscription, finalize, map } from 'rxjs';
 import { Mensaje } from './../../../../../modelos/mensaje';
@@ -14,6 +16,7 @@ export class MensajeAdministrarComponent implements OnInit {
   //Atributos requeridos
   public solicitudSeleccionada: Mensaje;
   public arregloSolicitudes: Mensaje[];
+  public arregloTipos: Tipo[];
 
   //Atributos consumo de servicios
   public tmp: any;
@@ -30,16 +33,28 @@ export class MensajeAdministrarComponent implements OnInit {
   //Atributos de filtrado
   public searchBar: string = '';
   public solicitudFiltrarEstado: number = 0;
+  public solicitudFiltrarTipo: any;
   public arregloEstados = [
     { id: 1, nom: 'Nueva' },
     { id: 2, nom: 'En progreso' },
-    { id: 3, nom: 'Terminada' }
+    { id: 3, nom: 'Terminada' },
+  ];
+  public arregloTipoClases = [
+    { id: 1, nom: 'Peticion' },
+    { id: 2, nom: 'Queja' },
+    { id: 3, nom: 'Reclamo' },
+    { id: 4, nom: 'Sugerencia' },
   ];
 
-  constructor(private ruta: ActivatedRoute,private mensajesService: MensajesService) {
+  constructor(
+    private ruta: ActivatedRoute,
+    private mensajesService: MensajesService,
+    private tipoService: TipoService
+  ) {
     //Inicializar atributos requeridos
     this.solicitudSeleccionada = this.inicializarMensaje();
     this.arregloSolicitudes = [];
+    this.arregloTipos = [];
 
     //Inicializar atributos paginación
     this.paginaActual = 1;
@@ -53,11 +68,12 @@ export class MensajeAdministrarComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.solicitudFiltrarTipo);
     this.obtenerSolicitudes();
+    this.obtenerTodosTipos();
     this.ruta.queryParamMap.subscribe((parametro) => {
       const estadoQuery = String(parametro.get('estado'));
       const estadoNumerico = parseFloat(estadoQuery);
-      console.log(estadoNumerico);
       if (estadoNumerico != null) {
         this.solicitudFiltrarEstado = estadoNumerico;
       } else this.solicitudFiltrarEstado = NaN;
@@ -71,7 +87,7 @@ export class MensajeAdministrarComponent implements OnInit {
   }
 
   public inicializarMensaje(): Mensaje {
-    return new Mensaje(0, 0, 0, '', '', '', 0, 0);
+    return new Mensaje(0, 0, 0, '', '', '', 0);
   }
 
   public seleccionarSolicitud(objMensaje: Mensaje): void {
@@ -97,6 +113,21 @@ export class MensajeAdministrarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
+  public obtenerTodosTipos(): void {
+    this.miSuscripcion = this.tipoService
+      .cargarTipos()
+      .pipe(
+        map((resultado: Tipo[]) => {
+          this.arregloTipos = resultado;
+        }),
+        finalize(() => {
+          this.cargaFinalizada = true;
+          this.searchBar = '';
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
   //Metodos paginacion
   handlePageChange(event: number): void {
     this.paginaActual = event;
@@ -105,11 +136,6 @@ export class MensajeAdministrarComponent implements OnInit {
   handlePageSizeChange(event: any): void {
     this.cantidadMostrar = event.target.value;
     this.paginaActual = 1;
-    this.obtenerSolicitudes();
-  }
-
-  handlePageSizeFilter(event: any): void {
-    this.paginaActual = event;
     this.obtenerSolicitudes();
   }
 }

@@ -31,14 +31,13 @@
     </h4>
 
     <div class="input-group-sm text-center mb-2">
-      <span class="badge rounded-pill bg-success">
-        <i class="fas fa-search"></i>
-      </span>
+      <label class="small mb-1" for="searchBar"
+        ><i class="fas fa-search"></i> Buscar tipo:</label
+      >&nbsp;
       <input
-        class="form-control-sm form-control-borderless"
+      class="my-input"
         type="search"
-        placeholder="Buscar tipos"
-        aria-label="Buscar"
+        placeholder="Clase o nombre"
         [(ngModel)]="searchBar"
       />
     </div>

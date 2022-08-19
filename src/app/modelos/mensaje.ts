@@ -6,7 +6,7 @@ export class Mensaje {
   public mensajeDetalle: string;
   public mensajeFecha: string;
   public mensajeEstado?: number;
-  public mensajePrioridad?: number;
+  public mensajeActualizado?: string;
   public mensajeIdUsuario?:number;
   public usuarioNombres?: string;
   public usuarioApellidos?: string;
@@ -20,8 +20,7 @@ export class Mensaje {
     tit: string,
     det: string,
     fec: string,
-    est: number,
-    pri: number
+    est: number
   ) {
     this.mensajeId = cod;
     this.mensajeCodpadre = codPad;
@@ -30,6 +29,5 @@ export class Mensaje {
     this.mensajeDetalle = det;
     this.mensajeFecha = fec;
     this.mensajeEstado = est;
-    this.mensajePrioridad = pri;
   }
 }
