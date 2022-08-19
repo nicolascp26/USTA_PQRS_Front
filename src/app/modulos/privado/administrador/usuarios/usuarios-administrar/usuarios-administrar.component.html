@@ -17,8 +17,8 @@
 
   <h4 class="mb-3 fw-bold mb-0 text-center">Administrar Usuarios</h4>
 
-  <div class="d-flex justify-content-around mb-2">
-    <div class="p-2">
+  <div class="row justify-content-around mb-2">
+    <div class="col p-2">
       <span class="badge rounded-pill bg-success">
         <i class="fas fa-search"></i>
       </span>
@@ -26,13 +26,27 @@
         class="form-control-sm form-control-borderless"
         type="search"
         placeholder="Buscar usuarios"
-        aria-label="Buscar"
+        title="Buscar usuarios por nombre, documento o telefono"
         [(ngModel)]="searchBar"
       />
     </div>
-    <div class="p-2">
-      Usuarios por página:
+    <div class="col p-2">
+      <i class="fa-solid fa-filter"></i> Filtrar por rol:
       <select
+        class="select"
+        style="border: transparent; padding: 5px"
+        [(ngModel)]="rolFiltrar"
+      >
+        <option class="text-muted" [ngValue]="''">Sin filtro</option>
+        <option *ngFor="let rol of arregloRoles" [ngValue]="rol.rolNombre">
+          {{ rol.rolNombre }}
+        </option>
+      </select>
+    </div>
+    <div class="col p-2">
+      <i class="fa-solid fa-user"></i> Usuarios por página:
+      <select
+        class="select"
         style="border: transparent; padding: 5px"
         (change)="handlePageSizeChange($event)"
       >
@@ -50,10 +64,38 @@
       >
         <thead class="bg-dark text-white">
           <tr>
-            <th style="width: 10%">Codigo</th>
-            <th style="width: 30%">Nombres</th>
-            <th style="width: 20%">Documento</th>
-            <th style="width: 20%">Telefono</th>
+            <th style="width: 10%">
+              Codigo
+              <i
+                (click)="ordenarUsuarios('usuarioId')"
+                class="fa-solid fa-sort"
+                style="cursor: pointer;"
+              ></i>
+            </th>
+            <th style="width: 30%">
+              Nombres
+              <i
+                (click)="ordenarUsuarios('usuarioNombres')"
+                class="fa-solid fa-sort"
+                style="cursor: pointer;"
+              ></i>
+            </th>
+            <th style="width: 20%">
+              Documento
+              <i
+                (click)="ordenarUsuarios('usuarioDocumento')"
+                class="fa-solid fa-sort"
+                style="cursor: pointer;"
+              ></i>
+            </th>
+            <th style="width: 20%">
+              Telefono
+              <i
+                (click)="ordenarUsuarios('usuarioTelefono')"
+                class="fa-solid fa-sort"
+                style="cursor: pointer;"
+              ></i>
+            </th>
             <th style="width: 20%"></th>
           </tr>
         </thead>
@@ -69,6 +111,8 @@
                       'usuarioTelefono'
                     ]
                   : searchBar
+                | filterBy: ['rolNombre']:rolFiltrar
+                | orderBy: ordenarPor
                 | paginate
                   : {
                       itemsPerPage: cantidadMostrar,

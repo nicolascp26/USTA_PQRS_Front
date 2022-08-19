@@ -8,6 +8,7 @@ import { Usuario } from './../../../../../modelos/usuario';
 import { Rol } from './../../../../../modelos/rol';
 import { Subscription, finalize, map, catchError } from 'rxjs';
 import { Component, OnInit, TemplateRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-usuarios-administrar',
@@ -30,6 +31,9 @@ export class UsuariosAdministrarComponent implements OnInit {
 
   //Atributos de filtrado
   public searchBar = '';
+  public rolFiltrar: string = '';
+  public ordenarPor: string = '';
+  public ordenadoSentido: boolean = false;
 
   //Atributos modales
   public modalTitulo: string;
@@ -43,6 +47,7 @@ export class UsuariosAdministrarComponent implements OnInit {
   public cargaFinalizada: boolean;
 
   constructor(
+    private ruta: ActivatedRoute,
     private usuarioService: UsuarioService,
     private rolService: RolService,
     public modalService: BsModalService,
@@ -51,9 +56,9 @@ export class UsuariosAdministrarComponent implements OnInit {
     //Inicializar atributos requeridos
     this.arregloUsuarios = [];
     this.arregloRoles = [];
-    //this.arregloEstados = ARREGLO_ESTADOS_ROL;
     this.usuarioSeleccionado = this.inicializarUsuario();
     this.rolSeleccionado = this.inicializarRol();
+
     //Inicializar atributos paginación
     this.paginaActual = 1;
     this.cantidadMostrar = 5;
@@ -83,6 +88,12 @@ export class UsuariosAdministrarComponent implements OnInit {
   ngOnInit(): void {
     this.obtenerUsuarios();
     this.obtenerRoles();
+    this.ruta.queryParamMap.subscribe((parametro) => {
+      const rolQuery = String(parametro.get('rol'));
+      if (rolQuery != 'null') {
+        this.rolFiltrar = rolQuery;
+      } else this.rolFiltrar = '';
+    });
   }
 
   ngOnDestroy(): void {
@@ -106,6 +117,9 @@ export class UsuariosAdministrarComponent implements OnInit {
         }),
         finalize(() => {
           this.cargaFinalizada = true;
+          this.cantidadPaginas = Math.ceil(
+            this.cantidadTotal / this.cantidadMostrar
+          );
         })
       )
       .subscribe(observadorAny);
@@ -150,6 +164,17 @@ export class UsuariosAdministrarComponent implements OnInit {
         })
       )
       .subscribe(observadorAny);
+  }
+
+  //Metodo ordenar
+  ordenarUsuarios(tipo: string): void {
+    if (this.ordenadoSentido) {
+      this.ordenarPor = tipo;
+      this.ordenadoSentido = false;
+    } else {
+      this.ordenarPor = '-' + tipo;
+      this.ordenadoSentido = true;
+    }
   }
 
   //Metodos paginacion

@@ -16,8 +16,9 @@
   </div>
 
   <h4 class="mb-3 fw-bold text-center">Administrar Solicitudes</h4>
-  <div class="d-flex justify-content-around mb-2">
-    <div class="p-2">
+
+  <div class="row justify-content-around mb-2">
+    <div class="col p-2">
       <span class="badge rounded-pill bg-success">
         <i class="fas fa-search"></i>
       </span>
@@ -29,7 +30,20 @@
         [(ngModel)]="searchBar"
       />
     </div>
-    <div class="p-2">
+    <div class="col p-2">
+      <i class="fa-solid fa-filter"></i> Filtrar por estado:
+      <select
+        class="select"
+        style="border: transparent; padding: 5px"
+        [(ngModel)]="solicitudFiltrarEstado"
+      >
+        <option class="text-muted" [ngValue]="[1,2,3]">Sin filtro</option>
+        <option *ngFor="let estado of arregloEstados" [ngValue]="estado.id">
+          {{ estado.nom }}
+        </option>
+      </select>
+    </div>
+    <div class="col p-2">
       Solicitudes por página:
       <select
         style="border: transparent; padding: 5px"
@@ -70,6 +84,7 @@
                       'tipoNombre'
                     ]
                   : searchBar
+                | filterBy: ['mensajeEstado']:solicitudFiltrarEstado
                 | paginate
                   : {
                       itemsPerPage: cantidadMostrar,
@@ -132,7 +147,7 @@
       </table>
       <div class="d-flex justify-content-around mb-2">
         <div class="p-2">
-          <strong> {{ cantidadTotal }} </strong> solicitudes registrados en
+          <strong> {{ cantidadTotal }} </strong> solicitudes registradas en
           <strong> {{ cantidadPaginas }}</strong> páginas.
         </div>
         <div class="p-2">

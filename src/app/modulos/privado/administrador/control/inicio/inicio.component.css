@@ -60,3 +60,10 @@
   background: linear-gradient(135deg, #289cf5, #84c0ec) !important;
   color: #fff;
 }
+
+.title-link{
+  cursor: pointer;
+}
+.title-link:hover{
+  color: #000;
+}
