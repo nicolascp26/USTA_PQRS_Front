@@ -19,33 +19,60 @@
 
   <div class="row justify-content-around mb-2">
     <div class="col p-2">
-      <span class="badge rounded-pill bg-success">
-        <i class="fas fa-search"></i>
-      </span>
+      <label class="small mb-1" for="searchBar"
+        ><i class="fas fa-search"></i> Buscar solicitudes:</label
+      >
       <input
-        class="form-control-sm form-control-borderless"
         type="search"
-        placeholder="Buscar solicitudes"
-        aria-label="Buscar"
+        placeholder="Titulo, nombre, apellido o clase"
         [(ngModel)]="searchBar"
       />
     </div>
     <div class="col p-2">
-      <i class="fa-solid fa-filter"></i> Filtrar por estado:
+      <label class="small mb-1" for="mensajeEstado"
+        >Filtrar por estado:</label
+      >
       <select
-        class="select"
+        class="form-control form-select"
         style="border: transparent; padding: 5px"
         [(ngModel)]="solicitudFiltrarEstado"
       >
-        <option class="text-muted" [ngValue]="[1,2,3]">Sin filtro</option>
+        <option class="text-muted" [ngValue]="[1, 2, 3]">Sin filtro</option>
         <option *ngFor="let estado of arregloEstados" [ngValue]="estado.id">
           {{ estado.nom }}
         </option>
       </select>
     </div>
     <div class="col p-2">
-      Solicitudes por página:
+      <label class="small mb-1" for="mensajeTipo"
+        >Filtrar por tipo de solicitud</label
+      >
       <select
+        class="form-control form-select"
+        style="border: transparent; padding: 5px"
+        [(ngModel)]="solicitudFiltrarTipo"
+      >
+        <optgroup
+          *ngFor="let clase of arregloTipoClases"
+          label="{{ clase.nom }}"
+        >
+          <option
+            *ngFor="
+              let tipo of arregloTipos | filterBy: ['tipoClase']:clase.nom;
+            "
+            [ngValue]="tipo.tipoId"
+          >
+            {{ tipo.tipoNombre }}
+          </option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="col p-2">
+      <label class="small mb-1" for="mensajeTipo"
+        >Solicitudes por página:</label
+      >
+      <select
+        class="form-control form-select"
         style="border: transparent; padding: 5px"
         (change)="handlePageSizeChange($event)"
       >
@@ -65,8 +92,9 @@
         <thead class="bg-dark text-white">
           <tr>
             <th style="width: 10%">Estado</th>
-            <th style="width: 30%">Solicitud</th>
-            <th style="width: 30%">Detalle</th>
+            <th style="width: 20%">Solicitud</th>
+            <th style="width: 20%">Estudiante</th>
+            <th style="width: 20%">Detalle</th>
             <th style="width: 10%">Clase</th>
             <th style="width: 20%">Tipo de solicitud</th>
           </tr>
@@ -80,10 +108,10 @@
                       'mensajeTitulo',
                       'usuarioNombres',
                       'usuarioApellidos',
-                      'tipoClase',
-                      'tipoNombre'
+                      'tipoClase'
                     ]
                   : searchBar
+                | filterBy: ['tipoId']:solicitudFiltrarTipo
                 | filterBy: ['mensajeEstado']:solicitudFiltrarEstado
                 | paginate
                   : {
@@ -123,16 +151,24 @@
               </a>
             </td>
             <td>
+              <div>
+                <strong>Creada por:</strong>
+                {{ soli.usuarioNombres + " " + soli.usuarioApellidos }}
+              </div>
+            </td>
+            <td>
               <span>
                 <div>
-                  <strong>Creada por:</strong>
-                  {{ soli.usuarioNombres + " " + soli.usuarioApellidos }}
-                </div>
-                <div>
-                  <strong>Fecha:</strong>
+                  <strong>Radicada:</strong>
                   {{ soli.mensajeFecha | date: "MMM d, y" }}
                   a las
                   {{ soli.mensajeFecha | date: "h:mm a" }}
+                </div>
+                <div>
+                  <strong>Actualizada:</strong>
+                  {{ soli.mensajeActualizado | date: "MMM d, y" }}
+                  a las
+                  {{ soli.mensajeActualizado | date: "h:mm a" }}
                 </div>
               </span>
             </td>

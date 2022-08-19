@@ -69,7 +69,7 @@ export class MensajeCrearComponent implements OnInit {
   }
 
   public inicializarMensaje(): Mensaje {
-    return new Mensaje(0, 0, 0, '', '', '', 0, 0);
+    return new Mensaje(0, 0, 0,'','','',0);
   }
 
   public crearSolicitud(formulario: NgForm): void {

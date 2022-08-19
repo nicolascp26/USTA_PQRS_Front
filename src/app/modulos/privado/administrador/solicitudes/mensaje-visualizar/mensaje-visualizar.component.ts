@@ -21,6 +21,7 @@ export class MensajeVisualizarComponent implements OnInit {
   public arregloHiloMensajes: Mensaje[];
   public usuarioId: number;
   public base64: string;
+  public mensajeEnviado: boolean;
 
   //Atributos modales
   public modalTitulo: string;
@@ -44,6 +45,7 @@ export class MensajeVisualizarComponent implements OnInit {
     this.arregloHiloMensajes = [];
     this.usuarioId = accesoService.objAcceso.usuarioId;
     this.base64 = localStorage.getItem('foto') as string;
+    this.mensajeEnviado = true;
 
     //Inicializar modales
     this.modalTitulo = '';
@@ -72,7 +74,7 @@ export class MensajeVisualizarComponent implements OnInit {
   }
 
   public inicializarMensaje(): Mensaje {
-    return new Mensaje(0, 0, 0, '', '', '', 0, 0);
+    return new Mensaje(0, 0, 0, '', '', '', 0);
   }
 
   public obtenerHiloMensajes(mensajeId: number): void {
@@ -90,6 +92,7 @@ export class MensajeVisualizarComponent implements OnInit {
   }
 
   public responderMensaje(formulario: NgForm): void {
+    this.mensajeEnviado = false;
     this.miSuscripcion = this.mensajesService
       .responderMensaje(this.nuevoMensaje)
       .pipe(
@@ -98,6 +101,9 @@ export class MensajeVisualizarComponent implements OnInit {
           this.obtenerHiloMensajes(this.nuevoMensaje.mensajeCodpadre);
           formulario.reset();
           return respuesta;
+        }),
+        finalize(() => {
+          this.mensajeEnviado = true;
         }),
         catchError((miError) => {
           mostrarMensaje(
@@ -117,7 +123,12 @@ export class MensajeVisualizarComponent implements OnInit {
       .terminarSolicitud(this.nuevoMensaje)
       .pipe(
         map((respuesta) => {
-          mostrarMensaje('success', 'Solicitud Terminada', 'Exito', this.toastr);
+          mostrarMensaje(
+            'success',
+            'Solicitud Terminada',
+            'Exito',
+            this.toastr
+          );
           this.obtenerHiloMensajes(this.nuevoMensaje.mensajeCodpadre);
           return respuesta;
         }),
@@ -139,7 +150,12 @@ export class MensajeVisualizarComponent implements OnInit {
       .reabrirSolicitud(this.nuevoMensaje)
       .pipe(
         map((respuesta) => {
-          mostrarMensaje('success', 'Solicitud Reabierta', 'Exito', this.toastr);
+          mostrarMensaje(
+            'success',
+            'Solicitud Reabierta',
+            'Exito',
+            this.toastr
+          );
           this.obtenerHiloMensajes(this.nuevoMensaje.mensajeCodpadre);
           return respuesta;
         }),

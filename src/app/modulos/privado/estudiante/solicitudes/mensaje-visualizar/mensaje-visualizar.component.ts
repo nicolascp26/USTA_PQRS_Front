@@ -22,6 +22,7 @@ export class MensajeVisualizarComponent implements OnInit {
   public arregloHiloMensajes: Mensaje[];
   public usuarioId: number;
   public base64:string;
+  public mensajeEnviado: boolean;
 
   //Atributos modales
   public modalTitulo: string;
@@ -45,6 +46,7 @@ export class MensajeVisualizarComponent implements OnInit {
     this.arregloHiloMensajes = [];
     this.usuarioId = accesoService.objAcceso.usuarioId;
     this.base64 = localStorage.getItem('foto') as string;
+    this.mensajeEnviado = true;
 
     //Inicializar modales
     this.modalTitulo = '';
@@ -73,7 +75,7 @@ export class MensajeVisualizarComponent implements OnInit {
   }
 
   public inicializarMensaje(): Mensaje {
-    return new Mensaje(0, 0, 0, '', '', '', 0, 0);
+    return new Mensaje(0, 0, 0,'','','',0);
   }
 
   public obtenerHiloMensajes(mensajeId: number): void {
@@ -82,7 +84,6 @@ export class MensajeVisualizarComponent implements OnInit {
       .pipe(
         map((resultado: Mensaje[]) => {
           this.arregloHiloMensajes = resultado;
-          console.log(this.arregloHiloMensajes);
         }),
         finalize(() => {
           this.cargaFinalizada = true;
@@ -92,6 +93,7 @@ export class MensajeVisualizarComponent implements OnInit {
   }
 
   public responderMensaje(formulario: NgForm): void {
+    this.mensajeEnviado = false;
     this.miSuscripcion = this.mensajesService
       .responderMensaje(this.nuevoMensaje)
       .pipe(
@@ -100,6 +102,9 @@ export class MensajeVisualizarComponent implements OnInit {
           this.obtenerHiloMensajes(this.nuevoMensaje.mensajeCodpadre);
           formulario.reset();
           return respuesta;
+        }),
+        finalize(() => {
+          this.mensajeEnviado = true;
         }),
         catchError((miError) => {
           mostrarMensaje(
