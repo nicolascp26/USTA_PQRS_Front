@@ -8,12 +8,12 @@ import { CommonModule } from '@angular/common';
 const routes: Routes = [
   { path: '', component: UsuariosAdministrarComponent },
   { path: 'actualizar/:usuarioId', component: UsuariosActualizarComponent },
-  {path:'**', component:ErrorSeguridadComponent}
+  { path: '**', component: ErrorSeguridadComponent },
 ];
 
 @NgModule({
   declarations: [],
   imports: [CommonModule, RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class UsuariosRoutingModule {}

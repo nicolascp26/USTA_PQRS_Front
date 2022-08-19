@@ -15,218 +15,61 @@
     </nav>
   </div>
 
-    <button
-      routerLinkActive="router-link-active"
-      type="button"
-      class="btn btn-primary"
-      (click)="abrirModalCrear(crearRol)"
-    >
-      Crear nuevo rol
-    </button>
-
-
-  <div class="row justify-content-center">
+  <div class="row justify-content-center mt-2">
     <h4 class="mb-3 fw-bold mb-0 text-center">Administrar Roles</h4>
   </div>
 
-  <div
-    class="row justify-content-center row-cols-sm-2 row-cols-md-3"
-    *ngIf="cargaFinalizada == true; else spinner"
-  >
-    <div class="col mb-3" *ngFor="let objRol of arregloRoles">
-      <div class="card text-center" style="width: 15rem">
-        <img *ngIf="objRol.rolNombre == 'Administrador'"
-          src="../../../../../../assets/images/card_admin.jpg"
-          class="card-img-top"
-        />
-        <img *ngIf="objRol.rolNombre == 'Estudiante'"
-          src="../../../../../../assets/images/card_student.jpg"
-          class="card-img-top"
-        />
-        <div class="card-body">
-          <h5 class="card-title">{{ objRol.rolNombre }}</h5>
-          <p class="card-text">
-            Cantidad de usuarios: {{ objRol.cantUsuarios }}
-          </p>
-          <a [routerLink]="['/administrador/usuarios']" class="btn btn-primary">Ver usuarios</a>
+  <div class="row justify-content-center" *ngIf="cargaFinalizada == true; else spinner">
+    <div
+      class="card mb-3 mx-2 bg-light"
+      style="max-width: 640px"
+      *ngFor="let objRol of arregloRoles"
+    >
+      <div class="row g-0">
+        <div class="col-md-4">
+          <img
+            *ngIf="objRol.rolNombre == 'Administrador'"
+            src="../../../../../../assets/images/card_admin.jpg"
+            class="img-fluid rounded-start"
+          />
+          <img
+            *ngIf="objRol.rolNombre == 'Estudiante'"
+            src="../../../../../../assets/images/card_student.jpg"
+            class="img-fluid rounded-start"
+          />
+          <img
+            *ngIf="objRol.rolNombre == 'Docente'"
+            src="../../../../../../assets/images/card_teacher.jpg"
+            class="img-fluid rounded-start"
+          />
+          <img
+            *ngIf="objRol.rolNombre == 'Invitado'"
+            src="../../../../../../assets/images/card_guest.jpg"
+            class="img-fluid rounded-start"
+          />
         </div>
-        <ul class="list-group list-group-flush">
-          <li
-            class="list-group-item"
-            style="cursor: pointer"
-            (click)="abrirModalActualizar(ActualizarRol, objRol)"
-          ><i class="fa fa-edit"></i>
-            Editar
-          </li>
-          <li
-            *ngIf="objRol.cantUsuarios == 0"
-            class="list-group-item bg-danger"
-            style="cursor: pointer; color: white"
-            (click)="abrirModalEliminar(eliminarRol, objRol)"
-          >
-            <i class="fa fa-trash"></i>
-            Eliminar
-          </li>
-          <li
-            *ngIf="objRol.cantUsuarios != 0"
-            class="list-group-item bg-secondary"
-            style="cursor: pointer; color: white"
-            title="No se puede eliminar porque hay usuarios registrados"
-          >
-            <i class="fa fa-trash"></i> Eliminar
-          </li>
-        </ul>
+
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">{{ objRol.rolNombre }}</h5>
+            <div class="card-text"></div>
+            <a
+              [routerLink]="['/administrador/usuarios']"
+              [queryParams]="{ rol: objRol.rolNombre }"
+              class="btn btn-primary"
+              >Ver usuarios</a
+            >
+            <p class="card-text">
+              <small class="text-muted"
+                >Cantidad de usuarios: {{ objRol.cantUsuarios }}</small
+              >
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3"></div>
-
-<ng-template #spinnercito>
-  <div class="spinner-grow text-info" role="status">
-    <span class="visually-hidden">Cargando ...</span>
-  </div>
-</ng-template>
-
-<ng-template #eliminarRol>
-  <div class="modal-content rounded-4 shadow">
-    <div class="modal-body p-4 text-center">
-      <h5 class="mb-0">{{ modalTitulo }}</h5>
-      <p class="mb-0">{{ modalContenido }}</p>
-    </div>
-    <div class="modal-footer flex-nowrap p-0">
-      <button
-        type="button"
-        class="btn btn-lg fs-6 text-primary col-6 m-0 rounded-0 border-right"
-        (click)="confirmarEliminar()"
-      >
-        <strong>Si, eliminar</strong>
-      </button>
-      <button
-        type="button"
-        class="btn btn-lg fs-6 text-danger col-6 m-0 rounded-0"
-        data-bs-dismiss="modal"
-        (click)="cancelar()"
-      >
-        Cancelar
-      </button>
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #crearRol>
-  <div class="modal-content rounded-4 shadow">
-    <div class="modal-body p-4 text-center">
-      <h5 class="mb-0">{{ modalTitulo }}</h5>
-    </div>
-    <form
-      #frmCrearRol="ngForm"
-      (ngSubmit)="frmCrearRol.valid && crearUnRol(frmCrearRol)"
-    >
-      <div class="form-floating mb-2 mx-4">
-        <input
-          type="text"
-          class="form-control rounded-4"
-          id="rolNombre"
-          name="rolNombre"
-          placeholder="nombre rol"
-          #rolNombre="ngModel"
-          [(ngModel)]="objRol.rolNombre"
-          [ngClass]="{
-            'is-invalid': frmCrearRol.submitted && rolNombre.invalid
-          }"
-          required
-        />
-        <div
-          class="text-danger error"
-          *ngIf="frmCrearRol.submitted && rolNombre.invalid"
-        >
-          <span *ngIf="rolNombre.errors?.['required']"
-            >Nombre de rol requerido</span
-          >
-        </div>
-        <label for="floatingInput">Nombre Rol</label>
-      </div>
-      <div class="modal-body p-4 text-center">
-        <p class="mb-0">{{ modalContenido }}</p>
-      </div>
-      <div class="modal-footer flex-nowrap p-0">
-        <button
-          type="button"
-          class="btn btn-lg fs-6 text-primary col-6 m-0 rounded-0 border-right"
-          type="submit"
-        >
-          <strong>Confirmar</strong>
-        </button>
-        <button
-          type="button"
-          class="btn btn-lg fs-6 text-danger col-6 m-0 rounded-0"
-          data-bs-dismiss="modal"
-          (click)="cancelar()"
-        >
-          Cancelar
-        </button>
-      </div>
-    </form>
-  </div>
-</ng-template>
-
-<ng-template #ActualizarRol>
-  <div class="modal-content rounded-4 shadow">
-    <div class="modal-body p-4 text-center">
-      <h5 class="mb-0">{{ modalTitulo }}</h5>
-    </div>
-    <form
-      #frmActualizarRol="ngForm"
-      (ngSubmit)="frmActualizarRol.valid && actualizarRol(frmActualizarRol)"
-    >
-      <div class="form-floating mb-2 mx-4">
-        <input
-          type="text"
-          class="form-control rounded-4"
-          id="rolNombre"
-          name="rolNombre"
-          placeholder="nombre rol"
-          #rolNombre="ngModel"
-          [(ngModel)]="rolSeleccionado.rolNombre"
-          [ngClass]="{
-            'is-invalid': frmActualizarRol.submitted && rolNombre.invalid
-          }"
-          required
-        />
-        <div
-          class="text-danger error"
-          *ngIf="frmActualizarRol.submitted && rolNombre.invalid"
-        >
-          <span *ngIf="rolNombre.errors?.['required']"
-            >Nombre de rol requerido</span
-          >
-        </div>
-        <label for="floatingInput">Nombre Rol</label>
-      </div>
-      <div class="modal-body p-4 text-center">
-        <p class="mb-0">{{ modalContenido }}</p>
-      </div>
-      <div class="modal-footer flex-nowrap p-0">
-        <button
-          type="button"
-          class="btn btn-lg fs-6 text-primary col-6 m-0 rounded-0 border-right"
-          type="submit"
-        >
-          <strong>Confirmar</strong>
-        </button>
-        <button
-          type="button"
-          class="btn btn-lg fs-6 text-danger col-6 m-0 rounded-0"
-          data-bs-dismiss="modal"
-          (click)="cancelar()"
-        >
-          Cancelar
-        </button>
-      </div>
-    </form>
-  </div>
-</ng-template>
 
 <ng-template #spinner>
   <div class="col-md text-center">
