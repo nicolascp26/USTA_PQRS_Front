@@ -2,14 +2,15 @@
 .table-hover tbody tr:hover th {
   background-color: #e4e4e4;
 }
-.form-control-borderless {
-  border: none;
+.my-input{
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: #000;
+}
+.my-input:focus {
+  border-color: #0d6efd;
 }
 
-.form-control-borderless:hover,
-.form-control-borderless:active,
-.form-control-borderless:focus {
-  border: none;
-  outline: none;
-  box-shadow: none;
+.my-input::placeholder {
+  font: 15px Segoe UI;
 }

@@ -19,16 +19,14 @@
   <h4 class="mb-3 fw-bold text-center">Preguntas frecuentes</h4>
 
   <div class="input-group-sm text-center mb-2">
-    <span class="badge rounded-pill bg-success">
-      <i class="fas fa-search"></i>
-    </span>
+    <label class="small mb-1" for="searchBar"
+      ><i class="fas fa-search"></i> Buscar preguntas:</label
+    >&nbsp;
     <input
-      class="form-control-sm form-control-borderless"
       type="search"
-      placeholder="Buscar preguntas"
-      aria-label="Buscar"
+      placeholder="Pregunta algo..."
       [(ngModel)]="searchBar"
-    />
+    />&nbsp;
     <a
       class="btn btn-primary"
       [routerLink]="['/administrador/preguntas-frecuentes/crear']"

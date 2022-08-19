@@ -1,13 +1,14 @@
-.form-control-borderless {
-  border: none;
+input {
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: #000;
+}
+input:focus {
+  border-color: #0d6efd;
 }
 
-.form-control-borderless:hover,
-.form-control-borderless:active,
-.form-control-borderless:focus {
-  border: none;
-  outline: none;
-  box-shadow: none;
+input::placeholder {
+  font: 15px Segoe UI;
 }
 
 .my-pagination ::ng-deep .ngx-pagination .current{

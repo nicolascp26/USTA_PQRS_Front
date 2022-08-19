@@ -16,14 +16,12 @@
   <h4 class="mb-3 fw-bold mb-0 text-center">Administrar Solicitudes</h4>
   <div class="d-flex justify-content-center mb-2">
     <div class="p-2">
-      <span class="badge rounded-pill bg-success">
-        <i class="fas fa-search"></i>
-      </span>
+      <label class="small mb-1" for="searchBar"
+        ><i class="fas fa-search"></i> Buscar solicitudes:</label
+      >&nbsp;
       <input
-        class="form-control-sm form-control-borderless"
         type="search"
-        placeholder="Buscar solicitudes"
-        aria-label="Buscar"
+        placeholder="Titulo, tipo o clase"
         [(ngModel)]="searchBar"
       />
     </div>
@@ -49,7 +47,9 @@
           <tr
             *ngFor="
               let soli of arregloSolicitudes
-                | filterBy: ['mensajeTitulo']:searchBar
+                | filterBy
+                  : ['mensajeTitulo', 'tipoClase', 'tipoNombre']
+                  : searchBar
                 | paginate
                   : {
                       itemsPerPage: cantidadMostrar,
