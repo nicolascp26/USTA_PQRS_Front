@@ -112,13 +112,18 @@
                       >Nueva</span
                     >
                     <span
-                      class="badge rounded-pill badge-warning"
+                      class="badge rounded-pill badge-primary"
                       *ngIf="soli.mensajeEstado == 2"
-                      >En progreso</span
+                      >Respondida</span
+                    >
+                    <span
+                      class="badge rounded-pill badge-warning"
+                      *ngIf="soli.mensajeEstado == 3"
+                      >Esperando respuesta</span
                     >
                     <span
                       class="badge rounded-pill badge-danger"
-                      *ngIf="soli.mensajeEstado == 3"
+                      *ngIf="soli.mensajeEstado == 4"
                       >Terminada</span
                     >
                   </div>

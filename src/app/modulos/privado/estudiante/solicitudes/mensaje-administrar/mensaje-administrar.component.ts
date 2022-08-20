@@ -31,6 +31,10 @@ export class MensajeAdministrarComponent implements OnInit {
   //Atributos de filtrado
   public searchBar = '';
 
+  //Atributos de ordenacion
+  public ordenarPor: string = '';
+  public ordenadoSentido: boolean = false;
+
   constructor(
     private mensajesService: MensajesService,
     private accesoService: AccesoService
@@ -62,7 +66,7 @@ export class MensajeAdministrarComponent implements OnInit {
   }
 
   public inicializarMensaje(): Mensaje {
-    return new Mensaje(0, 0, 0,'','','',0);
+    return new Mensaje(0, 0, 0, '', '', '', 0);
   }
 
   public seleccionarSolicitud(objMensaje: Mensaje): void {
@@ -86,6 +90,17 @@ export class MensajeAdministrarComponent implements OnInit {
         })
       )
       .subscribe(observadorAny);
+  }
+
+  //Metodo ordenar
+  ordenarSolicitudes(tipo: string): void {
+    if (this.ordenadoSentido) {
+      this.ordenarPor = tipo;
+      this.ordenadoSentido = false;
+    } else {
+      this.ordenarPor = '-' + tipo;
+      this.ordenadoSentido = true;
+    }
   }
 
   //Metodos paginacion

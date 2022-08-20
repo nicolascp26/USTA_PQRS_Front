@@ -76,7 +76,7 @@
       <div
         class="card-footer"
         *ngIf="
-          arregloHiloMensajes[0].mensajeEstado != 3;
+          arregloHiloMensajes[0].mensajeEstado != 4;
           else solicitudTerminada
         "
       >
@@ -86,7 +86,7 @@
             frmResponderMsj.valid && responderMensaje(frmResponderMsj)
           "
           *ngIf="
-            arregloHiloMensajes[0].mensajeEstado == 2;
+            arregloHiloMensajes[0].mensajeEstado == 3;
             else solicitudEnEspera
           "
         >
@@ -107,13 +107,18 @@
               required
             >
             </textarea>
-            <button class="btn btn-sm btn-primary" type="submit"  [disabled]="!mensajeEnviado">
+            <button
+              class="btn btn-sm btn-primary"
+              type="submit"
+              [disabled]="!mensajeEnviado"
+            >
               <i class="fa-solid fa-paper-plane mx-1"></i>
               Enviar
             </button>
             <button class="btn btn-sm btn-secondary" type="file">
               <i class="fa-solid fa-file-arrow-up"></i>
-              Anexar un<br> archivo
+              Anexar un<br />
+              archivo
             </button>
           </div>
 
@@ -139,7 +144,10 @@
           Esta solicitud esta en espera de respuesta. Por favor ten paciencia,
           la facultad responderá lo más pronto posible. Mientras esperas puedes
           revisar las preguntas frecuentes
-          <a [routerLink]="['/estudiante/inicio/preguntas-frecuentes']" class="alert-link">
+          <a
+            [routerLink]="['/estudiante/inicio/preguntas-frecuentes']"
+            class="alert-link"
+          >
             aquí</a
           >.
         </div>

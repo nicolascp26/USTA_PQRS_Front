@@ -5,7 +5,7 @@ export class Mensaje {
   public mensajeTitulo: string;
   public mensajeDetalle: string;
   public mensajeFecha: string;
-  public mensajeEstado?: number;
+  public mensajeEstado: number;
   public mensajeActualizado?: string;
   public mensajeIdUsuario?:number;
   public usuarioNombres?: string;
