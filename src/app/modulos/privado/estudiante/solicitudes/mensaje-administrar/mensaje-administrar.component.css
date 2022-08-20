@@ -33,3 +33,7 @@ input::placeholder {
   background-color: #fec1c6;
   color: #6d0517;
 }
+.badge-primary{
+  background-color: #bad0fa;
+  color: #093986;
+}

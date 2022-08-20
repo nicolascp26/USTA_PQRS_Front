@@ -32,6 +32,8 @@ export class UsuariosAdministrarComponent implements OnInit {
   //Atributos de filtrado
   public searchBar = '';
   public rolFiltrar: string = '';
+
+  //Atributos de ordenacion
   public ordenarPor: string = '';
   public ordenadoSentido: boolean = false;
 
