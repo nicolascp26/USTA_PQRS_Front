@@ -36,8 +36,9 @@ export class MensajeAdministrarComponent implements OnInit {
   public solicitudFiltrarTipo: any;
   public arregloEstados = [
     { id: 1, nom: 'Nueva' },
-    { id: 2, nom: 'En progreso' },
-    { id: 3, nom: 'Terminada' },
+    { id: 2, nom: 'Respondida' },
+    { id: 3, nom: 'Esperando respuesta' },
+    { id: 4, nom: 'Terminada' }
   ];
   public arregloTipoClases = [
     { id: 1, nom: 'Peticion' },
@@ -45,6 +46,10 @@ export class MensajeAdministrarComponent implements OnInit {
     { id: 3, nom: 'Reclamo' },
     { id: 4, nom: 'Sugerencia' },
   ];
+
+//Atributos de ordenacion
+public ordenarPor: string = '';
+public ordenadoSentido: boolean = false;
 
   constructor(
     private ruta: ActivatedRoute,
@@ -68,7 +73,6 @@ export class MensajeAdministrarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.solicitudFiltrarTipo);
     this.obtenerSolicitudes();
     this.obtenerTodosTipos();
     this.ruta.queryParamMap.subscribe((parametro) => {
@@ -127,6 +131,16 @@ export class MensajeAdministrarComponent implements OnInit {
       )
       .subscribe(observadorAny);
   }
+    //Metodo ordenar
+    ordenarSolicitudes(tipo: string): void {
+      if (this.ordenadoSentido) {
+        this.ordenarPor = tipo;
+        this.ordenadoSentido = false;
+      } else {
+        this.ordenarPor = '-' + tipo;
+        this.ordenadoSentido = true;
+      }
+    }
 
   //Metodos paginacion
   handlePageChange(event: number): void {

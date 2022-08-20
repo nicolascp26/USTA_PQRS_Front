@@ -93,6 +93,7 @@ export class MensajeVisualizarComponent implements OnInit {
 
   public responderMensaje(formulario: NgForm): void {
     this.mensajeEnviado = false;
+    this.nuevoMensaje.mensajeEstado = 3;
     this.miSuscripcion = this.mensajesService
       .responderMensaje(this.nuevoMensaje)
       .pipe(
