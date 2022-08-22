@@ -1,12 +1,16 @@
+import { Mensaje } from './../../../../../modelos/mensaje';
+import { Pregunta } from './../../../../../modelos/pregunta';
+
+import { PreguntasFrecuentesService } from './../../../../../servicios/preguntas-frecuentes.service';
 import { AccesoService } from './../../../../../servicios/acceso.service';
+import { MensajesService } from './../../../../../servicios/mensajes.service';
+
 import { mostrarMensaje } from 'src/app/utilidades/mensajes/mensajes-toast.func';
 import { ToastrService } from 'ngx-toastr';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { NgForm } from '@angular/forms';
 import { observadorAny } from 'src/app/utilidades/observable/observable-any';
 import { map, Subscription, finalize, catchError } from 'rxjs';
-import { Mensaje } from './../../../../../modelos/mensaje';
-import { MensajesService } from './../../../../../servicios/mensajes.service';
 import { ParamMap, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, TemplateRef } from '@angular/core';
 
@@ -23,6 +27,13 @@ export class MensajeVisualizarComponent implements OnInit {
   public base64: string;
   public mensajeEnviado: boolean;
 
+  //Atributos de respuesta con pregunta frecuente
+  public arregloPreguntas: Pregunta[];
+  public preguntaSeleccionada: Pregunta;
+
+  //Atributos de subir archivo
+  archivo: any = '';
+
   //Atributos modales
   public modalTitulo: string;
   public modalContenido: string;
@@ -36,6 +47,7 @@ export class MensajeVisualizarComponent implements OnInit {
   constructor(
     private mensajesService: MensajesService,
     private accesoService: AccesoService,
+    private preguntaService: PreguntasFrecuentesService,
     public modalService: BsModalService,
     private toastr: ToastrService,
     private ruta: ActivatedRoute
@@ -47,6 +59,10 @@ export class MensajeVisualizarComponent implements OnInit {
     this.base64 = localStorage.getItem('foto') as string;
     this.mensajeEnviado = true;
 
+    //Inicializar atributos de preguntas frecuentes
+    this.arregloPreguntas = [];
+    this.preguntaSeleccionada = this.inicializarPregunta();
+
     //Inicializar modales
     this.modalTitulo = '';
     this.modalContenido = '';
@@ -57,6 +73,7 @@ export class MensajeVisualizarComponent implements OnInit {
     this.cargaFinalizada = false;
   }
 
+  //Metodos obligatorios
   ngOnInit(): void {
     this.ruta.paramMap.subscribe((parametro: ParamMap) => {
       const miCodigo = String(parametro.get('mensajeId'));
@@ -77,12 +94,18 @@ export class MensajeVisualizarComponent implements OnInit {
     return new Mensaje(0, 0, 0, '', '', '', 0);
   }
 
+  public inicializarPregunta(): Pregunta {
+    return new Pregunta(0, '', '');
+  }
+
+  //Lógica del negocio
   public obtenerHiloMensajes(mensajeId: number): void {
     this.miSuscripcion = this.mensajesService
       .obtenerHiloMensajes(mensajeId)
       .pipe(
         map((resultado: Mensaje[]) => {
           this.arregloHiloMensajes = resultado;
+          this.obtenerPreguntasFrecuentes();
         }),
         finalize(() => {
           this.cargaFinalizada = true;
@@ -105,6 +128,8 @@ export class MensajeVisualizarComponent implements OnInit {
         }),
         finalize(() => {
           this.mensajeEnviado = true;
+          this.nuevoMensaje.mensajeTitulo = '';
+          this.preguntaSeleccionada = this.inicializarPregunta();
         }),
         catchError((miError) => {
           mostrarMensaje(
@@ -173,8 +198,23 @@ export class MensajeVisualizarComponent implements OnInit {
       .subscribe(observadorAny);
   }
 
+  public obtenerPreguntasFrecuentes(): void {
+    this.miSuscripcion = this.preguntaService
+      .cargarPreguntas()
+      .pipe(
+        map((resultado: Pregunta[]) => {
+          this.arregloPreguntas = resultado;
+        }),
+        finalize(() => {
+          this.cargaFinalizada = true;
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
   //Metodos de las modales
   public cancelar(): void {
+    this.preguntaSeleccionada = this.inicializarPregunta();
     this.modalRef.hide();
   }
 
@@ -198,5 +238,35 @@ export class MensajeVisualizarComponent implements OnInit {
   public confirmarReabrir(): void {
     this.reabrirSolicitud();
     this.modalRef.hide();
+  }
+
+  public abrirModalPreguntasFrecuentes(template: TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
+    this.modalTitulo = 'Contestar con pregunta frecuente:';
+  }
+
+  public confirmarPreguntaFrecuente(): void {
+    this.nuevoMensaje.mensajeTitulo =
+      'Re: Respuesta desde PREGUNTAS FRECUENTES';
+    this.nuevoMensaje.mensajeDetalle = this.preguntaSeleccionada.prefDetalle;
+    this.modalRef.hide();
+  }
+
+  public seleccionar(pregunta: Pregunta): void {
+    this.preguntaSeleccionada = pregunta;
+  }
+
+  //Metodos de subir archivo
+  public seleccionarAnexo(event: any): void {
+    this.archivo = event;
+    let caja = event.target.files[0];
+    if (!caja || caja.length == 0) {
+      return;
+    }
+    this.tmp = { fileName: caja.name, fileType: caja.type };
+    console.log(this.tmp);
+    //this.nuevaImagen.imgNombrePublico = this.tmpBase64.fileName;
+    //this.nuevaImagen.imgTipo = this.tmpBase64.fileType;
+    //this.nuevaImagen.imgUsuarioId = this.usuarioSeleccionado.usuarioId;
   }
 }
