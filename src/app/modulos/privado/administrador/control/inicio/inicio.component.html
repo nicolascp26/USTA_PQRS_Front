@@ -68,18 +68,18 @@
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
                 <h2 class="d-flex align-items-center mb-0">
-                  {{ estadisticas.nuevos }}
+                  {{ estadisticas.nuevas }}
                 </h2>
               </div>
             </div>
             <div class="mb-2">
               <progressbar
                 [max]="estadisticas.totales * 1"
-                [value]="estadisticas.nuevos * 1"
+                [value]="estadisticas.nuevas * 1"
               >
                 <span class="text-nowrap"
                   >{{
-                    (estadisticas.nuevos * 100) / estadisticas.totales
+                    (estadisticas.nuevas * 100) / estadisticas.totales
                       | number: "1.0-0"
                   }}%</span
                 >
@@ -108,18 +108,20 @@
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
                 <h2 class="d-flex align-items-center mb-0">
-                  {{ estadisticas.progreso }}
+                  {{
+                    estadisticas.respondidas * 1 + estadisticas.esperando * 1
+                  }}
                 </h2>
               </div>
             </div>
             <div class="mb-2">
               <progressbar
                 [max]="estadisticas.totales * 1"
-                [value]="estadisticas.progreso * 1"
+                [value]="estadisticas.respondidas * 1 + estadisticas.esperando * 1"
               >
                 <span class="text-nowrap"
                   >{{
-                    (estadisticas.progreso * 100) / estadisticas.totales
+                    (estadisticas.respondidas * 1 + estadisticas.esperando * 1) * 100 / estadisticas.totales
                       | number: "1.0-0"
                   }}%</span
                 >
@@ -147,18 +149,18 @@
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
                 <h2 class="d-flex align-items-center mb-0">
-                  {{ estadisticas.terminados }}
+                  {{ estadisticas.terminadas }}
                 </h2>
               </div>
             </div>
             <div class="mb-2">
               <progressbar
                 [max]="estadisticas.totales * 1"
-                [value]="estadisticas.terminados * 1"
+                [value]="estadisticas.terminadas * 1"
               >
                 <span class="text-nowrap"
                   >{{
-                    (estadisticas.terminados * 100) / estadisticas.totales
+                    (estadisticas.terminadas * 100) / estadisticas.totales
                       | number: "1.0-0"
                   }}%</span
                 >
