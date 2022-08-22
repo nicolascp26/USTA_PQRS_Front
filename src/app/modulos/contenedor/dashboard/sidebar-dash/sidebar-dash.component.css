@@ -19,6 +19,9 @@ body {
   height: 16px;
   vertical-align: text-bottom;
 }
+#notificaciones {
+  margin-right: 50px;
+}
 
 /*
  * Sidebar
@@ -42,7 +45,7 @@ body {
   .nav-item span {
     display: none;
   }
-  .nav-item{
+  .nav-item {
     margin-top: 10px;
   }
   .dropdown strong {
@@ -52,7 +55,6 @@ body {
 
 @media (max-width: 767.98px) {
   .sidebar {
-
     width: 100%;
   }
   .nav-item span {
@@ -60,6 +62,9 @@ body {
   }
   .dropdown strong {
     display: inline;
+  }
+  #header-image {
+    width: 50%;
   }
 }
 
