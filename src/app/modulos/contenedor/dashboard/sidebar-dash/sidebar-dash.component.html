@@ -1,9 +1,9 @@
 <header class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
   <a [routerLink]="['inicio']" class="navbar-brand col-md-3 col-lg-2 me-0 px-3">
     <img
-      class=""
+      id="header-image"
+      class="img-fluid"
       src="../../../../assets/images/logo-white.png"
-      alt=""
       width="200"
       height="60"
     />
@@ -20,6 +20,23 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <hr />
+  <div id="notificaciones" class="my-2" *ngIf="cargaFinalizada == true; else spinner">
+    <button
+      type="button"
+      class="btn btn-sm btn-light position-relative text-black"
+      popoverTitle="Nuevos mensajes"
+      [popover]="popTemplate"
+      placement="auto"
+    >
+      <i class="fa-solid fa-bell"></i>
+      <span
+        class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+      >
+        {{ estadisticas.respondidas }}
+        <span class="visually-hidden">unread messages</span>
+      </span>
+    </button>
+  </div>
 </header>
 <div>
   <nav
@@ -111,6 +128,26 @@
         </ul>
       </div>
     </div>
-    <div class="text-white mt-auto"><i class="fa-solid fa-bell"></i></div>
   </nav>
+  <ng-template #popTemplate
+    >Tienes
+    <a
+      *ngIf="rolUsuario == 'Estudiante'"
+      [routerLink]="['/estudiante/solicitudes']"
+      [queryParams]="{ estado: 3 }"
+      >{{ estadisticas.respondidas }} solicitudes respondidas</a
+    >
+    <a
+      *ngIf="rolUsuario != 'Estudiante'"
+      [routerLink]="['/administrador/solicitudes']"
+      [queryParams]="{ estado: 2 }"
+      >{{ estadisticas.respondidas }} solicitudes respondidas</a
+    >.
+  </ng-template>
 </div>
+
+<ng-template #spinner>
+  <div>
+    <h4>Cargando notificaciones...</h4>
+  </div>
+</ng-template>
