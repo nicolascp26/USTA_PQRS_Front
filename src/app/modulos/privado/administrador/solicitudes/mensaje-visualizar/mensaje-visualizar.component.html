@@ -68,7 +68,7 @@
                 }}</small>
               </div>
               <div class="timeline-content">
-                <p>{{ msj.mensajeDetalle }}</p>
+                <article>{{ msj.mensajeDetalle }}</article>
               </div>
             </div>
             <!-- end timeline-body -->
@@ -105,14 +105,36 @@
               required
             >
             </textarea>
-            <button class="btn btn-sm btn-primary" type="submit" [disabled]="!mensajeEnviado">
+            <button
+              class="btn btn-sm btn-primary"
+              type="submit"
+              [disabled]="!mensajeEnviado"
+            >
               <i class="fa-solid fa-paper-plane mx-1"></i>
               Enviar
             </button>
-            <button class="btn btn-sm btn-secondary" type="file">
-              <i class="fa-solid fa-file-arrow-up"></i>
-              Anexar un<br> archivo
+            <button
+              type="button"
+              class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+              style="border-left: 1px solid #000"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+              title="Responder con pregunta frecuente"
+              [disabled]="!mensajeEnviado"
+            >
+              <span class="visually-hidden">Toggle Dropdown</span>
             </button>
+            <ul class="dropdown-menu">
+              <li
+                class="dropdown-item"
+                style="cursor: pointer"
+                (click)="
+                  abrirModalPreguntasFrecuentes(responderPreguntaFrecuente)
+                "
+              >
+                Responder con pregunta frecuente
+              </li>
+            </ul>
           </div>
           <div
             class="text-danger error"
@@ -122,7 +144,23 @@
               >El mensaje no puede ser vacio</span
             >
           </div>
-          <div class="d-flex justify-content-center" *ngIf="arregloHiloMensajes[0].mensajeEstado == 3;">
+          <!-- Input de subir archivo -->
+          <div class="input-group mb-3">
+            <input
+              type="file"
+              class="form-control"
+              (change)="seleccionarAnexo($event)"
+            />
+            <button class="btn btn-secondary" type="button">
+              <i class="fa-solid fa-file-arrow-up"></i>
+              Subir documento
+            </button>
+          </div>
+          <!-- Fin Input de subir archivo -->
+          <div
+            class="d-flex justify-content-center"
+            *ngIf="arregloHiloMensajes[0].mensajeEstado == 3"
+          >
             <button
               class="btn btn-danger text-center"
               type="button"
@@ -189,6 +227,46 @@
           (click)="confirmarReabrir()"
         >
           <strong>Si, reabrirla</strong>
+        </button>
+        <button
+          type="button"
+          class="btn btn-lg fs-6 text-danger col-6 m-0 rounded-0"
+          data-bs-dismiss="modal"
+          (click)="cancelar()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #responderPreguntaFrecuente>
+    <div class="modal-content rounded-4 shadow">
+      <div class="modal-body p-4 text-center">
+        <h5 class="mb-2">{{ modalTitulo }}</h5>
+        <ul class="list-group list-group-flush mb-4">
+          <li
+            class="list-group-item list-group-item-action"
+            style="cursor: pointer"
+            *ngFor="let pref of arregloPreguntas"
+            (click)="seleccionar(pref)"
+          >
+            {{ pref.prefTitulo }}
+          </li>
+        </ul>
+        <strong>
+          Responder con:<br /><span class="badge bg-primary">{{
+            preguntaSeleccionada.prefTitulo
+          }}</span>
+        </strong>
+      </div>
+      <div class="modal-footer flex-nowrap p-0">
+        <button
+          type="button"
+          class="btn btn-lg fs-6 text-primary col-6 m-0 rounded-0 border-right"
+          (click)="confirmarPreguntaFrecuente()"
+        >
+          <strong>Confirmar</strong>
         </button>
         <button
           type="button"
