@@ -29,7 +29,8 @@
     <div class="card mb-3">
       <div class="card-header bg-dark text-white text-center">
         Solicitud #{{ arregloHiloMensajes[0].mensajeId }}:
-        <strong>{{ arregloHiloMensajes[0].mensajeTitulo }}</strong>
+        <strong>{{ arregloHiloMensajes[0].mensajeTitulo }}</strong><br />
+        Asignada a: <strong>{{ adminAsignado }}</strong>
       </div>
       <div class="card-body">
         <ul class="timeline">
@@ -78,7 +79,7 @@
       <div
         class="card-footer"
         *ngIf="
-          arregloHiloMensajes[0].mensajeEstado != 4;
+        estadoSolicitud != 4;
           else solicitudTerminada
         "
       >
@@ -144,6 +145,12 @@
               >El mensaje no puede ser vacio</span
             >
           </div>
+        </form>
+        <form
+          (ngSubmit)="subirAnexo(frmSubirAnexo)"
+          #frmSubirAnexo="ngForm"
+          *ngIf="estadoSolicitud == 3"
+        >
           <!-- Input de subir archivo -->
           <div class="input-group mb-3">
             <input
@@ -151,26 +158,30 @@
               class="form-control"
               (change)="seleccionarAnexo($event)"
             />
-            <button class="btn btn-secondary" type="button">
+            <button
+              class="btn btn-secondary"
+              type="submit"
+              [disabled]="!anexoEnviado"
+            >
               <i class="fa-solid fa-file-arrow-up"></i>
               Subir documento
             </button>
           </div>
           <!-- Fin Input de subir archivo -->
-          <div
-            class="d-flex justify-content-center"
-            *ngIf="arregloHiloMensajes[0].mensajeEstado == 3"
-          >
-            <button
-              class="btn btn-danger text-center"
-              type="button"
-              (click)="abrirModalTerminar(terminarSolicitud)"
-            >
-              <i class="fa-solid fa-circle-xmark mx-1"></i>
-              Terminar solicitud
-            </button>
-          </div>
         </form>
+        <div
+          class="d-flex justify-content-center"
+          *ngIf="estadoSolicitud == 3"
+        >
+          <button
+            class="btn btn-danger text-center"
+            type="button"
+            (click)="abrirModalTerminar(terminarSolicitud)"
+          >
+            <i class="fa-solid fa-circle-xmark mx-1"></i>
+            Terminar solicitud
+          </button>
+        </div>
       </div>
       <ng-template #solicitudTerminada>
         <div class="card-footer text-lg-center text-white bg-success">
