@@ -7,3 +7,4 @@ export const API_ROLES = API_URL + 'miapi/privado/role';
 export const API_TIPOS = API_URL + 'miapi/privado/tipo';
 export const API_MENSAJES = API_URL + 'miapi/privado/mensajes';
 export const API_PREGUNTAS = API_URL + 'miapi/privado/preguntas';
+export const API_ANEXOS = API_URL + 'miapi/privado/anexos';

@@ -75,20 +75,14 @@
       </div>
       <div
         class="card-footer"
-        *ngIf="
-          arregloHiloMensajes[0].mensajeEstado != 4;
-          else solicitudTerminada
-        "
+        *ngIf="estadoSolicitud != 4; else solicitudTerminada"
       >
         <form
           #frmResponderMsj="ngForm"
           (ngSubmit)="
             frmResponderMsj.valid && responderMensaje(frmResponderMsj)
           "
-          *ngIf="
-            arregloHiloMensajes[0].mensajeEstado == 3;
-            else solicitudEnEspera
-          "
+          *ngIf="estadoSolicitud == 3; else solicitudEnEspera"
         >
           <div class="input-group mb-3">
             <textarea
@@ -115,11 +109,6 @@
               <i class="fa-solid fa-paper-plane mx-1"></i>
               Enviar
             </button>
-            <button class="btn btn-sm btn-secondary" type="file">
-              <i class="fa-solid fa-file-arrow-up"></i>
-              Anexar un<br />
-              archivo
-            </button>
           </div>
 
           <div
@@ -131,7 +120,31 @@
             >
           </div>
         </form>
+        <form
+          (ngSubmit)="subirAnexo(frmSubirAnexo)"
+          #frmSubirAnexo="ngForm"
+          *ngIf="estadoSolicitud == 3"
+        >
+          <!-- Input de subir archivo -->
+          <div class="input-group mb-3">
+            <input
+              type="file"
+              class="form-control"
+              (change)="seleccionarAnexo($event)"
+            />
+            <button
+              class="btn btn-secondary"
+              type="submit"
+              [disabled]="!anexoEnviado"
+            >
+              <i class="fa-solid fa-file-arrow-up"></i>
+              Subir documento
+            </button>
+          </div>
+          <!-- Fin Input de subir archivo -->
+        </form>
       </div>
+
       <ng-template #solicitudTerminada>
         <div class="card-footer text-lg-center text-white bg-success">
           <i class="fa-solid fa-circle-check"></i>

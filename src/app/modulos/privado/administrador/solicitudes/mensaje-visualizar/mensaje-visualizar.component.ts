@@ -1,3 +1,4 @@
+import { AnexosService } from './../../../../../servicios/anexos.service';
 import { Mensaje } from './../../../../../modelos/mensaje';
 import { Pregunta } from './../../../../../modelos/pregunta';
 
@@ -24,15 +25,18 @@ export class MensajeVisualizarComponent implements OnInit {
   public nuevoMensaje: Mensaje;
   public arregloHiloMensajes: Mensaje[];
   public usuarioId: number;
+  public estadoSolicitud: number;
   public base64: string;
   public mensajeEnviado: boolean;
+  public adminAsignado: string;
 
   //Atributos de respuesta con pregunta frecuente
   public arregloPreguntas: Pregunta[];
   public preguntaSeleccionada: Pregunta;
 
   //Atributos de subir archivo
-  archivo: any = '';
+  public tmpFile: any;
+  public anexoEnviado: boolean;
 
   //Atributos modales
   public modalTitulo: string;
@@ -48,6 +52,7 @@ export class MensajeVisualizarComponent implements OnInit {
     private mensajesService: MensajesService,
     private accesoService: AccesoService,
     private preguntaService: PreguntasFrecuentesService,
+    private anexoService: AnexosService,
     public modalService: BsModalService,
     private toastr: ToastrService,
     private ruta: ActivatedRoute
@@ -56,12 +61,16 @@ export class MensajeVisualizarComponent implements OnInit {
     this.nuevoMensaje = this.inicializarMensaje();
     this.arregloHiloMensajes = [];
     this.usuarioId = accesoService.objAcceso.usuarioId;
+    this.estadoSolicitud = 0;
     this.base64 = localStorage.getItem('foto') as string;
     this.mensajeEnviado = true;
-
+    this.adminAsignado = this.tmp;
     //Inicializar atributos de preguntas frecuentes
     this.arregloPreguntas = [];
     this.preguntaSeleccionada = this.inicializarPregunta();
+
+    //Inicializar atributos de subir anexos
+    this.anexoEnviado = true;
 
     //Inicializar modales
     this.modalTitulo = '';
@@ -105,6 +114,8 @@ export class MensajeVisualizarComponent implements OnInit {
       .pipe(
         map((resultado: Mensaje[]) => {
           this.arregloHiloMensajes = resultado;
+          this.estadoSolicitud = this.arregloHiloMensajes[0].mensajeEstado;
+          this.adminAsignado = this.arregloHiloMensajes[1].usuarioNombres + ' '+this.arregloHiloMensajes[1].usuarioApellidos;
           this.obtenerPreguntasFrecuentes();
         }),
         finalize(() => {
@@ -258,15 +269,42 @@ export class MensajeVisualizarComponent implements OnInit {
 
   //Metodos de subir archivo
   public seleccionarAnexo(event: any): void {
-    this.archivo = event;
     let caja = event.target.files[0];
     if (!caja || caja.length == 0) {
       return;
     }
-    this.tmp = { fileName: caja.name, fileType: caja.type };
-    console.log(this.tmp);
-    //this.nuevaImagen.imgNombrePublico = this.tmpBase64.fileName;
-    //this.nuevaImagen.imgTipo = this.tmpBase64.fileType;
-    //this.nuevaImagen.imgUsuarioId = this.usuarioSeleccionado.usuarioId;
+    this.tmpFile = { fileRaw: caja, fileName: caja.name, fileType: caja.type };
+  }
+
+  public subirAnexo(formulario: NgForm): void {
+    this.mensajeEnviado = false;
+    const body = new FormData();
+    body.append('myFile', this.tmpFile.fileRaw, this.tmpFile.fileName);
+    this.miSuscripcion = this.anexoService
+      .subirAnexo(body)
+      .pipe(
+        map((respuesta) => {
+          mostrarMensaje(
+            'success',
+            'Anexo enviado correctamente',
+            'Exito',
+            this.toastr
+          );
+          return respuesta;
+        }),
+        finalize(() => {
+          this.anexoEnviado = true;
+        }),
+        catchError((miError) => {
+          mostrarMensaje(
+            'error',
+            'El archivo no pudo ser subido',
+            'Advertencia',
+            this.toastr
+          );
+          throw miError;
+        })
+      )
+      .subscribe(observadorAny);
   }
 }

@@ -27,7 +27,7 @@ export class UsuariosAdministrarComponent implements OnInit {
   public cantidadMostrar: number;
   public cantidadPaginas: number;
   public cantidadTotal: number;
-  public tamano = [5, 10, 15];
+  public tamano = [10, 20, 25];
 
   //Atributos de filtrado
   public searchBar = '';

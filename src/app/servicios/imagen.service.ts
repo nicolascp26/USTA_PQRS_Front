@@ -18,11 +18,4 @@ export class ImagenService {
       objImagen
     );
   }
-
-  public actualizarImagenPerfil(objImagen: Imagen): Observable<Imagen> {
-    return this.http.put<Imagen>(
-      this.apiImagen + '/updateProfileImage',
-      objImagen
-    );
-  }
 }
