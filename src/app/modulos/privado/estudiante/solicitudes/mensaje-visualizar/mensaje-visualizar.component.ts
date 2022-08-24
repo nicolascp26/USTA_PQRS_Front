@@ -142,16 +142,17 @@ export class MensajeVisualizarComponent implements OnInit {
   }
 
   public subirAnexo(formulario: NgForm): void {
-    this.mensajeEnviado = false;
+    this.anexoEnviado = false;
     const body = new FormData();
     body.append('myFile', this.tmpFile.fileRaw, this.tmpFile.fileName);
+    body.append('mensajeId',this.nuevoMensaje.mensajeCodpadre.toString());
     this.miSuscripcion = this.anexoService
       .subirAnexo(body)
       .pipe(
         map((respuesta) => {
           mostrarMensaje(
             'success',
-            'Anexo enviado correctamente',
+            'Anexo subido correctamente',
             'Exito',
             this.toastr
           );
