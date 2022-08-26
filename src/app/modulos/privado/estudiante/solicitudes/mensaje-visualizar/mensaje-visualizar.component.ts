@@ -30,9 +30,10 @@ export class MensajeVisualizarComponent implements OnInit {
   public modalContenido: string;
   public modalRef: BsModalRef;
 
-  //Atributos de subir archivo
+  //Atributos de anexos
   public tmpFile: any;
   public anexoEnviado: boolean;
+  public arregloAnexos: any;
 
   //Atributos consumo de servicios
   public tmp: any;
@@ -62,6 +63,7 @@ export class MensajeVisualizarComponent implements OnInit {
 
     //Inicializar atributos de subir anexos
     this.anexoEnviado = true;
+    this.arregloAnexos = [];
 
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
@@ -72,8 +74,8 @@ export class MensajeVisualizarComponent implements OnInit {
     this.ruta.paramMap.subscribe((parametro: ParamMap) => {
       const miCodigo = String(parametro.get('mensajeId'));
       const miCodigoNumerico = parseFloat(miCodigo);
+      this.obtenerAnexos(miCodigoNumerico);
       this.obtenerHiloMensajes(miCodigoNumerico);
-
       this.nuevoMensaje.mensajeCodpadre = miCodigoNumerico;
       this.nuevoMensaje.mensajeUsuario = this.usuarioId;
     });
@@ -138,14 +140,21 @@ export class MensajeVisualizarComponent implements OnInit {
     if (!caja || caja.length == 0) {
       return;
     }
-    this.tmpFile = { fileRaw: caja, fileName: caja.name, fileType: caja.type };
+    if (caja.size > 2097152) {
+      return;
+    } else
+      this.tmpFile = {
+        fileRaw: caja,
+        fileName: caja.name,
+        fileType: caja.type,
+      };
   }
 
   public subirAnexo(formulario: NgForm): void {
     this.anexoEnviado = false;
     const body = new FormData();
     body.append('myFile', this.tmpFile.fileRaw, this.tmpFile.fileName);
-    body.append('mensajeId',this.nuevoMensaje.mensajeCodpadre.toString());
+    body.append('mensajeId', this.nuevoMensaje.mensajeCodpadre.toString());
     this.miSuscripcion = this.anexoService
       .subirAnexo(body)
       .pipe(
@@ -160,6 +169,8 @@ export class MensajeVisualizarComponent implements OnInit {
         }),
         finalize(() => {
           this.anexoEnviado = true;
+          this.tmpFile = this.tmp;
+          this.obtenerAnexos(this.nuevoMensaje.mensajeCodpadre);
         }),
         catchError((miError) => {
           mostrarMensaje(
@@ -170,6 +181,17 @@ export class MensajeVisualizarComponent implements OnInit {
           );
           throw miError;
         })
+      )
+      .subscribe(observadorAny);
+  }
+  public obtenerAnexos(mensajeId: number): void {
+    this.miSuscripcion = this.anexoService
+      .obtenerAnexos(mensajeId)
+      .pipe(
+        map((resultado: any) => {
+          this.arregloAnexos = resultado;
+        }),
+        finalize(() => {})
       )
       .subscribe(observadorAny);
   }
