@@ -34,9 +34,10 @@ export class MensajeVisualizarComponent implements OnInit {
   public arregloPreguntas: Pregunta[];
   public preguntaSeleccionada: Pregunta;
 
-  //Atributos de subir archivo
+  //Atributos de anexos
   public tmpFile: any;
   public anexoEnviado: boolean;
+  public arregloAnexos: any;
 
   //Atributos modales
   public modalTitulo: string;
@@ -71,6 +72,7 @@ export class MensajeVisualizarComponent implements OnInit {
 
     //Inicializar atributos de subir anexos
     this.anexoEnviado = true;
+    this.arregloAnexos = [];
 
     //Inicializar modales
     this.modalTitulo = '';
@@ -87,6 +89,7 @@ export class MensajeVisualizarComponent implements OnInit {
     this.ruta.paramMap.subscribe((parametro: ParamMap) => {
       const miCodigo = String(parametro.get('mensajeId'));
       const miCodigoNumerico = parseFloat(miCodigo);
+      this.obtenerAnexos(miCodigoNumerico);
       this.obtenerHiloMensajes(miCodigoNumerico);
       this.nuevoMensaje.mensajeCodpadre = miCodigoNumerico;
       this.nuevoMensaje.mensajeUsuario = this.usuarioId;
@@ -115,7 +118,10 @@ export class MensajeVisualizarComponent implements OnInit {
         map((resultado: Mensaje[]) => {
           this.arregloHiloMensajes = resultado;
           this.estadoSolicitud = this.arregloHiloMensajes[0].mensajeEstado;
-          this.adminAsignado = this.arregloHiloMensajes[1].usuarioNombres + ' '+this.arregloHiloMensajes[1].usuarioApellidos;
+          this.adminAsignado =
+            this.arregloHiloMensajes[1].usuarioNombres +
+            ' ' +
+            this.arregloHiloMensajes[1].usuarioApellidos;
           this.obtenerPreguntasFrecuentes();
         }),
         finalize(() => {
@@ -273,14 +279,21 @@ export class MensajeVisualizarComponent implements OnInit {
     if (!caja || caja.length == 0) {
       return;
     }
-    this.tmpFile = { fileRaw: caja, fileName: caja.name, fileType: caja.type };
+    if (caja.size > 2097152) {
+      return;
+    } else
+      this.tmpFile = {
+        fileRaw: caja,
+        fileName: caja.name,
+        fileType: caja.type,
+      };
   }
 
   public subirAnexo(formulario: NgForm): void {
     this.anexoEnviado = false;
     const body = new FormData();
     body.append('myFile', this.tmpFile.fileRaw, this.tmpFile.fileName);
-    body.append('mensajeId',this.nuevoMensaje.mensajeCodpadre.toString());
+    body.append('mensajeId', this.nuevoMensaje.mensajeCodpadre.toString());
     this.miSuscripcion = this.anexoService
       .subirAnexo(body)
       .pipe(
@@ -295,7 +308,8 @@ export class MensajeVisualizarComponent implements OnInit {
         }),
         finalize(() => {
           this.anexoEnviado = true;
-          formulario.reset();
+          this.tmpFile = this.tmp;
+          this.obtenerAnexos(this.nuevoMensaje.mensajeCodpadre);
         }),
         catchError((miError) => {
           mostrarMensaje(
@@ -306,6 +320,17 @@ export class MensajeVisualizarComponent implements OnInit {
           );
           throw miError;
         })
+      )
+      .subscribe(observadorAny);
+  }
+  public obtenerAnexos(mensajeId: number): void {
+    this.miSuscripcion = this.anexoService
+      .obtenerAnexos(mensajeId)
+      .pipe(
+        map((resultado: any) => {
+          this.arregloAnexos = resultado;
+        }),
+        finalize(() => {})
       )
       .subscribe(observadorAny);
   }

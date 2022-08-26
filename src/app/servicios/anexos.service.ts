@@ -14,4 +14,8 @@ export class AnexosService {
   public subirAnexo(anexo: FormData): Observable<any> {
     return this.http.post<any>(this.apiAnexos + '/uploadFile', anexo);
   }
+
+  public obtenerAnexos(mensajeId: number): Observable<any> {
+    return this.http.get<any>(this.apiAnexos + '/getFiles/' + mensajeId);
+  }
 }

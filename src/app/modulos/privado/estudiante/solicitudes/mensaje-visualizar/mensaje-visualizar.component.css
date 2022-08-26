@@ -146,3 +146,16 @@
 p{
   white-space: pre-line;
 }
+
+.badge-info{
+  background-color: #bad0fa;
+  color: #000000;
+  padding: 25px;
+  font-size: 15px;
+}
+
+.file{
+  text-decoration: none;
+  background-color: #bad0fa;
+  color: #000000;
+}
