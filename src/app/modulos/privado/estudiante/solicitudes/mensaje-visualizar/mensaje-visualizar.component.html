@@ -72,6 +72,20 @@
             <!-- end timeline-body -->
           </li>
         </ul>
+        <div *ngIf="arregloAnexos.length != 0">
+          <h5>Anexos:</h5>
+          <span
+            class="badge badge-info mx-1 my-1"
+            *ngFor="let anexo of arregloAnexos"
+            ><a
+              class="file"
+              href="{{ anexo.anexoNombrePrivado }}"
+              target="_blank"
+              ><i class="fa-solid fa-file"></i>
+              {{ anexo.anexoNombrePublico }}</a
+            ></span
+          >
+        </div>
       </div>
       <div
         class="card-footer"
@@ -126,11 +140,16 @@
           *ngIf="estadoSolicitud == 3"
         >
           <!-- Input de subir archivo -->
+          <p>
+            Puedes subir un archivo anexo de tipo JPG,PNG o PDF, no superior a
+            2MB
+          </p>
           <div class="input-group mb-3">
             <input
               type="file"
               class="form-control"
               (change)="seleccionarAnexo($event)"
+              accept="image/*,.pdf"
             />
             <button
               class="btn btn-secondary"
