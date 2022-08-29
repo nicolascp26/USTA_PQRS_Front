@@ -26,7 +26,7 @@
     <h4 class="mb-3 fw-bold mb-0 text-center">Crear Solicitud</h4>
   </div>
 
-  <div class="card mb-4">
+  <div class="card mb-4" *ngIf="envioFinalizado; else spinner">
     <div class="card-header">Formulario</div>
     <div class="card-body">
       <form
@@ -135,7 +135,20 @@
             >
           </div>
         </div>
-        <!-- Save changes button-->
+        <!-- Input de subir archivo -->
+        <p>
+          Puedes subir un archivo anexo de tipo JPG,PNG o PDF, no superior a 2MB
+        </p>
+        <div class="input-group mb-3">
+          <input
+            type="file"
+            class="form-control"
+            (change)="seleccionarAnexo($event)"
+            accept="image/*,.pdf"
+          />
+        </div>
+        <!-- Fin Input de subir archivo -->
+        <!-- Enviar solicitud-->
         <div class="d-flex justify-content-center">
           <div class="p-2">
             <button class="btn btn-primary" type="submit">
@@ -143,14 +156,23 @@
               Registrar solicitud
             </button>
           </div>
-          <div class="p-2">
-            <button class="btn btn-secondary mx-2" type="file">
-              <i class="fa-solid fa-file-arrow-up mx-1"></i>
-              Anexar un archivo
-            </button>
-          </div>
         </div>
+        <!-- Fin Enviar solicitud-->
       </form>
     </div>
   </div>
 </div>
+
+<ng-template #spinner>
+  <div class="col-md text-center">
+    <div
+      class="spinner-grow ms-auto text-primary"
+      role="status"
+      style="width: 4rem; height: 4rem"
+      aria-hidden="true"
+    ></div>
+  </div>
+  <div class="col-md text-center">
+    <h4>Enviando Solicitud...</h4>
+  </div>
+</ng-template>
