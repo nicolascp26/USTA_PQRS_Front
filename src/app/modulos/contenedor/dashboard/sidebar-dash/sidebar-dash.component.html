@@ -20,7 +20,11 @@
     <span class="navbar-toggler-icon"></span>
   </button>
   <hr />
-  <div id="notificaciones" class="my-2" *ngIf="cargaFinalizada == true; else spinner">
+  <div
+    id="notificaciones"
+    class="my-2"
+    *ngIf="cargaFinalizada == true; else spinner"
+  >
     <button
       type="button"
       class="btn btn-sm btn-light position-relative text-black"
@@ -143,6 +147,15 @@
       [queryParams]="{ estado: 2 }"
       >{{ estadisticas.respondidas }} solicitudes respondidas</a
     >.
+    <div *ngIf="rolUsuario != 'Estudiante'">
+      <hr style="color: rgb(77, 77, 77)" />
+      Tienes
+      <a
+        [routerLink]="['/administrador/solicitudes']"
+        [queryParams]="{ estado: 1 }"
+        >{{ estadisticas.nuevas }} solicitudes nuevas</a
+      >.
+    </div>
   </ng-template>
 </div>
 
