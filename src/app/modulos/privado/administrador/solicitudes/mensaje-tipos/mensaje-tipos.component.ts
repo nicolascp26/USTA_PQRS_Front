@@ -104,7 +104,7 @@ export class MensajeTiposComponent implements OnInit {
         }),
         finalize(() => {
           this.cargaFinalizada = true;
-          this.searchBar='';
+          this.searchBar = '';
         })
       )
       .subscribe(observadorAny);
@@ -126,14 +126,14 @@ export class MensajeTiposComponent implements OnInit {
           formulario.reset();
           return respuesta;
         }),
-        catchError((miError) => {
+        catchError((err) => {
           mostrarMensaje(
             'error',
-            'Tipo de solicitud no pudo ser creado',
+            err.error.respuesta,
             'Advertencia',
             this.miMensaje
           );
-          throw miError;
+          throw err;
         })
       )
       .subscribe(observadorAny);
@@ -158,7 +158,7 @@ export class MensajeTiposComponent implements OnInit {
         catchError((err) => {
           mostrarMensaje(
             'error',
-            'No se pudo actualizar',
+            err.error.respuesta,
             'Fallo',
             this.miMensaje
           );
@@ -182,14 +182,14 @@ export class MensajeTiposComponent implements OnInit {
           );
           return respuesta;
         }),
-        catchError((miError) => {
+        catchError((err) => {
           mostrarMensaje(
             'error',
-            'Tipo de solicitud no eliminado',
+            err.error.respuesta,
             'Advertencia',
             this.miMensaje
           );
-          throw miError;
+          throw err;
         })
       )
       .subscribe(observadorAny);
@@ -201,7 +201,11 @@ export class MensajeTiposComponent implements OnInit {
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
     this.modalTitulo = 'Advertencia';
     this.modalContenido =
-      '¿Seguro que quieres eliminar '+ this.tipoSeleccionado.tipoClase + ': ' +this.tipoSeleccionado.tipoNombre + '?';
+      '¿Seguro que quieres eliminar ' +
+      this.tipoSeleccionado.tipoClase +
+      ': ' +
+      this.tipoSeleccionado.tipoNombre +
+      '?';
   }
 
   public abrirModalCrear(template: TemplateRef<any>): void {

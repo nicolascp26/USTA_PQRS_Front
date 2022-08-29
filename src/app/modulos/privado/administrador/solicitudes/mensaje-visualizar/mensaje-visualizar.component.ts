@@ -205,7 +205,7 @@ export class MensajeVisualizarComponent implements OnInit {
         catchError((miError) => {
           mostrarMensaje(
             'error',
-            'La solicitud no fue reabierta',
+            miError.error.respuesta,
             'Advertencia',
             this.toastr
           );
