@@ -82,6 +82,12 @@ export class AccesoService {
     } else return false;
   }
 
+  public accederRutasInvitado(): boolean {
+    if (this.objAcceso.usuarioRol == 'Invitado') {
+      return true;
+    } else return false;
+  }
+
   public actualizarClave(
     objAcceso: Acceso,
     usuarioId: number,

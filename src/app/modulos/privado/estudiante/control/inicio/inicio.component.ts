@@ -12,6 +12,7 @@ import { map, Subscription, finalize } from 'rxjs';
 export class InicioComponent implements OnInit {
   public nombreUsuario: string | any;
   public usuarioId: number;
+  public rolUsuario:string|any;
   public estadisticas: [] | any;
 
   public miSuscripcion: Subscription;
@@ -25,6 +26,7 @@ export class InicioComponent implements OnInit {
     //Inicializar atributos
     this.nombreUsuario = accesoService.objAcceso.usuarioNombres;
     this.usuarioId = accesoService.objAcceso.usuarioId;
+    this.rolUsuario = accesoService.objAcceso.usuarioRol;
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
     this.cargaFinalizada = false;

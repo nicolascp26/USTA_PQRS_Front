@@ -109,7 +109,7 @@ export class MensajeCrearComponent implements OnInit {
         catchError((miError) => {
           mostrarMensaje(
             'error',
-            'La solicitud no pudo ser registrada',
+            miError.error.respuesta,
             'Advertencia',
             this.toastr
           );

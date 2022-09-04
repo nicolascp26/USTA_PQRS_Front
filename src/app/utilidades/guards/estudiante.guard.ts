@@ -13,7 +13,7 @@ export class EstudianteGuard implements CanActivateChild {
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      if (this.accesoService.accederRutasEstudiante()) {
+      if (this.accesoService.accederRutasEstudiante() || this.accesoService.accederRutasInvitado()) {
         return true;
       } else {
         this.location.back();
