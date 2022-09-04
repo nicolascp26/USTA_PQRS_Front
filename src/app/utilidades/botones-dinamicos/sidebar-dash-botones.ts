@@ -21,6 +21,6 @@ export const DOCENTE_BOTONES: any = [
 ];
 
 export const INVITADO_BOTONES: any = [
-  { id: 1, name: 'Inicio', icon: 'fa fa', route: '/inicio' },
+  { id: 1, name: 'Inicio', icon: 'fa fa-home', route: '/estudiante/inicio' },
   { id: 2, name: 'Preguntas frecuentes', icon: 'fa fa-question-circle', route: '/estudiante/inicio/preguntas-frecuentes' }
 ];
