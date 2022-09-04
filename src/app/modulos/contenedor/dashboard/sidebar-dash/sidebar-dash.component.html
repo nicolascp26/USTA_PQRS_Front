@@ -114,6 +114,13 @@
               routerLinkActive="text-white"
               >Editar perfil</a
             >
+            <a
+              *ngIf="rolUsuario === 'Invitado'"
+              class="dropdown-item"
+              [routerLink]="['/estudiante/inicio/perfil']"
+              routerLinkActive="text-white"
+              >Editar perfil</a
+            >
           </li>
           <li>
             <hr class="dropdown-divider" />

@@ -11,6 +11,7 @@
         tus solicitudes particulares comunicandote directamente con la Facultad.
       </p>
       <a
+        *ngIf="rolUsuario == 'Estudiante'; else invitado"
         class="btn btn-primary"
         [routerLink]="['/estudiante/solicitudes/crear']"
         >Crear nueva solicitud</a
@@ -23,7 +24,7 @@
     *ngIf="cargaFinalizada == true; else spinner"
   >
     <h5 class="mb-4">Resumen</h5>
-    <div class="row">
+    <div class="row" *ngIf="rolUsuario == 'Estudiante'; else mensajeResumen">
       <div class="col-xl-3 col-lg-6">
         <div class="card l-bg-green-dark">
           <div class="card-statistic-3 p-4">
@@ -31,9 +32,7 @@
               <i class="fas fa-circle-exclamation"></i>
             </div>
             <div class="mb-4">
-              <h5 class="card-title mb-0">
-                Solicitudes esperando respuesta
-              </h5>
+              <h5 class="card-title mb-0">Solicitudes esperando respuesta</h5>
             </div>
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
@@ -70,19 +69,25 @@
             <div class="row align-items-center mb-2 d-flex">
               <div class="col-8">
                 <h2 class="d-flex align-items-center mb-0">
-                  {{ estadisticas.respondidas * 1 + estadisticas.esperando * 1 }}
+                  {{
+                    estadisticas.respondidas * 1 + estadisticas.esperando * 1
+                  }}
                 </h2>
               </div>
             </div>
             <div class="mb-2">
               <progressbar
                 [max]="estadisticas.totales * 1"
-                [value]="estadisticas.respondidas * 1 + estadisticas.esperando * 1"
+                [value]="
+                  estadisticas.respondidas * 1 + estadisticas.esperando * 1
+                "
               >
                 <span class="text-nowrap"
                   >{{
-                    (estadisticas.respondidas * 1 + estadisticas.esperando * 1) * 100 / estadisticas.totales
-                      | number: "1.0-0"
+                    ((estadisticas.respondidas * 1 +
+                      estadisticas.esperando * 1) *
+                      100) /
+                      estadisticas.totales | number: "1.0-0"
                   }}%</span
                 >
               </progressbar>
@@ -137,4 +142,19 @@
   <div class="col-md text-center">
     <h4>Cargando...</h4>
   </div>
+</ng-template>
+
+<ng-template #invitado>
+  <a
+    class="btn btn-primary"
+    [routerLink]="['/estudiante/inicio/preguntas-frecuentes']"
+    >Ver preguntas frecuentes</a
+  >
+</ng-template>
+<ng-template #mensajeResumen>
+  <p>
+    Debes esperar a que un administrador te de permisos de estudiante para poder
+    crear y gestionar solicitudes. Mientras tanto puedes actualizar tus datos
+    <a [routerLink]="['/estudiante/inicio/perfil']">aquí</a>.
+  </p>
 </ng-template>

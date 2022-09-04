@@ -4,6 +4,7 @@ import {
   ADMINISTRADOR_BOTONES,
   ESTUDIANTE_BOTONES,
   DOCENTE_BOTONES,
+  INVITADO_BOTONES,
 } from './../../../../utilidades/botones-dinamicos/sidebar-dash-botones';
 import { AccesoService } from './../../../../servicios/acceso.service';
 import { Rol } from '../../../../modelos/rol';
@@ -78,6 +79,9 @@ export class SidebarDashComponent implements OnInit {
         break;
       case 'Docente':
         this.botonesCargados = DOCENTE_BOTONES;
+        break;
+      case 'Invitado':
+        this.botonesCargados = INVITADO_BOTONES;
         break;
     }
   }
