@@ -27,12 +27,6 @@ const routes: Routes = [
     canActivate: [VigilanteGuard],
     canActivateChild: [EstudianteGuard],
   },
-  {
-    path: 'invitado',
-    component: ContenedorDashComponent,
-    children: RUTAS_DASHBOARD_ADMINISTRADOR,
-    canActivate: [VigilanteGuard],
-  },
   { path: '**', component: ErrorComponent, pathMatch: 'full' },
 ];
 

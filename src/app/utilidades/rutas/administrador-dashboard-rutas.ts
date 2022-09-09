@@ -1,3 +1,4 @@
+import { ErrorSeguridadComponent } from './../../modulos/privado/administrador/control/error-seguridad/error-seguridad.component';
 import { Routes } from '@angular/router';
 
 export const RUTAS_DASHBOARD_ADMINISTRADOR: Routes = [
@@ -36,5 +37,6 @@ export const RUTAS_DASHBOARD_ADMINISTRADOR: Routes = [
         '../../modulos/privado/administrador/preguntas/preguntas.module'
       ).then((m) => m.PreguntasModule),
   },
-  { path: '**', redirectTo: 'inicio', pathMatch: 'full' },
+  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+  { path: '**', component: ErrorSeguridadComponent, pathMatch: 'full' },
 ];
