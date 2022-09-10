@@ -122,9 +122,9 @@ export class MensajeVisualizarComponent implements OnInit {
             this.arregloHiloMensajes[1].usuarioNombres +
             ' ' +
             this.arregloHiloMensajes[1].usuarioApellidos;
-          this.obtenerPreguntasFrecuentes();
         }),
         finalize(() => {
+          this.obtenerPreguntasFrecuentes();
           this.cargaFinalizada = true;
         })
       )
@@ -280,6 +280,12 @@ export class MensajeVisualizarComponent implements OnInit {
       return;
     }
     if (caja.size > 2097152) {
+      mostrarMensaje(
+        'error',
+        'El archivo supera los 2MB',
+        'Advertencia',
+        this.toastr
+      );
       return;
     } else
       this.tmpFile = {

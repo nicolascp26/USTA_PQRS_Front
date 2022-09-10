@@ -109,7 +109,7 @@
 
             <div class="col-12">
               <label for="password" class="form-label"
-                >Contraseña<span class="text-danger"> *</span></label
+                >Contraseña (mínimo 6 carácteres)<span class="text-danger"> *</span></label
               >
               <input
                 type="password"
@@ -117,6 +117,7 @@
                 id="password"
                 name="password"
                 [(ngModel)]="objAcceso.claveUsuario"
+                minlength="6"
                 #password="ngModel"
                 placeholder="Contraseña"
                 [ngClass]="{
@@ -130,6 +131,14 @@
               >
                 <span *ngIf="password.errors?.['required']"
                   >Contraseña requerida</span
+                >
+              </div>
+              <div
+                class="text-danger error"
+                *ngIf="frmRegistro.submitted && password.invalid"
+              >
+                <span *ngIf="password.errors?.['minlength']"
+                  >La contraseña es muy corta</span
                 >
               </div>
             </div>
@@ -158,9 +167,6 @@
               >
                 <span *ngIf="repassword.errors?.['required']"
                   >Contraseña requerida</span
-                >
-                <span *ngIf="repassword.errors?.['pattern']"
-                  >Las contraseñas no coinciden</span
                 >
               </div>
             </div>

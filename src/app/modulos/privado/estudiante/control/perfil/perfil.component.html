@@ -306,6 +306,7 @@
                         type="password"
                         placeholder="Ingresa una nueva contraseña"
                         [(ngModel)]="objAcceso.nuevaClave"
+                        minlength="6"
                         [ngClass]="{
                           'is-invalid':
                             frmActualizarClave.submitted && nuevaClave.invalid
@@ -321,6 +322,16 @@
                       >
                         <span *ngIf="nuevaClave.errors?.['required']"
                           >Contraseña nueva requerida</span
+                        >
+                      </div>
+                      <div
+                        class="text-danger error"
+                        *ngIf="
+                          frmActualizarClave.submitted && nuevaClave.invalid
+                        "
+                      >
+                        <span *ngIf="nuevaClave.errors?.['minlength']"
+                          >La contraseña es muy corta</span
                         >
                       </div>
                     </div>
