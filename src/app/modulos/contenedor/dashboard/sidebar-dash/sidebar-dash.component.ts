@@ -42,15 +42,26 @@ export class SidebarDashComponent implements OnInit {
     this.nombreUsuario = accesoService.objAcceso.usuarioNombres;
     this.rolUsuario = accesoService.objAcceso.usuarioRol;
     this.inicializarSidebar();
+
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
     this.cargaFinalizada = false;
   }
 
   ngOnInit(): void {
-    if (this.rolUsuario == 'Estudiante') {
-      this.obtenerEstadisticasUsuario(this.accesoService.objAcceso.usuarioId);
-    } else this.obtenerEstadisticasAdmin();
+    switch (this.rolUsuario) {
+      case 'Administrador':
+        this.obtenerEstadisticasAdmin();
+        break;
+      case 'Estudiante':
+        this.obtenerEstadisticasUsuario(this.accesoService.objAcceso.usuarioId);
+        break;
+      case 'Docente':
+        this.obtenerEstadisticasAdmin();
+        break;
+      case 'Invitado':
+        break;
+    }
   }
 
   public inicializarImagen(): Imagen {
