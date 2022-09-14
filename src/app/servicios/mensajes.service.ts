@@ -16,8 +16,18 @@ export class MensajesService {
     return this.http.get<Mensaje[]>(this.apiMensajes + '/getAllAdmin');
   }
 
-  public obtenerSolicitudesUsuario(usuarioId:number): Observable<Mensaje[]> {
-    return this.http.get<Mensaje[]>(this.apiMensajes + '/getAllUser/'+ usuarioId);
+  public obtenerSolicitudesUsuario(usuarioId: number): Observable<Mensaje[]> {
+    return this.http.get<Mensaje[]>(
+      this.apiMensajes + '/getAllUser/' + usuarioId
+    );
+  }
+
+  public obtenerSolicitudesDocente(
+    usuarioAsignado: number
+  ): Observable<Mensaje[]> {
+    return this.http.get<Mensaje[]>(
+      this.apiMensajes + '/getAllTeacher/' + usuarioAsignado
+    );
   }
 
   public obtenerHiloMensajes(mensajeId: number): Observable<Mensaje[]> {
@@ -52,5 +62,15 @@ export class MensajesService {
       this.apiMensajes + '/reopenRequest/' + objMensaje.mensajeCodpadre,
       objMensaje
     );
+  }
+
+  public reasignarSolicitud(
+    mensajeId: number,
+    usuarioId: number
+  ): Observable<Mensaje> {
+    return this.http.put<Mensaje>(this.apiMensajes + '/reassignRequest/', [
+      mensajeId,
+      usuarioId,
+    ]);
   }
 }
