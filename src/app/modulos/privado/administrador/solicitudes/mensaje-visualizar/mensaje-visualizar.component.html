@@ -35,13 +35,15 @@
           Asignada a:
           <form
             #frmReasignar="ngForm"
-            (ngSubmit)="reasignarSolicitud(frmReasignar)"
+            (ngSubmit)="frmReasignar.valid && reasignarSolicitud(frmReasignar)"
           >
             <select
               style="border: transparent; padding: 5px; width: 400px"
               id="docente"
               name="docente"
               [(ngModel)]="adminAsignado.usuarioId"
+              #docente="ngModel"
+              required
             >
               <option
                 *ngFor="let docente of arregloDocentes; let indice = index"
@@ -50,6 +52,14 @@
                 {{ docente.usuarioNombres + " " + docente.usuarioApellidos }}
               </option>
             </select>
+            <div
+              class="text-danger error"
+              *ngIf="frmReasignar.submitted && docente.invalid"
+            >
+              <span *ngIf="docente.errors?.['required']"
+                >Selecciona un docente para asignarle la solicitud</span
+              >
+            </div>
             <button class="btn btn-sm btn-light mx-2" type="submit">
               Reasignar
             </button>

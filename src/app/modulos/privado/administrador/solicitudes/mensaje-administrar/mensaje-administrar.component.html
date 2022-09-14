@@ -202,6 +202,13 @@
                 <strong>Creada por:</strong>
                 {{ soli.usuarioNombres + " " + soli.usuarioApellidos }}
               </div>
+              <div *ngIf="usuarioRol == 'Administrador'">
+                <hr />
+                <strong>Asignada a: </strong>
+                <p *ngIf="soli.asignadoNombres != null; else noAsignada">
+                  {{ soli.asignadoNombres + " " + soli.asignadoApellidos }}
+                </p>
+              </div>
             </td>
             <td>
               <span>
@@ -275,4 +282,8 @@
     <i class="fa fa-circle-info"></i>
     Aún no hay solicitudes registradas.
   </div>
+</ng-template>
+
+<ng-template #noAsignada>
+  <span class="badge text-warning bg-secondary">Sin Asignar</span>
 </ng-template>
