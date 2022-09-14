@@ -18,6 +18,7 @@ export class MensajeAdministrarComponent implements OnInit {
   public solicitudSeleccionada: Mensaje;
   public arregloSolicitudes: Mensaje[];
   public arregloTipos: Tipo[];
+  public usuarioRol: string;
 
   //Atributos consumo de servicios
   public tmp: any;
@@ -62,6 +63,7 @@ export class MensajeAdministrarComponent implements OnInit {
     this.solicitudSeleccionada = this.inicializarMensaje();
     this.arregloSolicitudes = [];
     this.arregloTipos = [];
+    this.usuarioRol = this.accesoService.objAcceso.usuarioRol;
 
     //Inicializar atributos paginación
     this.paginaActual = 1;
@@ -75,7 +77,7 @@ export class MensajeAdministrarComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    switch (this.accesoService.objAcceso.usuarioRol) {
+    switch (this.usuarioRol) {
       case 'Administrador':
         this.obtenerSolicitudes();
         this.obtenerTodosTipos();

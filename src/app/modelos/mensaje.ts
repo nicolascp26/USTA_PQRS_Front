@@ -11,6 +11,8 @@ export class Mensaje {
   public usuarioNombres?: string;
   public usuarioApellidos?: string;
   public mensajeUsuarioAsignado?: number;
+  public asignadoNombres?:string;
+  public asignadoApellidos?:string;
   public tipoId?:number;
   public tipoClase?: string;
   public tipoNombre?: string;
