@@ -159,3 +159,9 @@ p{
   background-color: #bad0fa;
   color: #000000;
 }
+
+.btn-light:hover{
+  background-color: #212529;
+  color: #f8f9fa;
+  border-color: #f8f9fa;
+}

@@ -22,6 +22,10 @@ export class UsuarioService {
     return this.http.get<Usuario[]>(this.appUser + '/getAll');
   }
 
+  public obtenerDocentes(usuarioId: number): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(this.appUser + '/getTeachers/'+usuarioId);
+  }
+
   public registrarUsuario(
     objUsuario: Usuario,
     objAcceso: Acceso
@@ -53,5 +57,9 @@ export class UsuarioService {
 
   public estadisticasUsuario(usuarioId: number): Observable<any>{
     return this.http.get<any[]>(this.appUser + '/getStats/' + usuarioId);
+  }
+
+  public estadisticasDocente(usuarioId: number): Observable<any>{
+    return this.http.get<any[]>(this.appUser + '/getStatsTeacher/' + usuarioId);
   }
 }

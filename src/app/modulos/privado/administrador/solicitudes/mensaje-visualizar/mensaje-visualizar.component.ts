@@ -1,3 +1,5 @@
+import { Usuario } from './../../../../../modelos/usuario';
+import { UsuarioService } from './../../../../../servicios/usuario.service';
 import { AnexosService } from './../../../../../servicios/anexos.service';
 import { Mensaje } from './../../../../../modelos/mensaje';
 import { Pregunta } from './../../../../../modelos/pregunta';
@@ -25,14 +27,18 @@ export class MensajeVisualizarComponent implements OnInit {
   public nuevoMensaje: Mensaje;
   public arregloHiloMensajes: Mensaje[];
   public usuarioId: number;
+  public usuarioRol: string;
   public estadoSolicitud: number;
   public base64: string;
   public mensajeEnviado: boolean;
-  public adminAsignado: string;
 
   //Atributos de respuesta con pregunta frecuente
   public arregloPreguntas: Pregunta[];
   public preguntaSeleccionada: Pregunta;
+
+  //Atributos de reasignacion de solicitud
+  public arregloDocentes: Usuario[];
+  public adminAsignado: Usuario | any;
 
   //Atributos de anexos
   public tmpFile: any;
@@ -53,6 +59,7 @@ export class MensajeVisualizarComponent implements OnInit {
     private mensajesService: MensajesService,
     private accesoService: AccesoService,
     private preguntaService: PreguntasFrecuentesService,
+    private usuarioService: UsuarioService,
     private anexoService: AnexosService,
     public modalService: BsModalService,
     private toastr: ToastrService,
@@ -61,11 +68,16 @@ export class MensajeVisualizarComponent implements OnInit {
     //Inicializar atributos requeridos
     this.nuevoMensaje = this.inicializarMensaje();
     this.arregloHiloMensajes = [];
-    this.usuarioId = accesoService.objAcceso.usuarioId;
+    this.usuarioId = this.accesoService.objAcceso.usuarioId;
+    this.usuarioRol = this.accesoService.objAcceso.usuarioRol;
     this.estadoSolicitud = 0;
     this.base64 = localStorage.getItem('foto') as string;
     this.mensajeEnviado = true;
-    this.adminAsignado = this.tmp;
+
+    //Inicializar atributos de reasignacion
+    this.arregloDocentes = [];
+    this.adminAsignado = this.inicializarUsuario();
+
     //Inicializar atributos de preguntas frecuentes
     this.arregloPreguntas = [];
     this.preguntaSeleccionada = this.inicializarPregunta();
@@ -110,6 +122,10 @@ export class MensajeVisualizarComponent implements OnInit {
     return new Pregunta(0, '', '');
   }
 
+  public inicializarUsuario(): Usuario {
+    return new Usuario(0, '', '', '', '', 0);
+  }
+
   //Lógica del negocio
   public obtenerHiloMensajes(mensajeId: number): void {
     this.miSuscripcion = this.mensajesService
@@ -118,13 +134,28 @@ export class MensajeVisualizarComponent implements OnInit {
         map((resultado: Mensaje[]) => {
           this.arregloHiloMensajes = resultado;
           this.estadoSolicitud = this.arregloHiloMensajes[0].mensajeEstado;
-          this.adminAsignado =
-            this.arregloHiloMensajes[1].usuarioNombres +
-            ' ' +
-            this.arregloHiloMensajes[1].usuarioApellidos;
+          this.adminAsignado.usuarioId =
+            this.arregloHiloMensajes[0].mensajeUsuarioAsignado;
         }),
         finalize(() => {
           this.obtenerPreguntasFrecuentes();
+          if (this.usuarioRol == 'Administrador') {
+            this.obtenerDocentes(this.usuarioId);
+          }
+          this.cargaFinalizada = true;
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
+  public obtenerDocentes(usuarioId: number): void {
+    this.miSuscripcion = this.usuarioService
+      .obtenerDocentes(usuarioId)
+      .pipe(
+        map((respuesta: any) => {
+          this.arregloDocentes = respuesta.usuarios;
+        }),
+        finalize(() => {
           this.cargaFinalizada = true;
         })
       )
@@ -200,6 +231,35 @@ export class MensajeVisualizarComponent implements OnInit {
             this.toastr
           );
           this.obtenerHiloMensajes(this.nuevoMensaje.mensajeCodpadre);
+          return respuesta;
+        }),
+        catchError((miError) => {
+          mostrarMensaje(
+            'error',
+            miError.error.respuesta,
+            'Advertencia',
+            this.toastr
+          );
+          throw miError;
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
+  public reasignarSolicitud(formulario: NgForm): void {
+    this.miSuscripcion = this.mensajesService
+      .reasignarSolicitud(
+        this.nuevoMensaje.mensajeCodpadre,
+        this.adminAsignado.usuarioId
+      )
+      .pipe(
+        map((respuesta) => {
+          mostrarMensaje(
+            'success',
+            'Solicitud Reasignada',
+            'Exito',
+            this.toastr
+          );
           return respuesta;
         }),
         catchError((miError) => {

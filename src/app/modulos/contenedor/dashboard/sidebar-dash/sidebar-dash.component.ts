@@ -20,7 +20,6 @@ import { map, Subscription, finalize } from 'rxjs';
 })
 export class SidebarDashComponent implements OnInit {
   //Atributos obligatorios
-  public usuarioSeleccionado: Usuario;
   public base64: string;
   public nombreUsuario: string | any;
   public rolUsuario: string | any;
@@ -37,7 +36,6 @@ export class SidebarDashComponent implements OnInit {
     private usuarioService: UsuarioService
   ) {
     //Inicializar atributos obligatorios
-    this.usuarioSeleccionado = this.inicializarUsuario();
     this.base64 = localStorage.getItem('foto') as string;
     this.nombreUsuario = accesoService.objAcceso.usuarioNombres;
     this.rolUsuario = accesoService.objAcceso.usuarioRol;
@@ -57,7 +55,7 @@ export class SidebarDashComponent implements OnInit {
         this.obtenerEstadisticasUsuario(this.accesoService.objAcceso.usuarioId);
         break;
       case 'Docente':
-        this.obtenerEstadisticasAdmin();
+        this.obtenerEstadisticasDocente(this.accesoService.objAcceso.usuarioId);
         break;
       case 'Invitado':
         break;
@@ -66,10 +64,6 @@ export class SidebarDashComponent implements OnInit {
 
   public inicializarImagen(): Imagen {
     return new Imagen(0, 0, '', '', '', '');
-  }
-
-  public inicializarUsuario(): Usuario {
-    return new Usuario(0, '', '', '', '', 0);
   }
 
   public inicializarRol(): Rol {
@@ -115,6 +109,20 @@ export class SidebarDashComponent implements OnInit {
   public obtenerEstadisticasUsuario(usuarioId: number): void {
     this.miSuscripcion = this.usuarioService
       .estadisticasUsuario(usuarioId)
+      .pipe(
+        map((resultado: any[]) => {
+          this.estadisticas = resultado;
+        }),
+        finalize(() => {
+          this.cargaFinalizada = true;
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
+  public obtenerEstadisticasDocente(usuarioId: number): void {
+    this.miSuscripcion = this.usuarioService
+      .estadisticasDocente(usuarioId)
       .pipe(
         map((resultado: any[]) => {
           this.estadisticas = resultado;

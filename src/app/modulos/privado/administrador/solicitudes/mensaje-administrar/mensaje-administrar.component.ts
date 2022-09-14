@@ -1,3 +1,4 @@
+import { AccesoService } from './../../../../../servicios/acceso.service';
 import { Tipo } from './../../../../../modelos/tipo';
 import { TipoService } from './../../../../../servicios/tipo.service';
 import { observadorAny } from 'src/app/utilidades/observable/observable-any';
@@ -38,7 +39,7 @@ export class MensajeAdministrarComponent implements OnInit {
     { id: 1, nom: 'Nueva' },
     { id: 2, nom: 'Respondida' },
     { id: 3, nom: 'Esperando respuesta' },
-    { id: 4, nom: 'Terminada' }
+    { id: 4, nom: 'Terminada' },
   ];
   public arregloTipoClases = [
     { id: 1, nom: 'Peticion' },
@@ -47,13 +48,14 @@ export class MensajeAdministrarComponent implements OnInit {
     { id: 4, nom: 'Sugerencia' },
   ];
 
-//Atributos de ordenacion
-public ordenarPor: string = '';
-public ordenadoSentido: boolean = false;
+  //Atributos de ordenacion
+  public ordenarPor: string = '';
+  public ordenadoSentido: boolean = false;
 
   constructor(
     private ruta: ActivatedRoute,
     private mensajesService: MensajesService,
+    private accesoService: AccesoService,
     private tipoService: TipoService
   ) {
     //Inicializar atributos requeridos
@@ -73,8 +75,17 @@ public ordenadoSentido: boolean = false;
   }
 
   ngOnInit(): void {
-    this.obtenerSolicitudes();
-    this.obtenerTodosTipos();
+    switch (this.accesoService.objAcceso.usuarioRol) {
+      case 'Administrador':
+        this.obtenerSolicitudes();
+        this.obtenerTodosTipos();
+        break;
+      case 'Docente':
+        this.obtenerSolicitudesDocente();
+        this.obtenerTodosTipos();
+        break;
+    }
+
     this.ruta.queryParamMap.subscribe((parametro) => {
       const estadoQuery = String(parametro.get('estado'));
       const estadoNumerico = parseFloat(estadoQuery);
@@ -117,6 +128,24 @@ public ordenadoSentido: boolean = false;
       .subscribe(observadorAny);
   }
 
+  public obtenerSolicitudesDocente(): void {
+    this.miSuscripcion = this.mensajesService
+      .obtenerSolicitudesDocente(this.accesoService.objAcceso.usuarioId)
+      .pipe(
+        map((respuesta: any) => {
+          this.arregloSolicitudes = respuesta.solicitudes;
+          this.cantidadTotal = respuesta.count;
+        }),
+        finalize(() => {
+          this.cargaFinalizada = true;
+          this.cantidadPaginas = Math.ceil(
+            this.cantidadTotal / this.cantidadMostrar
+          );
+        })
+      )
+      .subscribe(observadorAny);
+  }
+
   public obtenerTodosTipos(): void {
     this.miSuscripcion = this.tipoService
       .cargarTipos()
@@ -131,16 +160,16 @@ public ordenadoSentido: boolean = false;
       )
       .subscribe(observadorAny);
   }
-    //Metodo ordenar
-    ordenarSolicitudes(tipo: string): void {
-      if (this.ordenadoSentido) {
-        this.ordenarPor = tipo;
-        this.ordenadoSentido = false;
-      } else {
-        this.ordenarPor = '-' + tipo;
-        this.ordenadoSentido = true;
-      }
+  //Metodo ordenar
+  ordenarSolicitudes(tipo: string): void {
+    if (this.ordenadoSentido) {
+      this.ordenarPor = tipo;
+      this.ordenadoSentido = false;
+    } else {
+      this.ordenarPor = '-' + tipo;
+      this.ordenadoSentido = true;
     }
+  }
 
   //Metodos paginacion
   handlePageChange(event: number): void {
