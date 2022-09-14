@@ -10,6 +10,7 @@ export class Mensaje {
   public mensajeIdUsuario?:number;
   public usuarioNombres?: string;
   public usuarioApellidos?: string;
+  public mensajeUsuarioAsignado?: number;
   public tipoId?:number;
   public tipoClase?: string;
   public tipoNombre?: string;

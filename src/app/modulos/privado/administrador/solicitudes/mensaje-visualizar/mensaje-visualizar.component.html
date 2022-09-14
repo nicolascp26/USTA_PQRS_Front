@@ -29,8 +29,32 @@
     <div class="card mb-3">
       <div class="card-header bg-dark text-white text-center">
         Solicitud #{{ arregloHiloMensajes[0].mensajeId }}:
-        <strong>{{ arregloHiloMensajes[0].mensajeTitulo }}</strong><br />
-        Asignada a: <strong>{{ adminAsignado }}</strong>
+        <strong>{{ arregloHiloMensajes[0].mensajeTitulo }}</strong
+        ><br />
+        <div *ngIf="usuarioRol == 'Administrador'">
+          Asignada a:
+          <form
+            #frmReasignar="ngForm"
+            (ngSubmit)="reasignarSolicitud(frmReasignar)"
+          >
+            <select
+              style="border: transparent; padding: 5px; width: 400px"
+              id="docente"
+              name="docente"
+              [(ngModel)]="adminAsignado.usuarioId"
+            >
+              <option
+                *ngFor="let docente of arregloDocentes; let indice = index"
+                [ngValue]="docente.usuarioId"
+              >
+                {{ docente.usuarioNombres + " " + docente.usuarioApellidos }}
+              </option>
+            </select>
+            <button class="btn btn-sm btn-light mx-2" type="submit">
+              Reasignar
+            </button>
+          </form>
+        </div>
       </div>
       <div class="card-body">
         <ul class="timeline">
@@ -92,10 +116,7 @@
       </div>
       <div
         class="card-footer"
-        *ngIf="
-        estadoSolicitud != 4;
-          else solicitudTerminada
-        "
+        *ngIf="estadoSolicitud != 4; else solicitudTerminada"
       >
         <form
           #frmResponderMsj="ngForm"
@@ -160,10 +181,7 @@
             >
           </div>
         </form>
-        <form
-          (ngSubmit)="subirAnexo(frmSubirAnexo)"
-          #frmSubirAnexo="ngForm"
-        >
+        <form (ngSubmit)="subirAnexo(frmSubirAnexo)" #frmSubirAnexo="ngForm">
           <!-- Input de subir archivo -->
           <p>
             Puedes subir un archivo anexo de tipo JPG,PNG o PDF, no superior a
@@ -187,10 +205,7 @@
           </div>
           <!-- Fin Input de subir archivo -->
         </form>
-        <div
-          class="d-flex justify-content-center"
-          *ngIf="estadoSolicitud == 3"
-        >
+        <div class="d-flex justify-content-center" *ngIf="estadoSolicitud == 3">
           <button
             class="btn btn-danger text-center"
             type="button"
