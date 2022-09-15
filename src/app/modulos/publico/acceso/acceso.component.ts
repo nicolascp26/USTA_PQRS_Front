@@ -7,7 +7,7 @@ import { mostrarMensaje } from './../../../utilidades/mensajes/mensajes-toast.fu
 import * as cifrado from 'js-sha512';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { catchError, map, Subscription } from 'rxjs';
+import { catchError, finalize, map, Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -20,6 +20,7 @@ export class AccesoComponent implements OnInit, OnDestroy {
   public patronCorreo = '^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$';
 
   public tmp: any;
+  public cargaFinalizada: boolean;
   public subscription: Subscription;
 
   constructor(
@@ -30,6 +31,7 @@ export class AccesoComponent implements OnInit, OnDestroy {
   ) {
     this.accesoUsuarioSeleccionado = this.inicializarAcceso();
     this.subscription = this.tmp;
+    this.cargaFinalizada = true;
   }
 
   ngOnDestroy(): void {
@@ -50,6 +52,7 @@ export class AccesoComponent implements OnInit, OnDestroy {
   // ****************************************************************************
 
   public verificarDatos(formulario: NgForm): void {
+    this.cargaFinalizada = false;
     const correo = this.accesoUsuarioSeleccionado.correoUsuario;
     const miHash = cifrado.sha512(this.accesoUsuarioSeleccionado.claveUsuario);
     const acceso = new Acceso(correo, miHash);
@@ -81,6 +84,9 @@ export class AccesoComponent implements OnInit, OnDestroy {
               this.router.navigate(['/estudiante']);
               break;
           }
+        }),
+        finalize(() => {
+          this.cargaFinalizada = true;
         }),
         catchError((miError) => {
           mostrarMensaje(

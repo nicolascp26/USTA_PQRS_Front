@@ -178,10 +178,16 @@
               >Acepto de tratamiento de datos</label
             >
           </div>
-          <button class="w-100 mt-3 btn btn-primary btn-sm" type="submit">
+          <button *ngIf="cargaFinalizada; else cargandoRegistro" class="w-100 mt-3 btn btn-primary btn-sm" type="submit">
             Finalizar registro
           </button>
         </form>
       </div>
     </div>
   </div>
+  <ng-template #cargandoRegistro>
+    <button class="w-100 mt-3 btn btn-primary btn-sm" type="submit" disabled>
+      <span class="spinner-border spinner-border-sm"></span>
+      Espera un momento...
+    </button>
+  </ng-template>
