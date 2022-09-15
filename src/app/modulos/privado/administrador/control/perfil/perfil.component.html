@@ -7,7 +7,11 @@
             ><i class="fas fa-home"></i
           ></a>
         </li>
-        <li class="breadcrumb-item active" style="cursor: pointer" aria-current="page">
+        <li
+          class="breadcrumb-item active"
+          style="cursor: pointer"
+          aria-current="page"
+        >
           Perfil
         </li>
         <li class="breadcrumb-item active" aria-current="page">
@@ -63,7 +67,10 @@
               <!-- Profile picture card-->
               <div class="card mb-4 mb-xl-0">
                 <div class="card-header">Imagen de usuario</div>
-                <div class="card-body text-center" *ngIf="cargaImagen == true;else spinner">
+                <div
+                  class="card-body text-center"
+                  *ngIf="cargaImagen == true; else spinner"
+                >
                   <!-- Profile picture image-->
                   <img
                     [src]="'data:image/png;base64,' + this.base64"
@@ -93,7 +100,9 @@
                   class="btn btn-primary"
                   type="button"
                   (click)="this.agregarImagenPerfil()"
-                ><i class="fa fa-upload"></i> Subir imagen</button>
+                >
+                  <i class="fa fa-upload"></i> Subir imagen
+                </button>
               </div>
             </div>
             <div class="col-xl-8">
@@ -210,7 +219,11 @@
                       </div>
                     </div>
                     <!-- Save changes button-->
-                    <button class="btn btn-primary" type="submit">
+                    <button
+                      *ngIf="actualizaFinalizada; else actualizando"
+                      class="btn btn-primary"
+                      type="submit"
+                    >
                       Guardar cambios
                     </button>
                   </form>
@@ -239,7 +252,7 @@
                     class="needs-validation"
                     (ngSubmit)="
                       frmActualizarClave.form.valid &&
-                      actualizarClave(frmActualizarClave)
+                        actualizarClave(frmActualizarClave)
                     "
                   >
                     <!-- Form Group (email address)-->
@@ -270,8 +283,7 @@
                         [(ngModel)]="objAcceso.claveUsuario"
                         [ngClass]="{
                           'is-invalid':
-                            frmActualizarClave.submitted &&
-                            claveUsuario.invalid
+                            frmActualizarClave.submitted && claveUsuario.invalid
                         }"
                         #claveUsuario="ngModel"
                         required
@@ -279,8 +291,7 @@
                       <div
                         class="text-danger error"
                         *ngIf="
-                          frmActualizarClave.submitted &&
-                          claveUsuario.invalid
+                          frmActualizarClave.submitted && claveUsuario.invalid
                         "
                       >
                         <span *ngIf="claveUsuario.errors?.['required']"
@@ -351,9 +362,7 @@
                       />
                       <div
                         class="text-danger error"
-                        *ngIf="
-                          frmActualizarClave.submitted && reClave.invalid
-                        "
+                        *ngIf="frmActualizarClave.submitted && reClave.invalid"
                       >
                         <span *ngIf="reClave.errors?.['required']"
                           >Confirmar contraseña requerido</span
@@ -363,8 +372,12 @@
                         >
                       </div>
                     </div>
-                    <button class="btn btn-primary" type="submit">
-                      Confirmar cambio
+                    <button
+                      *ngIf="actualizaFinalizada; else actualizando"
+                      class="btn btn-primary"
+                      type="submit"
+                    >
+                      Actualizar contraseña
                     </button>
                   </form>
                 </div>
@@ -451,4 +464,11 @@
   <div class="col-md text-center">
     <h4>Cargando...</h4>
   </div>
+</ng-template>
+
+<ng-template #actualizando>
+  <button class="btn btn-primary" type="submit" disabled>
+    <span class="spinner-border spinner-border-sm"></span>
+    Guardando...
+  </button>
 </ng-template>
