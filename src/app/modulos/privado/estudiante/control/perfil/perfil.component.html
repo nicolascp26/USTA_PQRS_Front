@@ -177,6 +177,7 @@
                           id="usuarioTelefono"
                           name="usuarioTelefono"
                           type="tel"
+                          maxlength="10"
                           [(ngModel)]="usuarioSeleccionado.usuarioTelefono"
                         />
                       </div>
@@ -190,6 +191,7 @@
                           id="usuarioDocumento"
                           name="usuarioDocumento"
                           type="text"
+                          maxlength="10"
                           [(ngModel)]="usuarioSeleccionado.usuarioDocumento"
                         />
                       </div>
@@ -218,7 +220,11 @@
                       </div>
                     </div>
                     <!-- Save changes button-->
-                    <button class="btn btn-primary" type="submit">
+                    <button
+                      *ngIf="actualizaFinalizada; else actualizando"
+                      class="btn btn-primary"
+                      type="submit"
+                    >
                       Guardar cambios
                     </button>
                   </form>
@@ -367,7 +373,11 @@
                         >
                       </div>
                     </div>
-                    <button class="btn btn-primary" type="submit">
+                    <button
+                      *ngIf="actualizaFinalizada; else actualizando"
+                      class="btn btn-primary"
+                      type="submit"
+                    >
                       Confirmar cambio
                     </button>
                   </form>
@@ -455,4 +465,11 @@
   <div class="col-md text-center">
     <h4>Cargando...</h4>
   </div>
+</ng-template>
+
+<ng-template #actualizando>
+  <button class="btn btn-primary" type="submit" disabled>
+    <span class="spinner-border spinner-border-sm"></span>
+    Guardando...
+  </button>
 </ng-template>

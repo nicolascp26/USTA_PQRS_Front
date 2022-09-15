@@ -92,7 +92,7 @@ export class PreguntasAdministrarComponent implements OnInit {
         catchError((miError) => {
           mostrarMensaje(
             'error',
-            'Pregunta no eliminada',
+            miError.error.respuesta,
             'Advertencia',
             this.toastr
           );
@@ -111,8 +111,7 @@ export class PreguntasAdministrarComponent implements OnInit {
     this.modalRef = this.modalService.show(template, { class: 'modal-alert' });
     this.modalTitulo = 'Advertencia';
     this.modalContenido =
-      '¿Seguro que quieres eliminar: ' +
-      this.preguntaSeleccionada.prefTitulo;
+      '¿Seguro que quieres eliminar: ' + this.preguntaSeleccionada.prefTitulo;
   }
 
   public cancelar(): void {

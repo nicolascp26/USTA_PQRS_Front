@@ -26,7 +26,7 @@
     <h4 class="mb-3 fw-bold mb-0 text-center">Crear Solicitud</h4>
   </div>
 
-  <div class="card mb-4" *ngIf="envioFinalizado; else spinner">
+  <div class="card mb-4" *ngIf="cargaFinalizada; else spinner">
     <div class="card-header">Formulario</div>
     <div class="card-body">
       <form
@@ -151,7 +151,11 @@
         <!-- Enviar solicitud-->
         <div class="d-flex justify-content-center">
           <div class="p-2">
-            <button class="btn btn-primary" type="submit">
+            <button
+              *ngIf="envioFinalizado; else enviandoSolicitud"
+              class="btn btn-primary"
+              type="submit"
+            >
               <i class="fa-solid fa-paper-plane mx-1"></i>
               Registrar solicitud
             </button>
@@ -173,6 +177,13 @@
     ></div>
   </div>
   <div class="col-md text-center">
-    <h4>Enviando Solicitud...</h4>
+    <h4>Cargando...</h4>
   </div>
+</ng-template>
+
+<ng-template #enviandoSolicitud>
+  <button class="btn btn-primary" type="submit" disabled>
+    <span class="spinner-border spinner-border-sm"></span>
+    Enviando solicitud...
+  </button>
 </ng-template>
