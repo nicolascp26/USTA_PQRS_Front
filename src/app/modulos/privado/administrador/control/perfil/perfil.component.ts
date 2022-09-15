@@ -33,6 +33,7 @@ export class PerfilComponent implements OnInit {
   public tmp: any;
   public miSuscripcion: Subscription;
   public cargaFinalizada: boolean;
+  public actualizaFinalizada: boolean;
 
   //Atributos modales
   public modalTitulo: string;
@@ -72,6 +73,7 @@ export class PerfilComponent implements OnInit {
     //Inicializar consumo de servicios
     this.miSuscripcion = this.tmp;
     this.cargaFinalizada = false;
+    this.actualizaFinalizada = true;
 
     //Inicializar modales
     this.modalTitulo = '';
@@ -119,6 +121,7 @@ export class PerfilComponent implements OnInit {
   }
 
   public actualizarUsuario(formulario: NgForm): void {
+    this.actualizaFinalizada = false;
     this.miSuscripcion = this.usuarioService
       .actualizarUsuario(this.usuarioSeleccionado)
       .pipe(
@@ -130,6 +133,9 @@ export class PerfilComponent implements OnInit {
             this.toastr
           );
           return respuesta;
+        }),
+        finalize(() => {
+          this.actualizaFinalizada = true;
         }),
         catchError((err) => {
           mostrarMensaje(
@@ -145,6 +151,7 @@ export class PerfilComponent implements OnInit {
   }
 
   public actualizarClave(formulario: NgForm): void {
+    this.actualizaFinalizada = false;
     const actual = cifrado.sha512(this.objAcceso.claveUsuario);
     const nueva = cifrado.sha512(this.objAcceso.nuevaClave);
     const acceso = new Acceso(
@@ -163,6 +170,9 @@ export class PerfilComponent implements OnInit {
           );
           formulario.reset();
           return respuesta;
+        }),
+        finalize(() => {
+          this.actualizaFinalizada = true;
         }),
         catchError((err) => {
           mostrarMensaje(
