@@ -10,3 +10,7 @@ input:focus {
 input::placeholder {
   font: 15px Segoe UI;
 }
+
+p{
+  white-space: pre-line;
+}
