@@ -98,10 +98,10 @@
             <div
               class="mb-4 title-link"
               [routerLink]="['/administrador/solicitudes']"
-              [queryParams]="{ estado: 2 }"
+              [queryParams]="{ estado: 2}"
             >
               <h5 class="card-title mb-0">
-                Solicitudes en progreso <i class="fa fa-arrow-right"></i>
+                Solicitudes respondidas <i class="fa fa-arrow-right"></i>
               </h5>
             </div>
 
@@ -117,12 +117,16 @@
             <div class="mb-2">
               <progressbar
                 [max]="estadisticas.totales * 1"
-                [value]="estadisticas.respondidas * 1 + estadisticas.esperando * 1"
+                [value]="
+                  estadisticas.respondidas * 1 + estadisticas.esperando * 1
+                "
               >
                 <span class="text-nowrap"
                   >{{
-                    (estadisticas.respondidas * 1 + estadisticas.esperando * 1) * 100 / estadisticas.totales
-                      | number: "1.0-0"
+                    ((estadisticas.respondidas * 1 +
+                      estadisticas.esperando * 1) *
+                      100) /
+                      estadisticas.totales | number: "1.0-0"
                   }}%</span
                 >
               </progressbar>
@@ -140,7 +144,7 @@
             <div
               class="mb-4 title-link"
               [routerLink]="['/administrador/solicitudes']"
-              [queryParams]="{ estado: 3 }"
+              [queryParams]="{ estado: 4 }"
             >
               <h5 class="card-title mb-0">
                 Solicitudes Finalizadas <i class="fa fa-arrow-right"></i>
